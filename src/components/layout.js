@@ -1,14 +1,14 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from "react";
+import { Link } from "gatsby";
 
-import { rhythm, scale } from "../utils/typography"
-import Image from "gatsby-image"
+import { rhythm, scale } from "../utils/typography";
+import Image from "gatsby-image";
 
 class Layout extends React.Component {
   render() {
-    const { location, title, children, logo } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
-    let header
+    const { location, title, children, logo } = this.props;
+    const rootPath = `${__PATH_PREFIX__}/`;
+    let header;
 
     if (location.pathname === rootPath) {
       header = (
@@ -17,9 +17,9 @@ class Layout extends React.Component {
             ...scale(1.5),
             marginBottom: rhythm(1.5),
             marginTop: 0,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-end',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
           }}
         >
           <Link
@@ -40,11 +40,10 @@ class Layout extends React.Component {
               marginBottom: 0,
               minWidth: 50,
             }}
-            imgStyle={{
-            }}
+            imgStyle={{}}
           />
         </h1>
-      )
+      );
     } else {
       header = (
         <h3
@@ -64,7 +63,7 @@ class Layout extends React.Component {
             {title}
           </Link>
         </h3>
-      )
+      );
     }
     return (
       <div
@@ -77,12 +76,10 @@ class Layout extends React.Component {
       >
         <header>{header}</header>
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Nicolas Gehlert
-        </footer>
+        <footer>© {new Date().getFullYear()}, Nicolas Gehlert</footer>
       </div>
-    )
+    );
   }
 }
 
-export default Layout
+export default Layout;

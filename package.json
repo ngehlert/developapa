@@ -1,11 +1,11 @@
 {
-  "name": "gatsby-starter-blog",
+  "name": "developapa",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "Personal blog",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Nicolas Gehlert <info@ngehlert.de>",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/ngehlert/developapa/issues"
   },
   "dependencies": {
     "gatsby": "^2.13.45",
