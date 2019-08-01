@@ -8,12 +8,13 @@ import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
   render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+    const { data } = this.props;
+    const siteTitle = data.site.siteMetadata.title;
+    const siteLogo = data.logo;
+    const posts = data.allMarkdownRemark.edges;
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout location={this.props.location} title={siteTitle} logo={siteLogo}>
         <SEO title="All posts" />
         <Bio />
         {posts.map(({ node }) => {
@@ -47,6 +48,13 @@ export default BlogIndex
 
 export const pageQuery = graphql`
   query {
+    logo: file(absolutePath: { regex: "/logo.png/" }) {
+      childImageSharp {
+        fixed(width: 200, height: 200) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
     site {
       siteMetadata {
         title

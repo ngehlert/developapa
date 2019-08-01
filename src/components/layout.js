@@ -2,10 +2,11 @@ import React from "react"
 import { Link } from "gatsby"
 
 import { rhythm, scale } from "../utils/typography"
+import Image from "gatsby-image"
 
 class Layout extends React.Component {
   render() {
-    const { location, title, children } = this.props
+    const { location, title, children, logo } = this.props
     const rootPath = `${__PATH_PREFIX__}/`
     let header
 
@@ -16,6 +17,9 @@ class Layout extends React.Component {
             ...scale(1.5),
             marginBottom: rhythm(1.5),
             marginTop: 0,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
           }}
         >
           <Link
@@ -28,6 +32,17 @@ class Layout extends React.Component {
           >
             {title}
           </Link>
+          <Image
+            fixed={logo.childImageSharp.fixed}
+            alt="Blog logo"
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: 0,
+              minWidth: 50,
+            }}
+            imgStyle={{
+            }}
+          />
         </h1>
       )
     } else {
@@ -56,16 +71,14 @@ class Layout extends React.Component {
         style={{
           marginLeft: `auto`,
           marginRight: `auto`,
-          maxWidth: rhythm(24),
+          maxWidth: rhythm(26),
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
         }}
       >
         <header>{header}</header>
         <main>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          © {new Date().getFullYear()}, Nicolas Gehlert
         </footer>
       </div>
     )

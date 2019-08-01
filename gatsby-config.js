@@ -3,7 +3,7 @@ module.exports = {
     title: `Developapa`,
     author: `Nicolas Gehlert`,
     description: `Personal blog about my live as a coder and parent`,
-    siteUrl: `https://developapa.netlify.com/`,
+    siteUrl: `https://developapa.com/`,
     social: {
       twitter: `ngehlert`,
       github: `ngehlert`,
@@ -58,13 +58,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Developapa`,
+        short_name: `Developapa`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `content/assets/icon.png`,
       },
     },
     `gatsby-plugin-offline`,
