@@ -26,6 +26,7 @@ const Bio = () => {
           author
           social {
             twitter
+            github
           }
         }
       }
@@ -54,11 +55,11 @@ const Bio = () => {
         }}
       />
       <p>
-        Written by <strong>{author}</strong> who lives and works in San
-        Francisco building useful things.
+        Personal Blog written by <strong>{author}</strong>, software developer
+        from Freiburg im Breisgau.
         {` `}
-        <a href={`https://twitter.com/${social.twitter}`}>
-          You should follow him on Twitter
+        <a href={`https://github.com/${social.github}`}>
+          Check out some of my other projects at Github
         </a>
       </p>
     </div>
