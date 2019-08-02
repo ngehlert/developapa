@@ -20,7 +20,7 @@ class Layout extends React.Component {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            fontFamily: 'Poiret One, serif',
+            fontFamily: "Poiret One, serif",
           }}
         >
           <Link
@@ -50,7 +50,7 @@ class Layout extends React.Component {
         <h3
           style={{
             marginTop: 0,
-            fontFamily: 'Poiret One, serif',
+            fontFamily: "Poiret One, serif",
           }}
         >
           <Link

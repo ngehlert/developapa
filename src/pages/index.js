@@ -20,11 +20,14 @@ class BlogIndex extends React.Component {
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug;
           return (
-            <div key={node.fields.slug} style={{
-              boxShadow: `0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12)`,
-              padding: `12px`,
-              marginBottom: rhythm(1),
-            }}>
+            <div
+              key={node.fields.slug}
+              style={{
+                boxShadow: `0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12)`,
+                padding: `12px`,
+                marginBottom: rhythm(1),
+              }}
+            >
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
@@ -36,6 +39,7 @@ class BlogIndex extends React.Component {
                 </Link>
               </h3>
               <small>{node.frontmatter.date}</small>
+              <small>{node.frontmatter.tags.split(',')}</small>
               <p
                 dangerouslySetInnerHTML={{
                   __html: node.frontmatter.description || node.excerpt,
@@ -76,6 +80,8 @@ export const pageQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             title
             description
+            tags
+            duration
           }
         }
       }
