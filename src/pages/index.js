@@ -18,7 +18,11 @@ class BlogIndex extends React.Component {
 
     return (
       <Layout location={this.props.location} title={siteTitle} logo={siteLogo}>
-        <SEO title="All posts" />
+        {pageContext.tag !== undefined ? (
+          <SEO title={`Posts with ${pageContext.tag} Tag`} />
+          ): (
+          <SEO title="All posts" />
+        )}
         <div style={{position: `relative`, marginBottom: rhythm(2)}}>
           <Bio />
           {pageContext.tag !== undefined ? (
