@@ -9,11 +9,19 @@ import { rhythm, scale } from "../utils/typography";
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark;
+    const siteLogo = this.props.data.logo;
     const siteTitle = this.props.data.site.siteMetadata.title;
     const { previous, next } = this.props.pageContext;
 
+    const divider = (<hr
+      style={{
+        marginBottom: rhythm(1),
+      }}
+    />);
+
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout location={this.props.location} title={siteTitle} logo={siteLogo}>
+        {divider}
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -36,11 +44,7 @@ class BlogPostTemplate extends React.Component {
           {post.frontmatter.date}
         </p>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <hr
-          style={{
-            marginBottom: rhythm(1),
-          }}
-        />
+        {divider}
         <Bio />
 
         <ul
@@ -76,6 +80,13 @@ export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
+    logo: file(absolutePath: { regex: "/logo.png/" }) {
+      childImageSharp {
+        fixed(width: 200, height: 200) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
     site {
       siteMetadata {
         title

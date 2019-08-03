@@ -10,7 +10,7 @@ class Layout extends React.Component {
     const rootPath = `${__PATH_PREFIX__}/`;
     let header;
 
-    if (location.pathname === rootPath) {
+    if (location.pathname === rootPath || location.pathname.startsWith('/tag/')) {
       header = (
         <h1
           style={{
@@ -51,6 +51,9 @@ class Layout extends React.Component {
           style={{
             marginTop: 0,
             fontFamily: "Poiret One, serif",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
           }}
         >
           <Link
@@ -63,6 +66,19 @@ class Layout extends React.Component {
           >
             {title}
           </Link>
+
+          <Image
+            fixed={logo.childImageSharp.fixed}
+            alt="Blog logo"
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: 0,
+              minWidth: 50,
+              width: `80px`,
+              height: `80px`,
+            }}
+            imgStyle={{}}
+          />
         </h3>
       );
     }

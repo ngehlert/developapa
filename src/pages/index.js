@@ -19,7 +19,20 @@ class BlogIndex extends React.Component {
     return (
       <Layout location={this.props.location} title={siteTitle} logo={siteLogo}>
         <SEO title="All posts" />
-        <Bio />
+        <div style={{position: `relative`, marginBottom: rhythm(2)}}>
+          <Bio />
+          {pageContext.tag !== undefined ? (
+            <div style={{
+              display: `flex`,
+              alignItems: `center`,
+              height: rhythm(1.5),
+              position: `absolute`,
+              bottom: rhythm(-1.5),
+            }}>
+              <div style={{marginRight: rhythm(0.3)}}>Articles with tag: </div><Chip>{pageContext.tag}</Chip>
+            </div>
+          ) : null}
+        </div>
         {posts
           .filter(({node}) => {
             if (pageContext.tag === undefined) {
