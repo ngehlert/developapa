@@ -47,6 +47,21 @@ class BlogPostTemplate extends React.Component {
         {divider}
         <Bio />
 
+        <h3>Add a comment</h3>
+        <form
+          method="POST"
+          action="https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments"
+        >
+          <input
+            name="options[slug]"
+            type="hidden"
+            value={this.props.pathContext.slug}
+          />
+          <input name="fields[name]" type="text" placeholder="Name" required />
+          <textarea name="fields[message]" placeholder="Comment" required />
+          <button type="submit">Submit Comment</button>
+        </form>
+
         <ul
           style={{
             display: `flex`,
