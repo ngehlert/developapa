@@ -33,6 +33,7 @@
     "react-typography": "^0.16.19",
     "typeface-merriweather": "0.0.72",
     "typeface-poiret-one": "0.0.71",
+    "typescript": "^3.5.3",
     "typography": "^0.16.19",
     "typography-theme-wordpress-2016": "^0.16.19"
   },
