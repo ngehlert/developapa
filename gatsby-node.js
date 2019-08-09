@@ -48,6 +48,7 @@ exports.createPages = async ({ graphql, actions }) => {
       component: blogPost,
       context: {
         slug: post.node.fields.slug,
+        yamlSlug: post.node.fields.slug.replace(/\//g, ''),
         previous,
         next,
       },

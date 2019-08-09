@@ -134,10 +134,8 @@ class BlogPostTemplate extends React.Component {
         fields: {
           name: this.state.commentName,
           message: this.state.commentMessage,
+          page: this.props.pageContext.slug.replace(/\//g, ''),
         },
-        options: {
-          slug: this.props.pageContext.slug.replace(/\//g, ''),
-        }
       });
   }
 }
@@ -145,7 +143,7 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query BlogPostBySlug($slug: String!, $yamlSlug: String!) {
     logo: file(absolutePath: { regex: "/logo.png/" }) {
       childImageSharp {
         fixed(width: 200, height: 200) {
@@ -171,7 +169,7 @@ export const pageQuery = graphql`
         duration
       }
     }
-    allYaml(filter: { slug: { eq: $slug } }) {
+    allYaml(filter: { page: { eq: $yamlSlug } }) {
       edges {
         node {
           id
