@@ -135,7 +135,7 @@ class BlogPostTemplate extends React.Component {
           message: this.state.commentMessage,
         },
         options: {
-          slug: this.props.pathContext.slug,
+          slug: this.props.pathContext.slug.replace(/\//g, ''),
         }
       });
   }
