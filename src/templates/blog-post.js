@@ -18,6 +18,7 @@ class BlogPostTemplate extends React.Component {
     commentMessage: '',
   };
   render() {
+    console.log(this.props.data)
     const post = this.props.data.markdownRemark;
     const siteLogo = this.props.data.logo;
     const siteTitle = this.props.data.site.siteMetadata.title;
@@ -135,7 +136,7 @@ class BlogPostTemplate extends React.Component {
           message: this.state.commentMessage,
         },
         options: {
-          slug: this.props.pathContext.slug.replace(/\//g, ''),
+          slug: this.props.pageContext.slug.replace(/\//g, ''),
         }
       });
   }
@@ -168,6 +169,16 @@ export const pageQuery = graphql`
         description
         tags
         duration
+      }
+    }
+    allYaml(filter: { slug: { eq: $slug } }) {
+      edges {
+        node {
+          id
+          name
+          message
+          date
+        }
       }
     }
   }
