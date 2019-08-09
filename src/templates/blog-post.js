@@ -90,7 +90,9 @@ class BlogPostTemplate extends React.Component {
               margin="normal"
               variant="outlined"
             />
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={() => {
+              this.saveComment();
+            }}>
               Submit
             </Button>
           </form>
@@ -128,9 +130,13 @@ class BlogPostTemplate extends React.Component {
     await axios.default.post(
       'https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
       {
-        name: this.state.commentName,
-        message: this.state.commentMessage,
-        'options[slug]': this.props.pathContext.slug,
+        fields: {
+          name: this.state.commentName,
+          message: this.state.commentMessage,
+        },
+        options: {
+          slug: this.props.pathContext.slug,
+        }
       });
   }
 }
