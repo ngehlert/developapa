@@ -24,7 +24,9 @@ class BlogPostTemplate extends React.Component {
     gdpr: false,
   };
   render() {
-    const comments = this.props.data.allYaml.edges;
+    const comments = this.props.data.allYaml.edges.filter(({node}) => {
+      return node.id !== '42227bed-71a8-5a8b-9c94-1b846ee0fdf7';
+    });
     const post = this.props.data.markdownRemark;
     const siteLogo = this.props.data.logo;
     const siteTitle = this.props.data.site.siteMetadata.title;
