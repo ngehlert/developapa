@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
 import FormGroup from "@material-ui/core/FormGroup"
+import CircularProgress from "@material-ui/core/CircularProgress"
 
 class BlogPostTemplate extends React.Component {
 
@@ -22,7 +23,9 @@ class BlogPostTemplate extends React.Component {
     commentName: '',
     commentMessage: '',
     gdpr: false,
+    isLoading: false,
   };
+
   render() {
     const comments = this.props.data.allYaml.edges.filter(({node}) => {
       return node.id !== '42227bed-71a8-5a8b-9c94-1b846ee0fdf7';
@@ -152,11 +155,21 @@ class BlogPostTemplate extends React.Component {
                 label="I agree that my name will be stored in connection with my comment and will be visible to others after a review. To change/delete the comment later please contact me via mail at info [at] ngehlert.de"
               />
             </FormGroup>
-            <Button disabled={!this.state.gdpr} style={{marginTop: rhythm(1)}} variant="contained" color="primary" onClick={() => {
-              this.saveComment();
-            }}>
-              Submit
-            </Button>
+            <div style={{marginTop: rhythm(1), display: 'flex', alignItems: 'center'}}>
+              <Button
+                disabled={!this.state.gdpr || !this.state.commentName.length || !this.state.commentMessage || this.state.isLoading}
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  this.saveComment();
+                }}
+              >
+                Submit
+              </Button>
+              {this.state.isLoading ? (
+                <CircularProgress size={24} style={{marginLeft: '8px'}}/>
+              ) : null}
+            </div>
           </form>
 
           <ul
@@ -189,15 +202,26 @@ class BlogPostTemplate extends React.Component {
   }
 
   async saveComment() {
-    await axios.default.post(
-      'https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
-      {
-        fields: {
-          name: this.state.commentName,
-          message: this.state.commentMessage,
-          page: this.props.pageContext.slug.replace(/\//g, ''),
-        },
-      });
+    this.setState({isLoading: true});
+    try {
+      await axios.default.post(
+        'https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
+        {
+          fields: {
+            name: this.state.commentName,
+            message: this.state.commentMessage,
+            page: this.props.pageContext.slug.replace(/\//g, ''),
+          },
+        });
+      this.setState({
+        commentName: '',
+        commentMessage: '',
+        gdpr: false,
+      })
+    } catch (error) {
+
+    }
+    this.setState({isLoading: false});
   }
 }
 
