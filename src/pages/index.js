@@ -5,11 +5,12 @@ import Bio from "../components/bio";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 import { rhythm } from "../utils/typography";
-import Chip from "../components/chip"
 import slugify from '@sindresorhus/slugify';
 import { createMuiTheme } from '@material-ui/core/styles';
 import pink from '@material-ui/core/colors/pink';
 import { ThemeProvider } from '@material-ui/styles';
+import { navigate } from "gatsby"
+import Chip from "@material-ui/core/Chip"
 
 export const Theme = createMuiTheme({
   palette: {
@@ -44,9 +45,11 @@ class BlogIndex extends React.Component {
                 position: `absolute`,
                 bottom: rhythm(-1.5),
               }}>
-                <div style={{marginRight: rhythm(0.3)}}>Articles with tag: </div><Chip>
-                  {pageContext.tag}
-                  <Link style={{ boxShadow: `none`, color: '#f44336', paddingLeft: '12px'}} to={`/`}>x</Link></Chip>
+                <div style={{marginRight: rhythm(0.3)}}>Articles with tag: </div>
+                <Chip
+                  label={pageContext.tag}
+                  onDelete={() => {navigate('/')}}
+                />
               </div>
             ) : null}
           </div>
@@ -87,7 +90,12 @@ class BlogIndex extends React.Component {
                 }}>{node.frontmatter.date}</div>
                 <div>
                   {node.frontmatter.tags.split(',').map((tag, index) => {
-                    return (<Chip key={index}><Link style={{ boxShadow: `none`, color: 'rgba(0,0,0,0.6)' }} to={`/tag/${slugify(tag)}`}>{tag}</Link></Chip>);
+                    return (
+                      <Chip
+                        label={tag}
+                        onClick={() => {navigate(`/tag/${slugify(tag)}`)}}
+                        key={index}
+                      />);
                   })}
                 </div>
                 <hr style={{
