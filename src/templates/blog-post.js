@@ -16,6 +16,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
 import FormGroup from "@material-ui/core/FormGroup"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import Snackbar from "@material-ui/core/Snackbar"
+import { green, red } from "@material-ui/core/colors"
+import SnackbarContent from "@material-ui/core/SnackbarContent"
+import Bio from "../components/bio"
 
 class BlogPostTemplate extends React.Component {
 
@@ -24,6 +28,8 @@ class BlogPostTemplate extends React.Component {
     commentMessage: '',
     gdpr: false,
     isLoading: false,
+    showSuccessSnackbar: false,
+    showErrorSnackbar: false,
   };
 
   render() {
@@ -68,6 +74,7 @@ class BlogPostTemplate extends React.Component {
           </p>
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
           {divider}
+          <Bio/>
           <h4>Comments</h4>
 
           {comments
@@ -196,6 +203,32 @@ class BlogPostTemplate extends React.Component {
               )}
             </li>
           </ul>
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={this.state.showSuccessSnackbar || this.state.showErrorSnackbar}
+            autoHideDuration={3000}
+            onClose={() => {this.setState({showSuccessSnackbar: false, showErrorSnackbar: false})}}
+            ContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+          >
+            {this.state.showSuccessSnackbar ? (
+              <SnackbarContent style={{
+                  backgroundColor: green[500],
+                }}
+                message={<span id="message-id">Comment successfully submitted</span>}
+              />
+            ) : this.state.showErrorSnackbar ? (
+              <SnackbarContent style={{
+                backgroundColor: red[500],
+              }}
+                 message={<span id="message-id">There was a problem submitting your comment</span>}
+              />
+            ) : null}
+          </Snackbar>
         </Layout>
       </ThemeProvider>
     );
@@ -217,9 +250,10 @@ class BlogPostTemplate extends React.Component {
         commentName: '',
         commentMessage: '',
         gdpr: false,
+        showSuccessSnackbar: true,
       })
     } catch (error) {
-
+      this.setState({showErrorSnackbar: true});
     }
     this.setState({isLoading: false});
   }
