@@ -123,8 +123,8 @@ export const pageQuery = graphql`
   query {
     logo: file(absolutePath: { regex: "/logo.png/" }) {
       childImageSharp {
-        fixed(width: 200, height: 200) {
-          ...GatsbyImageSharpFixed
+        fluid(maxWidth: 200, maxHeight: 200) {
+          ...GatsbyImageSharpFluid
         }
       }
     }

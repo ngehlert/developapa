@@ -1,3 +1,5 @@
+import { useMediaQuery } from "@material-ui/core"
+
 const path = require(`path`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const slugify = require('@sindresorhus/slugify');

@@ -26,7 +26,8 @@ I appreciate any kind of feedback and criticism, just drop a comment or reach ou
 Even if there are already a million blogs out there *(and probably about nearly every topic imaginable there are already
 dozens of posts)* I strongly believe that everybody can **and should** share his experiences and stories.  
 Different people like different styles of writing or maybe sometimes a specific example suits you better in a certain
-situation.
+situation.  
+And finally this is also a proof to myself that I have enough knowledge about certain topics to write detailed posts.
 
 I still don't have everything figured out where I want to go with this blog, but I just want to get started. So feel free
 to join me on this journey and help me along the way.
