@@ -62,7 +62,7 @@ exports.createPages = async ({ graphql, actions }) => {
         tag,
       },
     });
-  })
+  });
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

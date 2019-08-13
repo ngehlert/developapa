@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "gatsby";
+import React from 'react';
+import { Link } from 'gatsby';
 
-import { rhythm } from "../utils/typography";
-import Image from "gatsby-image";
-import { useMediaQuery } from "@material-ui/core"
+import { rhythm } from '../utils/typography';
+import Image from 'gatsby-image';
+import { useMediaQuery } from '@material-ui/core';
 
 function MediaQuery({ query, children }) {
   let result = useMediaQuery(query);
@@ -16,7 +16,10 @@ class Layout extends React.Component {
     const rootPath = `${__PATH_PREFIX__}/`;
     let header;
 
-    if (location.pathname === rootPath || location.pathname.startsWith('/tag/')) {
+    if (
+      location.pathname === rootPath ||
+      location.pathname.startsWith('/tag/')
+    ) {
       header = (
         <div
           style={{
@@ -28,13 +31,14 @@ class Layout extends React.Component {
           }}
         >
           <MediaQuery query="(max-width:700px)">
-            {query => (
-              <h1 style={{
-                fontSize: query ? '12vw' : '84px',
-                marginBottom: 0,
-                fontFamily: "Poiret One, serif",
-              }}>
-
+            {(query) => (
+              <h1
+                style={{
+                  fontSize: query ? '12vw' : '84px',
+                  marginBottom: 0,
+                  fontFamily: 'Poiret One, serif',
+                }}
+              >
                 <Link
                   style={{
                     boxShadow: `none`,
@@ -64,10 +68,10 @@ class Layout extends React.Component {
         <h3
           style={{
             marginTop: 0,
-            fontFamily: "Poiret One, serif",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
+            fontFamily: 'Poiret One, serif',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
           }}
         >
           <Link
@@ -100,17 +104,22 @@ class Layout extends React.Component {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: `minmax(0, 1fr) minmax(${rhythm(12)}, ${rhythm(26)}) minmax(0, 1fr)`,
-          gridTemplateAreas: '"left-spacer header right-spacer" "left-spacer content right-spacer" "left-spacer footer right-spacer"',
+          gridTemplateColumns: `minmax(0, 1fr) minmax(${rhythm(12)}, ${rhythm(
+            26
+          )}) minmax(0, 1fr)`,
+          gridTemplateAreas:
+            '"left-spacer header right-spacer" "left-spacer content right-spacer" "left-spacer footer right-spacer"',
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
           minWidth: 0,
         }}
       >
-        <div style={{gridArea: 'left-spacer'}}> </div>
-        <div style={{gridArea: 'right-spacer'}}> </div>
-        <header style={{gridArea: 'header'}}>{header}</header>
-        <main style={{gridArea: 'content'}}>{children}</main>
-        <footer style={{gridArea: 'footer'}}>© {new Date().getFullYear()}, Nicolas Gehlert</footer>
+        <div style={{ gridArea: 'left-spacer' }}> </div>
+        <div style={{ gridArea: 'right-spacer' }}> </div>
+        <header style={{ gridArea: 'header' }}>{header}</header>
+        <main style={{ gridArea: 'content' }}>{children}</main>
+        <footer style={{ gridArea: 'footer' }}>
+          © {new Date().getFullYear()}, Nicolas Gehlert
+        </footer>
       </div>
     );
   }
