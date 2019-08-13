@@ -25,6 +25,19 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-transformer-yaml`,
+      options: {
+        typeName: `Yaml`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/content/comments`,
+        name: 'comments',
+      },
+    },
+    {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [

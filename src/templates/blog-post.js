@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 
-import Bio from "../components/bio";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 import { rhythm, scale } from "../utils/typography";
@@ -10,14 +9,33 @@ import Button from "@material-ui/core/Button"
 import { Theme } from "../pages"
 import { ThemeProvider } from '@material-ui/styles';
 import * as axios from "axios"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import Typography from "@material-ui/core/Typography"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Checkbox from "@material-ui/core/Checkbox"
+import FormGroup from "@material-ui/core/FormGroup"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import Snackbar from "@material-ui/core/Snackbar"
+import { green, red } from "@material-ui/core/colors"
+import SnackbarContent from "@material-ui/core/SnackbarContent"
+import Bio from "../components/bio"
 
 class BlogPostTemplate extends React.Component {
 
   state = {
     commentName: '',
     commentMessage: '',
+    gdpr: false,
+    isLoading: false,
+    showSuccessSnackbar: false,
+    showErrorSnackbar: false,
   };
+
   render() {
+    const comments = this.props.data.allYaml.edges.filter(({node}) => {
+      return node.id !== '42227bed-71a8-5a8b-9c94-1b846ee0fdf7';
+    });
     const post = this.props.data.markdownRemark;
     const siteLogo = this.props.data.logo;
     const siteTitle = this.props.data.site.siteMetadata.title;
@@ -56,9 +74,46 @@ class BlogPostTemplate extends React.Component {
           </p>
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
           {divider}
-          <Bio />
+          <Bio/>
+          <h4>Comments</h4>
 
-          <h3>Add a comment</h3>
+          {comments
+            .sort(({node: nodeA}, {node: nodeB}) => {
+              return nodeA.date - nodeB.date;
+            })
+            .map(({node}) => {
+              const options = {
+                year: 'numeric', month: 'long', day: 'numeric',
+                hour: 'numeric', minute: 'numeric', second: 'numeric',
+                hour12: false,
+              };
+
+              return (
+                <div key={node.id} style={{marginBottom: rhythm(1)}}>
+                  <Card>
+                    <CardContent>
+                      <Typography variant="h6" component="h2">
+                        {node.name}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        {new Intl.DateTimeFormat('en-US', options).format(node.date * 1000)}
+                      </Typography>
+                      <Typography variant="body1" component="p">
+                        {node.message}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </div>
+              )
+            })
+          }
+          {comments.length === 0 ? (
+            <Typography variant="body1" color="textSecondary" component="p">
+              There are no comments available for this blog post yet
+            </Typography>
+          ): (null)}
+
+          <h4>Add a comment</h4>
           <form
             autoComplete="off"
           >
@@ -90,11 +145,38 @@ class BlogPostTemplate extends React.Component {
               margin="normal"
               variant="outlined"
             />
-            <Button variant="contained" color="primary" onClick={() => {
-              this.saveComment();
-            }}>
-              Submit
-            </Button>
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.gdpr}
+                    onChange={(event) => {
+                      this.setState({
+                        gdpr: event.target.checked,
+                      })
+                    }}
+                    value="checkedGdpr"
+                    color="primary"
+                  />
+                }
+                label="I agree that my name will be stored in connection with my comment and will be visible to others after a review. To change/delete the comment later please contact me via mail at info [at] ngehlert.de"
+              />
+            </FormGroup>
+            <div style={{marginTop: rhythm(1), display: 'flex', alignItems: 'center'}}>
+              <Button
+                disabled={!this.state.gdpr || !this.state.commentName.length || !this.state.commentMessage || this.state.isLoading}
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  this.saveComment();
+                }}
+              >
+                Submit
+              </Button>
+              {this.state.isLoading ? (
+                <CircularProgress size={24} style={{marginLeft: '8px'}}/>
+              ) : null}
+            </div>
           </form>
 
           <ul
@@ -121,30 +203,66 @@ class BlogPostTemplate extends React.Component {
               )}
             </li>
           </ul>
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={this.state.showSuccessSnackbar || this.state.showErrorSnackbar}
+            autoHideDuration={3000}
+            onClose={() => {this.setState({showSuccessSnackbar: false, showErrorSnackbar: false})}}
+            ContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+          >
+            {this.state.showSuccessSnackbar ? (
+              <SnackbarContent style={{
+                  backgroundColor: green[500],
+                }}
+                message={<span id="message-id">Comment successfully submitted</span>}
+              />
+            ) : this.state.showErrorSnackbar ? (
+              <SnackbarContent style={{
+                backgroundColor: red[500],
+              }}
+                 message={<span id="message-id">There was a problem submitting your comment</span>}
+              />
+            ) : null}
+          </Snackbar>
         </Layout>
       </ThemeProvider>
     );
   }
 
   async saveComment() {
-    await axios.default.post(
-      'https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
-      {
-        fields: {
-          name: this.state.commentName,
-          message: this.state.commentMessage,
-        },
-        options: {
-          slug: this.props.pathContext.slug,
-        }
-      });
+    this.setState({isLoading: true});
+    try {
+      await axios.default.post(
+        'https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
+        {
+          fields: {
+            name: this.state.commentName,
+            message: this.state.commentMessage,
+            page: this.props.pageContext.slug.replace(/\//g, ''),
+          },
+        });
+      this.setState({
+        commentName: '',
+        commentMessage: '',
+        gdpr: false,
+        showSuccessSnackbar: true,
+      })
+    } catch (error) {
+      this.setState({showErrorSnackbar: true});
+    }
+    this.setState({isLoading: false});
   }
 }
 
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query BlogPostBySlug($slug: String!, $yamlSlug: String!) {
     logo: file(absolutePath: { regex: "/logo.png/" }) {
       childImageSharp {
         fixed(width: 200, height: 200) {
@@ -168,6 +286,16 @@ export const pageQuery = graphql`
         description
         tags
         duration
+      }
+    }
+    allYaml(filter: { page: { eq: $yamlSlug } }) {
+      edges {
+        node {
+          id
+          name
+          message
+          date
+        }
       }
     }
   }
