@@ -111,6 +111,7 @@ class BlogIndex extends React.Component {
                             navigate(`/tag/${slugify(tag)}`);
                           }}
                           key={index}
+                          style={{marginRight: '8px'}}
                         />
                       );
                     })}
