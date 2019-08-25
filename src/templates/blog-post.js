@@ -276,7 +276,7 @@ class BlogPostTemplate extends React.Component {
     this.setState({ isLoading: true });
     try {
       await axios.default.post(
-        'https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
+        'https://api.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
         {
           fields: {
             name: this.state.commentName,
