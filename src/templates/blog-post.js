@@ -113,7 +113,7 @@ class BlogPostTemplate extends React.Component {
                           node.date * 1000
                         )}
                       </Typography>
-                      <Typography variant="body1" component="p">
+                      <Typography variant="body1" component="p" style={{whiteSpace: 'pre-wrap'}}>
                         {node.message}
                       </Typography>
                     </CardContent>

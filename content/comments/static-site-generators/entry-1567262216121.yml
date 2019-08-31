@@ -7,6 +7,6 @@ message: >-
   @Vin100 Tam
 
   no, currently there is no Markdown support for comments. But I'll definitely
-  consider this and probably implement this
+  consider this.
 page: static-site-generators
 date: 1567262216
