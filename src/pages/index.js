@@ -68,7 +68,7 @@ class BlogIndex extends React.Component {
               if (pageContext.tag === undefined) {
                 return true;
               }
-              return node.frontmatter.tags.split(',').includes(pageContext.tag);
+              return node.frontmatter.tags.split(',').map(tag => tag.trim()).includes(pageContext.tag);
             })
             .map(({ node }) => {
               const title = node.frontmatter.title || node.fields.slug;
@@ -104,6 +104,7 @@ class BlogIndex extends React.Component {
                   </div>
                   <div>
                     {node.frontmatter.tags.split(',').map((tag, index) => {
+                      tag = tag.trim();
                       return (
                         <Chip
                           label={tag}

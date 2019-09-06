@@ -87,7 +87,7 @@ class BlogPostTemplate extends React.Component {
               return nodeA.date - nodeB.date;
             })
             .map(({ node }) => {
-              const options = {
+              const dateOptions = {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -109,7 +109,7 @@ class BlogPostTemplate extends React.Component {
                         color="textSecondary"
                         component="p"
                       >
-                        {new Intl.DateTimeFormat('en-US', options).format(
+                        {new Intl.DateTimeFormat('en-US', dateOptions).format(
                           node.date * 1000
                         )}
                       </Typography>
