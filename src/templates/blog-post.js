@@ -1,3 +1,4 @@
+/*global Sentry*/
 import React from 'react';
 import { Link, graphql } from 'gatsby';
 
@@ -294,6 +295,7 @@ class BlogPostTemplate extends React.Component {
       });
     } catch (error) {
       this.setState({ showErrorSnackbar: true });
+      Sentry.captureException(error);
     }
     this.setState({ isLoading: false });
   }

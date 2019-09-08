@@ -98,5 +98,15 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
+
+    {
+      resolve: "gatsby-plugin-sentry",
+      options: {
+        dsn: "https://2b7277ec914f43308d9f9ac19b63fe77@sentry.io/1639743",
+        // Optional settings, see https://docs.sentry.io/clients/node/config/#optional-settings
+        environment: process.env.NODE_ENV,
+        enabled: true,
+      }
+    }
   ],
 };
