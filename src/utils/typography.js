@@ -10,8 +10,11 @@ Wordpress2016.overrideThemeStyles = () => {
       boxShadow: 'none',
     },
     a: {
-      color: '#E91E63',
+      color: '#009688',
     },
+    'a:hover': {
+      color: '#FF9800',
+    }
   };
 };
 
