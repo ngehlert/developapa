@@ -6,10 +6,10 @@ tags: "Projects, Made my day"
 duration: Big Snack
 ---
 
-#### App is currently in Apples verification process. Will update the article with the app store link soon
 
-![Sample](./sample.png)
+![Made my day](./made-my-day.png)
 
+#### Click [here](https://apps.apple.com/us/app/made-my-day/id1481700999?l=de&ls=1&mt=12) to get it from the App Store
 With this blog post I want to present my latest app for macOS - a minimalistic journaling app.  
 You might ask if another journaling app ist really necessary so I try to quickly explain the benefits of *Made my day* 
 and differences to other common apps.
@@ -19,6 +19,8 @@ and differences to other common apps.
 - [Full file control](#full-file-control)
 - [GDPR](#gdpr)
 - [Future plans](#future-plans)
+
+![Sample](./sample.png)
 
 ## No subscription
 Most of the apps I already tested in the past year require some sort of monthly/yearly subscription to get all features 
