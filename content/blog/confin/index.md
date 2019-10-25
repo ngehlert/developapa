@@ -8,7 +8,7 @@ duration: Big Snack
 
 ![Confin](./confin.png)
 
-With this blog post I want to present finance app for iOS and Android.  
+With this blog post I want to present my finance app for iOS and Android.  
 You might ask if another finance app ist really necessary so I try to quickly explain the benefits of *Confin* 
 and differences to other common apps.  
 Confin is basically my first *real* (published) side project and went through multiple iterations and reworks.
@@ -48,16 +48,16 @@ day budget. It even lets you know how much money you should save monthly for the
 
 ## FAQ
 
-### Why do I have to create an user account
+### Why do I have to create an user account?
 I get this question pretty often. Two reasons
 * I wanted to have a shared account with my wife and storing everything online seemed like the easiest solution
 * Initially I planned on also having an online version for more and even deeper statistics. However I just didn't have 
 the time so far to build it
 
-### Why did you publish Confin
+### Why did you publish Confin?
 For a long time Confin was just a private project and only used by myself and my wife. However couple of other people asked 
 me I they can use it as well. At first I distributed Confin by sending the packaged app via E-Mail. But as the audience grows 
-this approach was to obnoxious… And at that point I decided to publish it in the app store
+this approach was too obnoxious… And at that point I decided to publish it in the app store
 
 ## GDPR
 Confin stores following user specific data:
