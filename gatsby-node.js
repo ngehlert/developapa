@@ -1,3 +1,4 @@
+
 const path = require(`path`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const slugify = require('@sindresorhus/slugify');
@@ -5,6 +6,7 @@ const slugify = require('@sindresorhus/slugify');
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
+  const confinGdprPage = path.resolve('./src/pages/gdpr-confin.js');
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
   const indexPage = path.resolve(`./src/pages/index.js`);
   const result = await graphql(
@@ -41,7 +43,7 @@ exports.createPages = async ({ graphql, actions }) => {
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node;
     const next = index === 0 ? null : posts[index - 1].node;
-    post.node.frontmatter.tags.split(',').forEach((tag) => tags.add(tag));
+    post.node.frontmatter.tags.split(',').forEach((tag) => tags.add(tag.trim()));
 
     createPage({
       path: post.node.fields.slug,
@@ -54,6 +56,7 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     });
   });
+
   tags.forEach((tag) => {
     createPage({
       path: `/tag/${slugify(tag)}`,
@@ -62,6 +65,13 @@ exports.createPages = async ({ graphql, actions }) => {
         tag,
       },
     });
+  });
+
+  createPage({
+    path: `/confin/gdpr`,
+    component: confinGdprPage,
+    context: {
+    },
   });
 };
 

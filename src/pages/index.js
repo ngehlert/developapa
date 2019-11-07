@@ -7,15 +7,16 @@ import SEO from '../components/seo';
 import { rhythm } from '../utils/typography';
 import slugify from '@sindresorhus/slugify';
 import { createMuiTheme } from '@material-ui/core/styles';
-import pink from '@material-ui/core/colors/pink';
+import teal from '@material-ui/core/colors/teal';
+import orange from '@material-ui/core/colors/orange';
 import { ThemeProvider } from '@material-ui/styles';
 import { navigate } from 'gatsby';
 import Chip from '@material-ui/core/Chip';
 
 export const Theme = createMuiTheme({
   palette: {
-    primary: pink,
-    // secondary: pink,
+    primary: teal,
+    secondary: orange,
   },
 });
 
@@ -59,6 +60,9 @@ class BlogIndex extends React.Component {
                   onDelete={() => {
                     navigate('/');
                   }}
+                  color="secondary"
+                  variant="outlined"
+                  size="small"
                 />
               </div>
             ) : null}
@@ -68,7 +72,7 @@ class BlogIndex extends React.Component {
               if (pageContext.tag === undefined) {
                 return true;
               }
-              return node.frontmatter.tags.split(',').includes(pageContext.tag);
+              return node.frontmatter.tags.split(',').map(tag => tag.trim()).includes(pageContext.tag);
             })
             .map(({ node }) => {
               const title = node.frontmatter.title || node.fields.slug;
@@ -80,6 +84,7 @@ class BlogIndex extends React.Component {
                     padding: `12px`,
                     marginBottom: rhythm(1),
                     position: `relative`,
+                    backgroundColor: '#ffffff'
                   }}
                 >
                   <h3
@@ -104,6 +109,7 @@ class BlogIndex extends React.Component {
                   </div>
                   <div>
                     {node.frontmatter.tags.split(',').map((tag, index) => {
+                      tag = tag.trim();
                       return (
                         <Chip
                           label={tag}
@@ -112,6 +118,9 @@ class BlogIndex extends React.Component {
                           }}
                           key={index}
                           style={{marginRight: '8px'}}
+                          color="secondary"
+                          variant="outlined"
+                          size="small"
                         />
                       );
                     })}

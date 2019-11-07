@@ -1,3 +1,4 @@
+/*global Sentry*/
 import React from 'react';
 import { Link, graphql } from 'gatsby';
 
@@ -32,9 +33,7 @@ class BlogPostTemplate extends React.Component {
   };
 
   render() {
-    const comments = this.props.data.allYaml.edges.filter(({ node }) => {
-      return node.id !== '42227bed-71a8-5a8b-9c94-1b846ee0fdf7';
-    });
+    const comments = this.props.data.allYaml.edges;
     const post = this.props.data.markdownRemark;
     const siteLogo = this.props.data.logo;
     const siteTitle = this.props.data.site.siteMetadata.title;
@@ -87,7 +86,7 @@ class BlogPostTemplate extends React.Component {
               return nodeA.date - nodeB.date;
             })
             .map(({ node }) => {
-              const options = {
+              const dateOptions = {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -109,11 +108,11 @@ class BlogPostTemplate extends React.Component {
                         color="textSecondary"
                         component="p"
                       >
-                        {new Intl.DateTimeFormat('en-US', options).format(
+                        {new Intl.DateTimeFormat('en-US', dateOptions).format(
                           node.date * 1000
                         )}
                       </Typography>
-                      <Typography variant="body1" component="p">
+                      <Typography variant="body1" component="p" style={{whiteSpace: 'pre-wrap'}}>
                         {node.message}
                       </Typography>
                     </CardContent>
@@ -276,7 +275,8 @@ class BlogPostTemplate extends React.Component {
     this.setState({ isLoading: true });
     try {
       await axios.default.post(
-        'https://dev.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
+        // 'https://api.staticman.net/v3/entry/github/ngehlert/developapa/master/comments',
+        'https://staticman3.herokuapp.com/v3/entry/github/ngehlert/developapa/master/comments',
         {
           fields: {
             name: this.state.commentName,
@@ -293,6 +293,7 @@ class BlogPostTemplate extends React.Component {
       });
     } catch (error) {
       this.setState({ showErrorSnackbar: true });
+      Sentry.captureException(error);
     }
     this.setState({ isLoading: false });
   }
