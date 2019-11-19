@@ -17,10 +17,11 @@ and differences to other common apps.
 - [No subscription](#no-subscription)
 - [Standard format](#standard-format)
 - [Full file control](#full-file-control)
+- [Themes](#themes)
 - [GDPR](#gdpr)
 - [Future plans](#future-plans)
 
-![Sample](./sample.png)
+![Sample](./default-theme.png)
 
 ## No subscription
 Most of the apps I already tested in the past year require some sort of monthly/yearly subscription to get all features 
@@ -42,6 +43,9 @@ your cloud settings)
 * Even saving everything on an USB drive so no data is on your PC is really easy
 * And for the developers out there you can also use private repository 😉
 
+## Themes
+Added in the first big update. Check [the update Blog post](/made-my-day-2) for detailed information. There are a couple 
+beautiful themes available. If your favorite theme is not available, leave a comment and I try to add it in a future update.
 
 ## GDPR
 There are no external resources that get loaded. No HTTP requests are made. No user registration. **Everything runs 
@@ -54,7 +58,7 @@ functionality is implemented.
 Things I have in mind for future updates:
 * Image support (You already can use images if you are familiar with Markdown syntax, but I want to implement Drag & Drop 
 support and the option to use images by reference or copy them)
-* Different themes
+* ~~Different themes~~ (already added, [Update notes](/made-my-day-2))
 * Different languages
 
 If you have any ideas of cool features or feedback just leave a comment.
