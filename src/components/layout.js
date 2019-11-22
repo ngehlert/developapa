@@ -6,6 +6,7 @@ import Image from 'gatsby-image';
 import { useMediaQuery } from '@material-ui/core';
 import headerImage from '../../static/header.png';
 import footerSvg from '../../static/footer.svg';
+import TagWordCloud from './tag-cloud';
 
 function MediaQuery({ query, children }) {
   let result = useMediaQuery(query);
@@ -106,11 +107,11 @@ class Layout extends React.Component {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: `minmax(0, 1fr) minmax(${rhythm(12)}, ${rhythm(
+          gridTemplateColumns: `minmax(300px, 1fr) minmax(${rhythm(12)}, ${rhythm(
             26
           )}) minmax(0, 1fr)`,
           gridTemplateAreas:
-            '"left-spacer header right-spacer" "left-spacer content right-spacer" "left-spacer footer right-spacer"',
+            '"left-header-spacer header right-spacer" "tag-cloud content right-spacer" "left-footer-spacer footer right-spacer"',
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
           minWidth: 0,
           backgroundImage:  `url(${headerImage}), url(${footerSvg})`,
@@ -119,7 +120,7 @@ class Layout extends React.Component {
           backgroundRepeat: 'no-repeat, no-repeat',
         }}
       >
-        <div style={{ gridArea: 'left-spacer' }}> </div>
+        <div style={{ gridArea: 'tag-cloud' }}><TagWordCloud/> </div>
         <div style={{ gridArea: 'right-spacer' }}> </div>
         <header style={{ gridArea: 'header' }}>{header}</header>
         <main style={{ gridArea: 'content' }}>{children}</main>
