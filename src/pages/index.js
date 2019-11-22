@@ -116,7 +116,7 @@ class BlogIndex extends React.Component {
                           onClick={() => {
                             navigate(`/tag/${slugify(tag)}`);
                           }}
-                          key={index}
+                          key={tag}
                           style={{marginRight: '8px'}}
                           color="secondary"
                           variant="outlined"
