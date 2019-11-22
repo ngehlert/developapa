@@ -27,6 +27,7 @@ class BlogIndex extends React.Component {
     const siteLogo = data.logo;
     const posts = data.allMarkdownRemark.edges;
     const pageContext = this.props.pageContext;
+    const tags = data.tags.edges.map((edge) => edge.node.frontmatter.tags.split(', ')).flat();
 
     return (
       <ThemeProvider theme={Theme}>
@@ -34,6 +35,7 @@ class BlogIndex extends React.Component {
           location={this.props.location}
           title={siteTitle}
           logo={siteLogo}
+          tags={tags}
         >
           {pageContext.tag !== undefined ? (
             <SEO title={`Posts with ${pageContext.tag} Tag`} />
@@ -175,6 +177,15 @@ export const pageQuery = graphql`
             description
             tags
             duration
+          }
+        }
+      }
+    }
+    tags: allMarkdownRemark {
+      edges {
+        node {
+          frontmatter {
+            tags
           }
         }
       }

@@ -15,7 +15,7 @@ function MediaQuery({ query, children }) {
 
 class Layout extends React.Component {
   render() {
-    const { location, title, children, logo } = this.props;
+    const { location, title, children, logo, tags } = this.props;
     const rootPath = `${__PATH_PREFIX__}/`;
     let header;
 
@@ -107,7 +107,7 @@ class Layout extends React.Component {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: `minmax(300px, 1fr) minmax(${rhythm(12)}, ${rhythm(
+          gridTemplateColumns: `minmax(${tags !== undefined ? '300px' : '0'}, 1fr) minmax(${rhythm(12)}, ${rhythm(
             26
           )}) minmax(0, 1fr)`,
           gridTemplateAreas:
@@ -120,7 +120,7 @@ class Layout extends React.Component {
           backgroundRepeat: 'no-repeat, no-repeat',
         }}
       >
-        <div style={{ gridArea: 'tag-cloud' }}><TagWordCloud/> </div>
+        <div style={{ gridArea: 'tag-cloud' }}>{tags !== undefined ? <TagWordCloud tags={tags}/> : <></>} </div>
         <div style={{ gridArea: 'right-spacer' }}> </div>
         <header style={{ gridArea: 'header' }}>{header}</header>
         <main style={{ gridArea: 'content' }}>{children}</main>

@@ -11,6 +11,12 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: 'gatsby-plugin-simple-analytics',
+      options: {
+        domain: 'api.developapa.com'
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/content/blog`,
