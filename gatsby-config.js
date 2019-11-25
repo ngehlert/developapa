@@ -13,8 +13,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-simple-analytics',
       options: {
-        domain: 'api.developapa.com'
-      }
+        domain: 'api.developapa.com',
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
@@ -101,13 +101,13 @@ module.exports = {
     },
 
     {
-      resolve: "gatsby-plugin-sentry",
+      resolve: 'gatsby-plugin-sentry',
       options: {
-        dsn: "https://2b7277ec914f43308d9f9ac19b63fe77@sentry.io/1639743",
+        dsn: 'https://2b7277ec914f43308d9f9ac19b63fe77@sentry.io/1639743',
         // Optional settings, see https://docs.sentry.io/clients/node/config/#optional-settings
         environment: process.env.NODE_ENV,
         enabled: true,
-      }
-    }
+      },
+    },
   ],
 };

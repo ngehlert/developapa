@@ -1,4 +1,3 @@
-
 const path = require(`path`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const slugify = require('@sindresorhus/slugify');
@@ -43,7 +42,9 @@ exports.createPages = async ({ graphql, actions }) => {
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node;
     const next = index === 0 ? null : posts[index - 1].node;
-    post.node.frontmatter.tags.split(',').forEach((tag) => tags.add(tag.trim()));
+    post.node.frontmatter.tags
+      .split(',')
+      .forEach((tag) => tags.add(tag.trim()));
 
     createPage({
       path: post.node.fields.slug,
@@ -70,8 +71,7 @@ exports.createPages = async ({ graphql, actions }) => {
   createPage({
     path: `/confin/gdpr`,
     component: confinGdprPage,
-    context: {
-    },
+    context: {},
   });
 };
 

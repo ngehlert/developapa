@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 
 import Bio from '../components/bio';
 import Layout from '../components/layout';
@@ -12,6 +12,7 @@ import orange from '@material-ui/core/colors/orange';
 import { ThemeProvider } from '@material-ui/styles';
 import { navigate } from 'gatsby';
 import Chip from '@material-ui/core/Chip';
+import { StyledLink } from '../components/styled-link';
 
 export const Theme = createMuiTheme({
   palette: {
@@ -27,7 +28,9 @@ class BlogIndex extends React.Component {
     const siteLogo = data.logo;
     const posts = data.allMarkdownRemark.edges;
     const pageContext = this.props.pageContext;
-    const tags = data.tags.edges.map((edge) => edge.node.frontmatter.tags.split(', ')).flat();
+    const tags = data.tags.edges
+      .map((edge) => edge.node.frontmatter.tags.split(', '))
+      .flat();
 
     return (
       <ThemeProvider theme={Theme}>
@@ -42,7 +45,7 @@ class BlogIndex extends React.Component {
           ) : (
             <SEO title="All posts" />
           )}
-          <div style={{ position: `relative`, marginBottom: rhythm(2) }}>
+          <div style={{ position: `relative`, marginBottom: '24px' }}>
             <Bio />
             {pageContext.tag !== undefined ? (
               <div
@@ -74,7 +77,10 @@ class BlogIndex extends React.Component {
               if (pageContext.tag === undefined) {
                 return true;
               }
-              return node.frontmatter.tags.split(',').map(tag => tag.trim()).includes(pageContext.tag);
+              return node.frontmatter.tags
+                .split(',')
+                .map((tag) => tag.trim())
+                .includes(pageContext.tag);
             })
             .map(({ node }) => {
               const title = node.frontmatter.title || node.fields.slug;
@@ -86,7 +92,7 @@ class BlogIndex extends React.Component {
                     padding: `12px`,
                     marginBottom: rhythm(1),
                     position: `relative`,
-                    backgroundColor: '#ffffff'
+                    backgroundColor: '#ffffff',
                   }}
                 >
                   <h3
@@ -95,9 +101,7 @@ class BlogIndex extends React.Component {
                       marginTop: rhythm(1 / 4),
                     }}
                   >
-                    <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                      {title}
-                    </Link>
+                    <StyledLink to={node.fields.slug}>{title}</StyledLink>
                   </h3>
                   <div
                     style={{
@@ -119,7 +123,7 @@ class BlogIndex extends React.Component {
                             navigate(`/tag/${slugify(tag)}`);
                           }}
                           key={tag}
-                          style={{marginRight: '8px'}}
+                          style={{ marginRight: '8px' }}
                           color="secondary"
                           variant="outlined"
                           size="small"

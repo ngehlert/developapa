@@ -1,6 +1,6 @@
 /*global Sentry*/
 import React from 'react';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -21,6 +21,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { green, red } from '@material-ui/core/colors';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Bio from '../components/bio';
+import { StyledLink } from '../components/styled-link';
 
 class BlogPostTemplate extends React.Component {
   state = {
@@ -112,7 +113,11 @@ class BlogPostTemplate extends React.Component {
                           node.date * 1000
                         )}
                       </Typography>
-                      <Typography variant="body1" component="p" style={{whiteSpace: 'pre-wrap'}}>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        style={{ whiteSpace: 'pre-wrap' }}
+                      >
                         {node.message}
                       </Typography>
                     </CardContent>
@@ -212,16 +217,16 @@ class BlogPostTemplate extends React.Component {
           >
             <li>
               {previous && (
-                <Link to={previous.fields.slug} rel="prev">
+                <StyledLink to={previous.fields.slug} rel="prev">
                   ← {previous.frontmatter.title}
-                </Link>
+                </StyledLink>
               )}
             </li>
             <li>
               {next && (
-                <Link to={next.fields.slug} rel="next">
+                <StyledLink to={next.fields.slug} rel="next">
                   {next.frontmatter.title} →
-                </Link>
+                </StyledLink>
               )}
             </li>
           </ul>
