@@ -13,6 +13,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { navigate } from 'gatsby';
 import Chip from '@material-ui/core/Chip';
 import { StyledLink } from '../components/styled-link';
+import 'array-flat-polyfill';
 
 export const Theme = createMuiTheme({
   palette: {
