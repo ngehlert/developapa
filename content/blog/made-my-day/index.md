@@ -4,6 +4,7 @@ date: "2019-09-29T18:14:08.123Z"
 description: "My latest app for macOS - a minimalistic journaling app"
 tags: "Projects, Made my day"
 duration: Big Snack
+sticky: true
 ---
 
 

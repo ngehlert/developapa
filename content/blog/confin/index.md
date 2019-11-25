@@ -4,6 +4,7 @@ date: "2019-10-22T21:19:08.123Z"
 description: "Control your finances - Keep track of your spendings and discover places where you can save money"
 tags: "Projects, Confin, Finance"
 duration: Big Snack
+sticky: true
 ---
 
 ![Confin](./confin.png)
