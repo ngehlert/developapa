@@ -2,7 +2,7 @@
 title: "Made my day: First Update"
 date: "2019-11-18T18:14:08.123Z"
 description: "The first update is here for Made my day - a minimalistic journaling app"
-tags: "Projects, Made my day, Update"
+tags: ["Projects", "Made my day", "Update"]
 duration: Small Snack
 ---
 
