@@ -67,7 +67,7 @@ const SideMenu = (props) => {
       <Header>Sticky Posts</Header>
       <StickyList>
         {stickyPosts.map((post) => (
-          <li style={{paddingLeft: '12px'}} key={post.node.id}>
+          <li style={{ paddingLeft: '12px' }} key={post.node.id}>
             <StyledLink to={post.node.fields.slug}>
               {post.node.frontmatter.title}
             </StyledLink>

@@ -2,7 +2,7 @@
 title: "Let's get started"
 date: "2019-08-10T22:12:03.123Z"
 description: ""
-tags: Misc
+tags: ["Misc"]
 duration: Snack
 ---
 Alright, I'm pretty excited so let's go!

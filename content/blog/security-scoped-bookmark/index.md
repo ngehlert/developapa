@@ -2,7 +2,7 @@
 title: "What is: Security Scoped Bookmarks"
 date: "2019-11-08T23:19:08.123Z"
 description: "Quick summary of Security Scoped Bookmarks and how to use them in your Electron app"
-tags: "Electron, mas, macOS, JavaScript, What is"
+tags: ["Electron", "mas", "macOS", "JavaScript", "What is"]
 duration: Snack
 ---
 

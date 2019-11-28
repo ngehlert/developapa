@@ -18,10 +18,12 @@ class Layout extends React.Component {
     const { location, title, children, logo, tags } = this.props;
     const rootPath = `${__PATH_PREFIX__}/`;
     let header;
+    const pagePattern = `${rootPath}[\\W\\d]+`;
 
     if (
       location.pathname === rootPath ||
-      location.pathname.startsWith('/tag/')
+      location.pathname.startsWith('/tag/') ||
+      location.pathname.match(new RegExp(pagePattern))
     ) {
       header = (
         <div
@@ -102,7 +104,8 @@ class Layout extends React.Component {
     return (
       <AppLayout tags={tags}>
         <TagCloudArea>
-          <div> </div>{tags !== undefined ? <SideMenu tags={tags} /> : <></>}{' '}
+          <div> </div>
+          {tags !== undefined ? <SideMenu tags={tags} /> : <></>}{' '}
         </TagCloudArea>
         <div style={{ gridArea: 'right-spacer' }}> </div>
         <header style={{ gridArea: 'header' }}>{header}</header>

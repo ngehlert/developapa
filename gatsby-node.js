@@ -6,8 +6,8 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
   const confinGdprPage = path.resolve('./src/pages/gdpr-confin.js');
-  const blogPost = path.resolve(`./src/templates/blog-post.js`);
-  const indexPage = path.resolve(`./src/pages/index.js`);
+  const blogPost = path.resolve(`./src/templates/post-entry.js`);
+  const indexPage = path.resolve(`./src/templates/post-list.js`);
   const result = await graphql(
     `
       {
@@ -37,14 +37,33 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Create blog posts pages.
   const posts = result.data.allMarkdownRemark.edges;
-  const tags = new Set();
+
+  const tagsWithFrequency = new Map();
+  const postsPerPage = 6;
+  const numPages = Math.ceil(posts.length / postsPerPage);
+
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/` : `/${i + 1}`,
+      component: indexPage,
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    });
+  });
 
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node;
     const next = index === 0 ? null : posts[index - 1].node;
-    post.node.frontmatter.tags
-      .split(',')
-      .forEach((tag) => tags.add(tag.trim()));
+    post.node.frontmatter.tags.forEach((tag) => {
+      tagsWithFrequency.set(
+        tag.trim(),
+        (tagsWithFrequency.get(tag.trim()) || 0) + 1
+      );
+    });
 
     createPage({
       path: post.node.fields.slug,
@@ -58,13 +77,22 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 
-  tags.forEach((tag) => {
-    createPage({
-      path: `/tag/${slugify(tag)}`,
-      component: indexPage,
-      context: {
-        tag,
-      },
+  Array.from(tagsWithFrequency.keys()).forEach((tag) => {
+    const numTagPages = Math.ceil(tagsWithFrequency.get(tag) / postsPerPage);
+    const path = `/tag/${slugify(tag)}`;
+
+    Array.from({ length: numTagPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? path : `${path}/${i + 1}`,
+        component: indexPage,
+        context: {
+          tag,
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages: numTagPages,
+          currentPage: i + 1,
+        },
+      });
     });
   });
 

@@ -7,7 +7,7 @@ import SEO from '../components/seo';
 import { rhythm, scale } from '../utils/typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Theme } from '../pages';
+import { Theme } from './post-list';
 import { ThemeProvider } from '@material-ui/styles';
 import * as axios from 'axios';
 import Card from '@material-ui/core/Card';
