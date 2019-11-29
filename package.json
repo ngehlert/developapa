@@ -18,6 +18,7 @@
     "gatsby-image": "^2.2.7",
     "gatsby-plugin-feed": "^2.3.6",
     "gatsby-plugin-manifest": "^2.2.4",
+    "gatsby-plugin-netlify": "^2.1.27",
     "gatsby-plugin-offline": "^2.2.4",
     "gatsby-plugin-react-helmet": "^3.1.2",
     "gatsby-plugin-sentry": "^1.0.1",

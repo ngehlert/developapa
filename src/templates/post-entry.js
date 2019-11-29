@@ -308,7 +308,7 @@ const StyledTextField = styled(TextField)`
   width: ${rhythm(15)};
 
   @media (max-width: 600px) {
-      width: 100%;
+    width: 100%;
   }
 `;
 
