@@ -101,7 +101,7 @@ class BlogIndex extends React.Component {
                 <h3
                   style={{
                     marginBottom: rhythm(1 / 4),
-                    marginTop: rhythm(1 / 4),
+                    marginTop: rhythm(0.6),
                   }}
                 >
                   <StyledLink to={node.fields.slug}>{title}</StyledLink>
@@ -109,9 +109,10 @@ class BlogIndex extends React.Component {
                 <div
                   style={{
                     position: `absolute`,
-                    top: rhythm(1 / 4),
+                    top: rhythm(1 / 6),
                     right: rhythm(1 / 4),
-                    fontSize: rhythm(0.5),
+                    fontSize: rhythm(0.45),
+                    fontStyle: 'italic',
                   }}
                 >
                   {node.frontmatter.date}
