@@ -86,7 +86,7 @@ function tagRenderer(tag, size, color) {
       style={{
         color,
         fontSize: `${size}px`,
-        whiteSpace: 'nowrap',
+        display: 'inline-block',
         padding: '0 12px',
       }}
     >
