@@ -22,6 +22,7 @@ import { green, red } from '@material-ui/core/colors';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Bio from '../components/bio';
 import { StyledLink } from '../components/styled-link';
+import styled from 'styled-components';
 
 class BlogPostTemplate extends React.Component {
   state = {
@@ -133,7 +134,7 @@ class BlogPostTemplate extends React.Component {
 
           <h4>Add a comment</h4>
           <form autoComplete="off">
-            <TextField
+            <StyledTextField
               id="name"
               label="Name"
               value={this.state.commentName}
@@ -144,9 +145,8 @@ class BlogPostTemplate extends React.Component {
               }}
               margin="normal"
               variant="outlined"
-              style={{ width: rhythm(15) }}
             />
-            <TextField
+            <StyledTextField
               id="comment"
               label="Comment"
               multiline
@@ -303,6 +303,14 @@ class BlogPostTemplate extends React.Component {
     this.setState({ isLoading: false });
   }
 }
+
+const StyledTextField = styled(TextField)`
+  width: ${rhythm(15)};
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
 
 export default BlogPostTemplate;
 
