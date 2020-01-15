@@ -3,7 +3,7 @@ module.exports = {
     title: `Developapa`,
     author: `Nicolas Gehlert`,
     description: `Personal blog about my live as a coder and parent`,
-    siteUrl: `https://developapa.com/`,
+    siteUrl: `https://developapa.com`,
     social: {
       twitter: `ngehlert`,
       github: `ngehlert`,
@@ -87,7 +87,7 @@ module.exports = {
         short_name: `Developapa`,
         start_url: `/`,
         background_color: `#ffffff`,
-        theme_color: `#663399`,
+        theme_color: `#009688`,
         display: `minimal-ui`,
         icon: `content/assets/icon.png`,
       },
