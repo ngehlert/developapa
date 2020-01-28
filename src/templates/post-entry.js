@@ -131,7 +131,14 @@ class BlogPostTemplate extends React.Component {
           ) : null}
 
           <h4>Add a comment</h4>
-          <form autoComplete="off" method="post" data-netlify-recaptcha="true" data-netlify-honeypot="bot-field" data-netlify="true">
+          <form
+            autoComplete="off"
+            name="comment-form"
+            method="post"
+            netlify-recaptcha="true"
+            netlify-honeypot="bot-field"
+            netlify="true"
+          >
             <div style={{display: 'none'}}>
               <label>Don’t fill this out if you're human: <input name="bot-field"/></label>
             </div>
@@ -190,7 +197,7 @@ class BlogPostTemplate extends React.Component {
                 alignItems: 'center',
               }}
             >
-              <div data-netlify-recaptcha="true"></div>
+              <div data-netlify-recaptcha="true"/>
               <Button
                 disabled={
                   !this.state.gdpr ||
