@@ -135,6 +135,7 @@ class BlogPostTemplate extends React.Component {
             <div style={{display: 'none'}}>
               <label>Don’t fill this out if you're human: <input name="bot-field"/></label>
             </div>
+            <input type="hidden" name="form-name" value="comments" />
             <StyledTextField
               id="name"
               label="Name"
