@@ -1,6 +1,7 @@
+/*global Sentry*/
 import React from 'react';
 import { graphql } from 'gatsby';
-
+import * as axios from 'axios';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { rhythm, scale } from '../utils/typography';
@@ -26,11 +27,43 @@ class BlogPostTemplate extends React.Component {
   state = {
     commentName: '',
     commentMessage: '',
+    honeypot: '',
     gdpr: false,
     isLoading: false,
     showSuccessSnackbar: false,
     showErrorSnackbar: false,
   };
+
+  async saveComment() {
+    this.setState({ isLoading: true });
+    try {
+      await axios.default.post(
+        '/',
+        {
+          fields: {
+            name: this.state.commentName,
+            message: this.state.commentMessage,
+            page: this.props.pageContext.slug.replace(/\//g, ''),
+            'bot-field': this.state.honeypot,
+            'form-name': 'comment-form',
+          },
+        },
+        {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        }
+      );
+      this.setState({
+        commentName: '',
+        commentMessage: '',
+        gdpr: false,
+        showSuccessSnackbar: true,
+      });
+    } catch (error) {
+      this.setState({ showErrorSnackbar: true });
+      Sentry.captureException(error);
+    }
+    this.setState({ isLoading: false });
+  }
 
   render() {
     const comments = this.props.data.allYaml.edges;
@@ -134,15 +167,25 @@ class BlogPostTemplate extends React.Component {
           <form
             autoComplete="off"
             name="comment-form"
-            method="post"
+            onSubmit={this.saveComment}
             data-netlify-honeypot="bot-field"
             data-netlify="true"
           >
-            <div style={{display: 'none'}}>
-              <label>Don’t fill this out if you're human: <input name="bot-field"/></label>
+            <div style={{ display: 'none' }}>
+              <label>
+                Don’t fill this out if you're human:{' '}
+                <input
+                  name="bot-field"
+                  value={this.state.honeypot}
+                  onChange={(event) => {
+                    this.setState({
+                      honeypot: event.target.value,
+                    });
+                  }}
+                />
+              </label>
             </div>
             <input type="hidden" name="form-name" value="comment-form" />
-            <input type="hidden" name="page" value={this.props.pageContext.slug.replace(/\//g, '')} />
             <StyledTextField
               id="name"
               label="Name"
@@ -285,6 +328,12 @@ class BlogPostTemplate extends React.Component {
       </ThemeProvider>
     );
   }
+}
+
+function encode(data) {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
 }
 
 const StyledTextField = styled(TextField)`
