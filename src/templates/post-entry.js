@@ -34,7 +34,7 @@ class BlogPostTemplate extends React.Component {
     showErrorSnackbar: false,
   };
 
-  async saveComment() {
+  async saveComment(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
