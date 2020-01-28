@@ -139,6 +139,7 @@ class BlogPostTemplate extends React.Component {
             <StyledTextField
               id="name"
               label="Name"
+              name="name"
               value={this.state.commentName}
               onChange={(event) => {
                 this.setState({
@@ -151,6 +152,7 @@ class BlogPostTemplate extends React.Component {
             <StyledTextField
               id="comment"
               label="Comment"
+              name="comment"
               multiline
               rows="8"
               value={this.state.commentMessage}
@@ -173,6 +175,7 @@ class BlogPostTemplate extends React.Component {
                         gdpr: event.target.checked,
                       });
                     }}
+                    name="gdpr"
                     value="checkedGdpr"
                     color="primary"
                   />
