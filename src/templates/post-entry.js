@@ -39,15 +39,13 @@ class BlogPostTemplate extends React.Component {
     try {
       await axios.default.post(
         '/',
-        {
-          fields: {
-            name: this.state.commentName,
-            message: this.state.commentMessage,
-            page: this.props.pageContext.slug.replace(/\//g, ''),
-            'bot-field': this.state.honeypot,
-            'form-name': 'comment-form',
-          },
-        },
+        encode({
+          name: this.state.commentName,
+          message: this.state.commentMessage,
+          page: this.props.pageContext.slug.replace(/\//g, ''),
+          'bot-field': this.state.honeypot,
+          'form-name': 'comment-form',
+        }),
         {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         }
@@ -167,7 +165,9 @@ class BlogPostTemplate extends React.Component {
           <form
             autoComplete="off"
             name="comment-form"
-            onSubmit={this.saveComment}
+            onSubmit={() => {
+              this.saveComment();
+            }}
             data-netlify-honeypot="bot-field"
             data-netlify="true"
           >
