@@ -1,4 +1,3 @@
-/*global Sentry*/
 import React from 'react';
 import { graphql } from 'gatsby';
 
@@ -9,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Theme } from './post-list';
 import { ThemeProvider } from '@material-ui/styles';
-import * as axios from 'axios';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -133,7 +131,10 @@ class BlogPostTemplate extends React.Component {
           ) : null}
 
           <h4>Add a comment</h4>
-          <form autoComplete="off">
+          <form autoComplete="off" data-netlify-recaptcha="true" data-netlify-honeypot="bot-field" data-netlify="true">
+            <div style={{display: 'none'}}>
+              <label>Don’t fill this out if you're human: <input name="bot-field"/></label>
+            </div>
             <StyledTextField
               id="name"
               label="Name"
@@ -185,6 +186,7 @@ class BlogPostTemplate extends React.Component {
                 alignItems: 'center',
               }}
             >
+              <div data-netlify-recaptcha="true"></div>
               <Button
                 disabled={
                   !this.state.gdpr ||
@@ -194,9 +196,7 @@ class BlogPostTemplate extends React.Component {
                 }
                 variant="contained"
                 color="primary"
-                onClick={() => {
-                  this.saveComment();
-                }}
+                type="submit"
               >
                 Submit
               </Button>
@@ -275,34 +275,6 @@ class BlogPostTemplate extends React.Component {
       </ThemeProvider>
     );
   }
-
-  async saveComment() {
-    this.setState({ isLoading: true });
-    try {
-      await axios.default.post(
-        '/',
-        encode({
-          name: this.state.commentName,
-          message: this.state.commentMessage,
-          page: this.props.pageContext.slug.replace(/\//g, ''),
-          'form-name': 'comment',
-        }),
-        {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        },
-      );
-      this.setState({
-        commentName: '',
-        commentMessage: '',
-        gdpr: false,
-        showSuccessSnackbar: true,
-      });
-    } catch (error) {
-      this.setState({ showErrorSnackbar: true });
-      Sentry.captureException(error);
-    }
-    this.setState({ isLoading: false });
-  }
 }
 
 const StyledTextField = styled(TextField)`
@@ -312,12 +284,6 @@ const StyledTextField = styled(TextField)`
     width: 100%;
   }
 `;
-
-function encode(data) {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
-}
 
 export default BlogPostTemplate;
 
