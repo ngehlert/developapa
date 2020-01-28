@@ -135,7 +135,6 @@ class BlogPostTemplate extends React.Component {
             autoComplete="off"
             name="comment-form"
             method="post"
-            data-netlify-recaptcha="true"
             data-netlify-honeypot="bot-field"
             data-netlify="true"
           >
@@ -197,7 +196,6 @@ class BlogPostTemplate extends React.Component {
                 alignItems: 'center',
               }}
             >
-              <div data-netlify-recaptcha="true"></div>
               <Button
                 disabled={
                   !this.state.gdpr ||
