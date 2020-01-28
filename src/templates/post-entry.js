@@ -35,6 +35,7 @@ class BlogPostTemplate extends React.Component {
   };
 
   async saveComment() {
+    event.preventDefault();
     this.setState({ isLoading: true });
     try {
       await axios.default.post(
@@ -165,8 +166,9 @@ class BlogPostTemplate extends React.Component {
           <form
             autoComplete="off"
             name="comment-form"
-            onSubmit={() => {
-              this.saveComment();
+            method="post"
+            onSubmit={(event) => {
+              this.saveComment(event);
             }}
             data-netlify-honeypot="bot-field"
             data-netlify="true"
