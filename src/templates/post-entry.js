@@ -142,6 +142,7 @@ class BlogPostTemplate extends React.Component {
               <label>Don’t fill this out if you're human: <input name="bot-field"/></label>
             </div>
             <input type="hidden" name="form-name" value="comment-form" />
+            <input type="hidden" name="page" value={this.props.pageContext.slug.replace(/\//g, '')} />
             <StyledTextField
               id="name"
               label="Name"
