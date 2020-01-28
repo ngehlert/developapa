@@ -281,14 +281,12 @@ class BlogPostTemplate extends React.Component {
     try {
       await axios.default.post(
         '/',
-        {
-          fields: {
-            name: this.state.commentName,
-            message: this.state.commentMessage,
-            page: this.props.pageContext.slug.replace(/\//g, ''),
-            'form-name': 'comment',
-          },
-        },
+        encode({
+          name: this.state.commentName,
+          message: this.state.commentMessage,
+          page: this.props.pageContext.slug.replace(/\//g, ''),
+          'form-name': 'comment',
+        }),
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         },
@@ -314,6 +312,12 @@ const StyledTextField = styled(TextField)`
     width: 100%;
   }
 `;
+
+function encode(data) {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
 
 export default BlogPostTemplate;
 
