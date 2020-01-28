@@ -42,7 +42,8 @@ class BlogPostTemplate extends React.Component {
         '/',
         encode({
           name: this.state.commentName,
-          message: this.state.commentMessage,
+          comment: this.state.commentMessage,
+          gdpr: this.state.gdpr,
           page: this.props.pageContext.slug.replace(/\//g, ''),
           'bot-field': this.state.honeypot,
           'form-name': 'comment-form',
@@ -188,6 +189,7 @@ class BlogPostTemplate extends React.Component {
               </label>
             </div>
             <input type="hidden" name="form-name" value="comment-form" />
+            <input type="hidden" name="page" value="blog-page" />
             <StyledTextField
               id="name"
               label="Name"
