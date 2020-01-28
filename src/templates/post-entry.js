@@ -131,7 +131,7 @@ class BlogPostTemplate extends React.Component {
           ) : null}
 
           <h4>Add a comment</h4>
-          <form autoComplete="off" data-netlify-recaptcha="true" data-netlify-honeypot="bot-field" data-netlify="true">
+          <form autoComplete="off" method="post" data-netlify-recaptcha="true" data-netlify-honeypot="bot-field" data-netlify="true">
             <div style={{display: 'none'}}>
               <label>Don’t fill this out if you're human: <input name="bot-field"/></label>
             </div>
