@@ -60,7 +60,7 @@ class BlogPostTemplate extends React.Component {
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
           {divider}
           <Bio />
-          <CommentForm/>
+          <CommentForm pageContext={this.props.pageContext}/>
           <h4>Comments</h4>
 
           {comments
