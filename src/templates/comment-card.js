@@ -9,7 +9,7 @@ class CommentCard extends React.Component {
   render() {
     const { node } = this.props;
     return (
-      <div key={node.id} style={{ marginBottom: rhythm(1) }}>
+      <div style={{ marginBottom: rhythm(1) }}>
         <Card>
           <CardContent>
             <Typography variant="h6" component="h2">
