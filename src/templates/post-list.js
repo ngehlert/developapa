@@ -4,7 +4,6 @@ import Bio from '../components/bio';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { rhythm } from '../utils/typography';
-import slugify from '@sindresorhus/slugify';
 import { createMuiTheme } from '@material-ui/core/styles';
 import teal from '@material-ui/core/colors/teal';
 import orange from '@material-ui/core/colors/orange';
@@ -14,6 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import { StyledLink } from '../components/styled-link';
 import 'array-flat-polyfill';
 import styled from 'styled-components';
+import PostCard from './post-card';
 
 export const Theme = createMuiTheme({
   palette: {
@@ -27,7 +27,7 @@ class BlogIndex extends React.Component {
     const { data } = this.props;
     const siteTitle = data.site.siteMetadata.title;
     const siteLogo = data.logo;
-    const posts = data.allMarkdownRemark.edges;
+    const posts = data.posts.edges;
     const pageContext = this.props.pageContext;
     const tags = data.tags.edges
       .map((edge) => edge.node.frontmatter.tags)
@@ -86,68 +86,8 @@ class BlogIndex extends React.Component {
             ) : null}
           </div>
           {posts.map(({ node }) => {
-            const title = node.frontmatter.title || node.fields.slug;
             return (
-              <div
-                key={node.fields.slug}
-                style={{
-                  boxShadow: `0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12)`,
-                  padding: `12px`,
-                  marginBottom: rhythm(1),
-                  position: `relative`,
-                  backgroundColor: '#ffffff',
-                }}
-              >
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 4),
-                    marginTop: rhythm(0.6),
-                  }}
-                >
-                  <StyledLink to={node.fields.slug}>{title}</StyledLink>
-                </h3>
-                <div
-                  style={{
-                    position: `absolute`,
-                    top: rhythm(1 / 6),
-                    right: rhythm(1 / 4),
-                    fontSize: rhythm(0.45),
-                    fontStyle: 'italic',
-                  }}
-                >
-                  {node.frontmatter.date}
-                </div>
-                <div>
-                  {node.frontmatter.tags.map((tag, index) => {
-                    tag = tag.trim();
-                    return (
-                      <Chip
-                        label={tag}
-                        onClick={() => {
-                          navigate(`/tag/${slugify(tag)}`);
-                        }}
-                        key={tag}
-                        style={{ marginRight: '8px' }}
-                        color="secondary"
-                        variant="outlined"
-                        size="small"
-                      />
-                    );
-                  })}
-                </div>
-                <hr
-                  style={{
-                    marginTop: rhythm(0.6),
-                    marginBottom: rhythm(0.6),
-                    width: `70%`,
-                  }}
-                />
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
-                  }}
-                />
-              </div>
+              <PostCard node={node} key={node.fields.slug}/>
             );
           })}
 
@@ -215,8 +155,11 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(
-      filter: { frontmatter: { tags: { in: $tag } } }
+    posts: allMarkdownRemark(
+      filter: { 
+        fileAbsolutePath: {regex: "/blog\\\/.*\\\/.*\\\\.md$/"}
+        frontmatter: { tags: { in: $tag } }
+      }
       sort: { fields: [frontmatter___date], order: DESC }
       limit: $limit
       skip: $skip
@@ -237,7 +180,11 @@ export const pageQuery = graphql`
         }
       }
     }
-    tags: allMarkdownRemark {
+    tags: allMarkdownRemark(
+      filter: { 
+        fileAbsolutePath: {regex: "/blog\\\/.*\\\/.*\\\\.md$/"}
+      }
+    ) {
       edges {
         node {
           frontmatter {

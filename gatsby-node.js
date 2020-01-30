@@ -12,6 +12,7 @@ exports.createPages = async ({ graphql, actions }) => {
     `
       {
         allMarkdownRemark(
+          filter: {fileAbsolutePath: {regex: "/blog\\\\/.*\\\\/.*\\\\.md$/"}}
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
         ) {
@@ -23,6 +24,7 @@ exports.createPages = async ({ graphql, actions }) => {
               frontmatter {
                 title
                 tags
+                date
               }
             }
           }
@@ -70,7 +72,6 @@ exports.createPages = async ({ graphql, actions }) => {
       component: blogPost,
       context: {
         slug: post.node.fields.slug,
-        yamlSlug: post.node.fields.slug.replace(/\//g, ''),
         previous,
         next,
       },
@@ -107,11 +108,18 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode });
+    console.log(node, getNode);
+    const slug = createFilePath({ node, getNode });
+    const collection = getNode(node.parent).sourceInstanceName;
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value: slug,
+    });
+    createNodeField({
+      name: `collection`,
+      node,
+      value: collection,
     });
   }
 };

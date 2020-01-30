@@ -32,12 +32,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-transformer-yaml`,
-      options: {
-        typeName: `Yaml`,
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/content/comments`,
