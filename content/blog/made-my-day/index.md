@@ -57,9 +57,8 @@ tl;dr: No personal user data is collected or saved
 I'm not quite done with *Made my day* but I decided it is time for it to get user feedback and suggestions. Most core 
 functionality is implemented.  
 Things I have in mind for future updates:
-* Image support (You already can use images if you are familiar with Markdown syntax, but I want to implement Drag & Drop 
-support and the option to use images by reference or copy them)
 * ~~Different themes~~ (already added, [Update notes](/made-my-day-2))
+* ~~Image support~~ (also added with previous update)
 * Different languages
 
 If you have any ideas of cool features or feedback just leave a comment.
