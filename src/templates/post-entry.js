@@ -66,7 +66,7 @@ class BlogPostTemplate extends React.Component {
           {comments
             .map(({ node }) => {
               return (
-                <CommentCard node={node}/>
+                <CommentCard node={node} key={node.id}/>
               );
             })}
           {comments.length === 0 ? (
