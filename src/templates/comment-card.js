@@ -15,11 +15,7 @@ class CommentCard extends React.Component {
             <Typography variant="h6" component="h2">
               {node.frontmatter.name}
             </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
+            <Typography variant="body2" color="textSecondary" component="p">
               {node.frontmatter.date}
             </Typography>
             <StyledComment
@@ -29,7 +25,7 @@ class CommentCard extends React.Component {
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 }
 
