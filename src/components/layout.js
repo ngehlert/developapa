@@ -154,6 +154,17 @@ const AppLayout = styled.div`
   @media (max-width: 1000px) {
     grid-template-columns: 0 1fr 0;
   }
+  
+  pre[class*="language-"]>code {
+    border-left-width: 2px;
+  }
+  
+  pre[class*="language-"].line-numbers.line-numbers .line-numbers-rows {
+    left: 8px !important;
+  }
+  pre[class*="language-"].line-numbers.line-numbers code {
+    padding-left: 2.8em;
+  }
 `;
 
 const TagCloudArea = styled.div`
