@@ -29,7 +29,7 @@ Firt we need to add a `netlify` attribute to our form element. [Netlify](https:/
   data-netlify="true"
 >
     <input type="hidden" name="form-name" value="comment-form" />
-    <input type="hidden" name="slug" value={this.state.slug} />
+    <input type="hidden" name="slug" value={this.props.pageContext.slug} />
     // Add name input
     // Add comment input
     // I also added a checkbox for gdpr consent
