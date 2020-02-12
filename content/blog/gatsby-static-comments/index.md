@@ -146,10 +146,10 @@ render() {
   return (
     <div>
       {comments.map(({ node }) => {
-        return <div>
+        return <div key={node.id}>
           <p>Define how your comment should look like</p>
-          <p>Name: ${node.frontmatter.name}</p>
-          <p>Date: ${node.frontmatter.date}</p>
+          <p>Name: {node.frontmatter.name}</p>
+          <p>Date: {node.frontmatter.date}</p>
           <div dangerouslySetInnerHTML={{ __html: node.html }}/>
           </div>;
       })}
