@@ -39,5 +39,5 @@ Currently looking for other features to implement for Made my day, so hit me up 
 
 ## MX Keys
 For christmas I got this new keyboard from Logitech, the [MX Keys](https://www.logitech.com/en-us/product/mx-keys-wireless-keyboard). 
-Been trying it now for two months and I really really enjoy it. I will write a detailed review about it in march and 
+Been trying it now for two months and I really really enjoy it. I will write a detailed review about it and 
 put a link to it here.
