@@ -41,3 +41,10 @@ Mark Rober is a former NASA engineer and currently does entertaining content for
 squirrel proof bird feeders, porch pirates, water melon tricks, nerf guns and much more.
 
 He is really entertaining and often times somewhat educational as well.
+
+## Desktop background
+I stumbled upon [this tweet](https://twitter.com/leeanndroid/status/1259150954089213952) that showcased a pretty funny 
+way to customize your macOS desktop. I applied the same concept to my desktop and put a League of Legends map and champions 
+in the background.
+
+![Desktop background](./desktop-background.png)
