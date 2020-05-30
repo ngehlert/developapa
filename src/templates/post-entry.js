@@ -62,9 +62,14 @@ class BlogPostTemplate extends React.Component {
           <CommentForm pageContext={this.props.pageContext} />
           <h4>Comments</h4>
 
-          {comments.map(({ node }) => {
-            return <CommentCard node={node} key={node.id} />;
-          })}
+          {comments
+            .sort((entryA, entryB) => {
+              return new Date(entryA.node.frontmatter.date).valueOf() - new Date(entryB.node.frontmatter.date).valueOf();
+            })
+            .map(({ node }) => {
+              return <CommentCard node={node} key={node.id} />;
+            })
+          }
           {comments.length === 0 ? (
             <Typography variant="body1" color="textSecondary" component="p">
               There are no comments available for this blog post yet
