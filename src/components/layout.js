@@ -165,6 +165,10 @@ const AppLayout = styled.div`
   pre[class*="language-"].line-numbers.line-numbers code {
     padding-left: 2.8em;
   }
+
+  a {
+    box-shadow: none;
+  }
 `;
 
 const TagCloudArea = styled.div`
