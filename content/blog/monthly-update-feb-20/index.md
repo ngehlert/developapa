@@ -2,7 +2,7 @@
 title: "Monthly update: February 2020"
 date: "2020-02-29T22:12:03.123Z"
 description: "Information about Cobalt 2 update, status update for Made my day"
-tags: ["Monthly Update"]
+tags: ["Monthly Update", "Made my day"]
 duration: Snack
 ---
 
