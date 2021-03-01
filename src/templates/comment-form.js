@@ -162,9 +162,7 @@ class CommentForm extends React.Component {
             vertical: 'bottom',
             horizontal: 'center',
           }}
-          open={
-            this.state.showSuccessSnackbar || this.state.showErrorSnackbar
-          }
+          open={this.state.showSuccessSnackbar || this.state.showErrorSnackbar}
           autoHideDuration={3000}
           onClose={() => {
             this.setState({
@@ -192,16 +190,15 @@ class CommentForm extends React.Component {
               }}
               message={
                 <span id="message-id">
-                    There was a problem submitting your comment
-                  </span>
+                  There was a problem submitting your comment
+                </span>
               }
             />
           ) : null}
         </Snackbar>
       </div>
-    )
+    );
   }
-
 }
 
 function encode(data) {

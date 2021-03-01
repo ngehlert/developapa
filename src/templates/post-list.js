@@ -86,9 +86,7 @@ class BlogIndex extends React.Component {
             ) : null}
           </div>
           {posts.map(({ node }) => {
-            return (
-              <PostCard node={node} key={node.fields.slug}/>
-            );
+            return <PostCard node={node} key={node.fields.slug} />;
           })}
 
           {numPages > 1 ? (
@@ -156,8 +154,8 @@ export const pageQuery = graphql`
       }
     }
     posts: allMarkdownRemark(
-      filter: { 
-        fileAbsolutePath: {regex: "/blog\\\/.*\\\/.*\\\\.md$/"}
+      filter: {
+        fileAbsolutePath: { regex: "/blog/.*/.*\\\\.md$/" }
         frontmatter: { tags: { in: $tag } }
       }
       sort: { fields: [frontmatter___date], order: DESC }
@@ -181,9 +179,7 @@ export const pageQuery = graphql`
       }
     }
     tags: allMarkdownRemark(
-      filter: { 
-        fileAbsolutePath: {regex: "/blog\\\/.*\\\/.*\\\\.md$/"}
-      }
+      filter: { fileAbsolutePath: { regex: "/blog/.*/.*\\\\.md$/" } }
     ) {
       edges {
         node {

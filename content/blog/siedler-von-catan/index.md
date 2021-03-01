@@ -1,0 +1,32 @@
+---
+title: "Siedler von Catan"
+date: "2020-09-20T19:54:03.123Z"
+description: "Poetry Slam Text by Nik Salsflausen"
+tags: ["Misc", "German"]
+duration: Snack
+---
+
+This going to be a different kind of post. And we start of by switching to german.
+
+Vor einer kleinen Weile hab ich einen Text bei einem Poetry Slam gehört der mir wirklich gut gefallen hat. **Der Text ist von 
+Nik Salsflausen** ([Twitter](https://twitter.com/niksalsflausen) / [Facebook](https://www.facebook.com/niksalsliebe/)) beim 
+Kultursommer in Konstanz, Juli 2020. Ich habe Nik natürlich gefragt ob ich seinen Text hier veröffentlichen darf.  
+Die Live Performance kann man sich [hier auf Youtube](https://www.youtube.com/watch?v=lGCxZLwPRbc&feature=youtu.be&t=6840) anschauen.  
+Er freut sich über jeden Like / Follow ;)
+
+----
+
+ Spielen ist für mich das wundervollste Hobby der Welt. Du tauchst ein in eine fremde Welt mit ganz eigenen Regeln, erlebst abenteuerliche Geschichten und hast die Gelegenheit, die Menschen, die du liebst, zu demütigen. Nicht nur ein bisschen. So richtig. Selbst schuld, wenn du so dumm bist, Australien mit nur vier Truppen zu schützen, war doch klar, dass ich mir das von Siam aus schnappe, was hast du dir dabei gedacht, jetzt gehst du eben unter, suck it, Oma Gertrud. Spielen bringt uns zusammen, weckt das Kind in uns, das nicht über die fällige Rate für die Hypothek oder die Leistungsbeurteilung nachdenkt. Das Kind, das sich streiten und sich freuen kann über was ganz Banales.
+ 
+ Wenn es nach mir ginge, würde viel mehr gespielt werden. Auch und gerade in wichtigen Momenten. Internationale Handelsverträge – einfach mal entspannt auskniffeln. Atomwaffensperrvertrag geschmeidig feinjustieren beim Halma. Mensch ärgere dich nicht in der Paartherapie. Und am Ende ist doch auch egal, wer gewinnt... ist so ein Satz, den du dir direkt sparen kannst, Jan-Olaf, ja ich weiß, dass dein Waldorff-Harmonie-Junkie-Ich mit der knallharten Realität einer Partie MauMau nicht klarkommt, aber wenn du eine Teilnehmerurkunde willst, dann geh dir eine töpfern, du Olm. Klar, nach dem Spiel haben sich hoffentlich alle lieb. Während des Spiels muss man gewinnen wollen, sonst kann man sich das Ganze gleich sparen. Große Geschichten werden nur geschrieben, wenn es um was geht, oder hättet ihr über 11 Stunden Herr der Ringe geschaut, wenn Gandalf gesagt hätte: „Vernichtet den Ring, oder nicht, ist doch egal, Hauptsache alle haben eine gute Zeit“?
+ 
+ Und verdammt, beim Spielen werden Geschichten geschrieben. Das große Comeback der gelben Schnecke beim Schneckenrennen gegen meinen Cousin 1992: Abgeschlagen hinter dem verhassten Erzrivalen in Blau, dann ein unglaublicher Spurt, der Rückschlag, als die Hauskatze das Spielfeld umriss und
+ mein Cousin die gelbe Schnecke heimlich ein Feld nach hinten setzte, Korruption, Betrug, aber dann, im letzten Moment: Triumph! Ich hab mich seit 1992 nicht mehr so lebendig gefühlt! Dazu muss man wissen, dass Schneckenrennen ein reines Glücksspiel ist, bei dem alle reihum würfeln und irgendeine Schnecke bewegt sich, also ist nie klar, wer gewinnen wird, wenn man seine Schnecke aussucht, und genau darin liegt der Zauber, denn damit ist Schneckenrennen tausendmal bessere Unterhaltung als die Bundesliga seit acht Jahren. In Sachen rückgratlose Tiere ziehe ich die gelbe Schnecke Manuel Neuer jeden Tag locker vor.
+ 
+ Aber egal, wie sehr ich Spiele liebe, ein Huhn gibt es zu rupfen, einen Affen zu lausen, ein Alpaca zu melken. Eine Frage, unlösbar wie angetrocknete Essensreste mit „herkömmlichen Spülmitteln“ in der Fairy Ultra-Werbung. Warum ist DAS Standardwerk in deutschen Haushalten ausgerechnet... „die Siedler von Catan“? Dieses drittlangweiligste aller Spiele, knapp über Schnick- Schnack-Schnuck und Nasebohren! Das ist, als hätten 80% der Leute nur ein Buch und das wäre die Biografie von Atze Schröder. Für die wenigen Glücklichen, die Siedler noch nie spielen mussten: Es geht dabei darum, eine Insel zu bebauen, indem man mit fünf verschiedenen Ressourcen Straße errichtet, Dörfer gründet, Entwicklungen tätigt. Und alles auf Kosten der Inselbewohner, ich meine, glaubt denn irgendwer, dass da vorher keiner gewohnt hat neben dem riesigen Feld mit Kulturgetreide? Das wächst nicht von alleine! Das hat da wer gepflanzt! Das ist keine harmlose Familienunterhaltung, das ist imperiale Frühindoktrination für Klein Leon und Marta-Elise!
+ 
+ Und dabei tut Siedler so, als ginge es um Taktik, tatsächlich gewinnt aber die Person mit dem besten Startplatz und dem größten Würfelglück. Das ist Schneckenrennen, verkleidet als Schach, plus Love Island, aber mit
+ Rohstoffspekulationen! Jeder Depp, der ein paarmal passend gewürfelt hat, kann sich als Leistungsträger fühlen und auf seinem Überfluss an Wolle auf den Rest der Welt herabblicken, als wäre er die Scheiss EU. Was ist das überhaupt für ein Wirtschaftssystem? Man kann Bibliotheken und Kathedralen bauen, aber das Finanzwesen ist über „zwei Holz für drei Lehm“ noch nicht hinaus? Und mit dem Holz und mit Lehm baut man dann die längste Straße für Extrapunkte, ja vielen Dank, wie wäre es denn mal mit Punkten für die Straße, die inftrastrukturpolitisch am meisten Sinn ergibt? Kein Wunder haben wir Andy Scheuer als Verkehrsminister, den haben wir einfach verdient, der baut zwei Ringautobahnen um Garmisch rum und sammelt noch die Prämie ein! Jetzt hör ich sie doch schon jammern, die Verteidiger des nicht zu Rettenden, ja, okay, das Spiel hat Schwächen, aber mit Erweiterungen ist das toll. Na super! Mit Erweiterungen ist auch unser Gesundheitssystem total gut in Schuss! „Die Seefahrer“ hier, „Zahnzusatzversicherung“ da, das ist neoliberales Zweiklassenspielen! Siedler ist für Spiele, was der Chihuahua für Hund, was Mon Chérie für Süßigkeiten, was die blaue Schnecke für Schneckenrennen ist: der schlechtestmögliche Vertreter einer sonst ganz wunderbaren Einrichtung. Und darum:
+ Lasst uns spielen. Die Ratenzahlung und die Leistungsbeurteilung vergessen. Lasst uns streiten und uns über ganz Banales freuen. Aber nicht beim Siedler. Es sei denn, ich darf nächstes Mal anfangen. Dann will ich nichts gesagt haben.
+
+

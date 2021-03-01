@@ -12,7 +12,6 @@ import CommentForm from './comment-form';
 import CommentCard from './comment-card';
 
 class BlogPostTemplate extends React.Component {
-
   render() {
     const comments = this.props.data.comments.edges;
     const post = this.props.data.post;
@@ -60,15 +59,17 @@ class BlogPostTemplate extends React.Component {
           <div dangerouslySetInnerHTML={{ __html: post.html }} />
           {divider}
           <Bio />
-          <CommentForm/>
+          <CommentForm pageContext={this.props.pageContext} />
           <h4>Comments</h4>
 
           {comments
+            .sort((entryA, entryB) => {
+              return new Date(entryA.node.frontmatter.date).valueOf() - new Date(entryB.node.frontmatter.date).valueOf();
+            })
             .map(({ node }) => {
-              return (
-                <CommentCard node={node} key={node.id}/>
-              );
-            })}
+              return <CommentCard node={node} key={node.id} />;
+            })
+          }
           {comments.length === 0 ? (
             <Typography variant="body1" color="textSecondary" component="p">
               There are no comments available for this blog post yet
@@ -123,7 +124,7 @@ export const pageQuery = graphql`
       }
     }
     post: markdownRemark(
-      fields: { slug: { eq: $slug }, collection: {eq: "blog"} }
+      fields: { slug: { eq: $slug }, collection: { eq: "blog" } }
     ) {
       id
       excerpt(pruneLength: 160)
@@ -137,9 +138,9 @@ export const pageQuery = graphql`
       }
     }
     comments: allMarkdownRemark(
-      filter: { 
-        fields: { collection: {eq: "comments"} }
-        frontmatter: { slug: { eq: $slug} }
+      filter: {
+        fields: { collection: { eq: "comments" } }
+        frontmatter: { slug: { eq: $slug } }
       }
     ) {
       edges {
