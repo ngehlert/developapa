@@ -64,7 +64,7 @@ class BlogPostTemplate extends React.Component {
 
           {comments
             .sort((entryA, entryB) => {
-              return new Date(entryA.node.frontmatter.date).valueOf() - new Date(entryB.node.frontmatter.date).valueOf();
+              return new Date(entryB.node.frontmatter.date).valueOf() - new Date(entryA.node.frontmatter.date).valueOf();
             })
             .map(({ node }) => {
               return <CommentCard node={node} key={node.id} />;
