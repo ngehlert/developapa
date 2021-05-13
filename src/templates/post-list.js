@@ -2,11 +2,8 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Bio from '../components/bio';
 import Layout from '../components/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import { rhythm } from '../utils/typography';
-import { createMuiTheme } from '@material-ui/core/styles';
-import teal from '@material-ui/core/colors/teal';
-import orange from '@material-ui/core/colors/orange';
 import { ThemeProvider } from '@material-ui/styles';
 import { navigate } from 'gatsby';
 import Chip from '@material-ui/core/Chip';
@@ -14,13 +11,7 @@ import { StyledLink } from '../components/styled-link';
 import 'array-flat-polyfill';
 import styled from 'styled-components';
 import PostCard from './post-card';
-
-export const Theme = createMuiTheme({
-  palette: {
-    primary: teal,
-    secondary: orange,
-  },
-});
+import { Theme } from '../theme';
 
 class BlogIndex extends React.Component {
   render() {
@@ -54,9 +45,9 @@ class BlogIndex extends React.Component {
           tags={tags}
         >
           {pageContext.tag !== undefined ? (
-            <SEO title={`Posts with ${pageContext.tag} Tag`} />
+            <Seo title={`Posts with ${pageContext.tag} Tag`} />
           ) : (
-            <SEO title="All posts" />
+            <Seo title="All posts" />
           )}
           <div style={{ position: `relative`, marginBottom: '36px' }}>
             <Bio />
@@ -100,7 +91,7 @@ class BlogIndex extends React.Component {
                 const pageNumber = index + 1;
                 const link =
                   pageNumber === 1
-                    ? getLocationWithoutPage()
+                    ? '/'
                     : `${getLocationWithoutPage()}/${pageNumber}`;
                 return (
                   <StyledLink
@@ -155,7 +146,7 @@ export const pageQuery = graphql`
     }
     posts: allMarkdownRemark(
       filter: {
-        fileAbsolutePath: { regex: "/blog/.*/.*\\\\.md$/" }
+        fileAbsolutePath: { regex: "/blog/.*/.*.md$/" }
         frontmatter: { tags: { in: $tag } }
       }
       sort: { fields: [frontmatter___date], order: DESC }
@@ -179,7 +170,7 @@ export const pageQuery = graphql`
       }
     }
     tags: allMarkdownRemark(
-      filter: { fileAbsolutePath: { regex: "/blog/.*/.*\\\\.md$/" } }
+      filter: { fileAbsolutePath: { regex: "/blog/.*/.*.md$/" } }
     ) {
       edges {
         node {

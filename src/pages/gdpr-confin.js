@@ -1,6 +1,6 @@
 import React from 'react';
 import { rhythm } from '../utils/typography';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import Layout from '../components/layout';
 import { graphql } from 'gatsby';
 
@@ -23,7 +23,7 @@ class ConfinGdpr extends React.Component {
         logo={siteLogo}
       >
         {divider}
-        <SEO title="Datenschutzerklärung Confin" />
+        <Seo title="Datenschutzerklärung Confin" />
         <h1
           style={{
             marginTop: rhythm(1),
