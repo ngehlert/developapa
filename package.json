@@ -13,7 +13,7 @@
     "@material-ui/styles": "4.11.4",
     "@sindresorhus/slugify": "1.1.2",
     "array-flat-polyfill": "1.0.1",
-    "axios": "0.21.1",
+    "axios": "0.21.2",
     "babel-plugin-styled-components": "1.12.0",
     "gatsby": "3.13.0",
     "gatsby-image": "3.4.0",
