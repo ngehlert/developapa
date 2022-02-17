@@ -5,7 +5,7 @@ module.exports = {
     description: `Personal blog about my live as a coder and parent`,
     siteUrl: `https://developapa.com`,
     social: {
-      twitter: `ngehlert`,
+      twitter: `ngDevelopapa`,
       github: `ngehlert`,
     },
   },
