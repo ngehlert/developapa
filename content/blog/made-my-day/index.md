@@ -60,5 +60,6 @@ Things I have in mind for future updates:
 * ~~Different themes~~ (already added, [Update notes](/made-my-day-2))
 * ~~Image support~~ (also added with previous update)
 * ~~Different languages~~ (added with a second update in March 2020, [Update preview](/monthly-update-feb-20/#made-my-day))
+* ~~Search~~ (added with an update beginning 2022, [Update notes](/made-my-day-4))
 
 If you have any ideas of cool features or feedback just leave a comment.
