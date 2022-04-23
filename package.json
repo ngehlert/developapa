@@ -15,7 +15,7 @@
     "array-flat-polyfill": "1.0.1",
     "axios": "0.26.1",
     "babel-plugin-styled-components": "2.0.6",
-    "gatsby": "4.12.1",
+    "gatsby": "4.6.2",
     "gatsby-image": "3.11.0",
     "gatsby-plugin-feed": "4.12.1",
     "gatsby-plugin-manifest": "4.12.1",
