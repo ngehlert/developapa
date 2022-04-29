@@ -16,7 +16,6 @@ import { Theme } from '../theme';
 class BlogIndex extends React.Component {
   render() {
     const { data } = this.props;
-    console.log(data);
     const siteTitle = data.site.siteMetadata.title;
     const siteLogo = data.logo;
     const posts = data.posts.edges;
