@@ -4,7 +4,6 @@ date: "2019-08-18T12:42:13.123Z"
 description: "Everything you want to know about static site generators. What are they? How do they work? What does static mean?"
 tags: ["What is", "Static Site Generators", "Architecture", "Technology"]
 duration: Full Meal
-sticky: true
 ---
 
 This is going to be the first article in my series "What is" where I try to explain *current trendy topics* from the 
