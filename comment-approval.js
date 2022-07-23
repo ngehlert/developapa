@@ -1,11 +1,16 @@
-require('dotenv').config();
-const NetlifyAPI = require('netlify');
-const process = require('process');
-const prompt = require('prompt');
-const clear = require('clear');
-const util = require('util');
-const Handlebars = require('handlebars');
-const fs = require('fs');
+const dotenv = await import('dotenv');
+dotenv.config();
+const { NetlifyAPI } = await import('netlify');
+const process = await import('process');
+const { default: prompt } = await import('prompt');
+const { default: clear } = await import('clear');
+const util = await import('util');
+const { default: Handlebars } = await import('handlebars');
+const fs = await import('fs');
+import path from 'path';
+import {fileURLToPath} from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const template = Handlebars.compile(
   fs.readFileSync('./comment-template.md', 'utf8')
