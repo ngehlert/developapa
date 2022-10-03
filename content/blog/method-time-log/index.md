@@ -1,14 +1,14 @@
 ---
-title: "TS decorator to log method durations"
+title: "TypeScript decorator to log method durations"
 date: "2022-10-03T13:49:08.123Z"
-description: "Quick snipped to log duration of functions with zero effort"
+description: "Quick snipped to log duration of methods in TypeScript with zero effort"
 tags: ["TypeScript", "Snippet"]
 duration: Snack
 ---
 
 Recently I wrote an article about [Log Request times with an Angular Interceptor](/angular-trace-request-time). And I'm 
 still in the performance optimizing mindset ;)  
-The snippet below allows you to add a TS decorator to any class methods to log the duration of the method in the console.  
+The snippet below allows you to add a TypeScript decorator to any class methods to log the duration of the method in the console.  
 This can be very helpful if you try to narrow down performance problems in your application.
 
 **(I know this is possible with browser tools like performance recorder as well - sometimes this is just easier to use and requires less overhead)**
