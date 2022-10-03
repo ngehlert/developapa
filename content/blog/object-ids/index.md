@@ -13,7 +13,7 @@ I want to show a quick & easy way how to get an id per object.
 **Disclaimer: It's not possible to get the internal used object references, but this method rather assigns IDs to objects 
 and makes sure for the same object you will always get the same ID.**
 
-You can find a [StackBlitz example here](https://typescript-9lhmyz.stackblitz.io)
+You can find a [StackBlitz example here](https://stackblitz.com/edit/typescript-9lhmyz?file=index.ts)
 
 ### TypeScript
 ```typescript
