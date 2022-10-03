@@ -2,7 +2,7 @@
 title: "Beach driven development"
 date: "2019-09-06T23:17:08.123Z"
 description: "Small vacation report and how I passively develop while relaxing on the beach"
-tags: ["Misc", "Beach driven development"]
+tags: ["Misc"]
 duration: Big Snack
 ---
 
