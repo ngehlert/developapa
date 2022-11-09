@@ -5,7 +5,7 @@ module.exports = {
     description: `Personal blog about my live as a coder and parent`,
     siteUrl: `https://developapa.com`,
     social: {
-      twitter: `ngehlert`,
+      twitter: `ngDevelopapa`,
       github: `ngehlert`,
     },
   },
@@ -109,7 +109,14 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`png`],
+        },
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

@@ -152,7 +152,7 @@ const AppLayout = styled.div`
   background-repeat: no-repeat, no-repeat;
 
   @media (max-width: 1000px) {
-    grid-template-columns: 0 1fr 0;
+    grid-template-columns: 0 minmax(100px, 1fr) 0;
   }
   
   pre[class*="language-"]>code {
@@ -161,6 +161,7 @@ const AppLayout = styled.div`
   
   pre[class*="language-"].line-numbers.line-numbers .line-numbers-rows {
     left: 8px !important;
+    z-index: 1;
   }
   pre[class*="language-"].line-numbers.line-numbers code {
     padding-left: 2.8em;

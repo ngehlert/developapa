@@ -2,7 +2,7 @@
 title: "User Defined Type Guards"
 date: "2021-02-28T12:14:08.123Z"
 description: "Quick tutorial on TypeScripts User-Defined Type Guards"
-tags: ["Typescript"]
+tags: ["TypeScript"]
 duration: Lunch
 ---
 

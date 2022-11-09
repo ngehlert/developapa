@@ -1,15 +1,15 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import { rhythm, scale } from '../utils/typography';
-import { Theme } from './post-list';
 import { ThemeProvider } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Bio from '../components/bio';
 import { StyledLink } from '../components/styled-link';
 import CommentForm from './comment-form';
 import CommentCard from './comment-card';
+import { Theme } from '../theme';
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -35,7 +35,7 @@ class BlogPostTemplate extends React.Component {
           logo={siteLogo}
         >
           {divider}
-          <SEO
+          <Seo
             title={post.frontmatter.title}
             description={post.frontmatter.description || post.excerpt}
           />

@@ -62,7 +62,7 @@ const Bio = () => {
         Personal Blog written by <strong>{author}</strong>, software developer
         from Freiburg im Breisgau. Developer & Papa.
         {` `}
-        <a href={`https://github.com/${social.github}`}>Github</a>
+        <a href={`https://github.com/${social.github}`}>Github</a> | <a href={`https://twitter.com/${social.twitter}`}>Twitter</a>
       </p>
     </div>
   );
