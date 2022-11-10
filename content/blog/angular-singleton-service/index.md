@@ -5,10 +5,10 @@ description: "And why `providedIn: 'root'` is not (always) the solution"
 tags: ["Angular"]
 duration: Snack
 ---
-Coming from an AngularJS background services always felt as being singletons - even if this is not true for Angular. 
+I started out with AngularJS where services always were singletons - this stuck with me for Angular even if this is not true there anymore. 
 I quickly discovered the `providedIn: 'root'` flag and started using this one on every service. But even if it is mentioned as the first solution 
 to make a service a singleton on top of the 
-[Angular documentation](https://angular.io/guide/singleton-services#providing-a-singleton-service) this is actually is **not true**.  
+[Angular documentation](https://angular.io/guide/singleton-services#providing-a-singleton-service) this is actually is **not true**!  
 This only works if your application is not using lazy loaded modules/routes.
 
 - [What is a singleton](#what-is-a-singleton)
@@ -31,7 +31,7 @@ if you want to ensure that the entire application uses the same context, for exa
 > The router adds the lazy module's providers and the providers of its imported NgModules to this child injector.
 
 Taken from the [Angular documentation](https://angular.io/guide/ngmodule-faq#why-is-a-service-provided-in-a-lazy-loaded-module-visible-only-to-that-module).
-To put into other words. If you have a service, lets call it `ExampleService` that is being declared in our `ExampleModule`
+To put in other words. If you have a service, lets call it `ExampleService` that is being declared in our `ExampleModule`
 ```typescript
 @NgModule({
   providers: [ExampleService]
@@ -143,4 +143,4 @@ Explanation for the two annotations taken again from the [Angular documentation]
 and 
 > By default, the injector throws an error when it can't find a requested provider. The @Optional() decorator means not finding the service is OK
 
-This approach works also very well with the [Import in main module](#import-in-main-module) I mentioned earlier. It ensures that you actually do not accidentally load a specific module multiple times. 
+This approach works also very well with the [Import in main module](#import-in-main-module) approach I mentioned earlier. It ensures that you actually do not accidentally load a specific module multiple times. 
