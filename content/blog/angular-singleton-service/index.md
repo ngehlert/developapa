@@ -1,7 +1,7 @@
 ---
 title: "How to create an Angular Singleton Service"
 date: "2022-11-09T23:59:08.123Z"
-description: "And why `providedIn: 'root'` is not (always) the solution"
+description: "And why providedIn: 'root' is not (always) the solution"
 tags: ["Angular"]
 duration: Snack
 ---
