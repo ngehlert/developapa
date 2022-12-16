@@ -4,6 +4,7 @@ date: "2022-05-11T23:59:08.123Z"
 description: "Example of how to use an Interceptor to track request times"
 tags: ["Angular", "Snippet"]
 duration: Snack
+sticky: true
 ---
 Sometimes the regular Angular change detection is just not enough and you need to rerender a specific component completely. 
 

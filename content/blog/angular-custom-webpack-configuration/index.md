@@ -4,6 +4,7 @@ date: "2021-05-30T14:19:08.123Z"
 description: "And how to do AngularJs dependency injection annotations in such a setup properly"
 tags: ["Angular", "Tutorial"]
 duration: Lunch
+sticky: true
 ---
 
 There are still a couple of brave warriors (me included) out there wo work in Angular Hybrid Applications (AngularJs in the same application

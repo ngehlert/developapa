@@ -4,6 +4,7 @@ date: "2022-04-16T14:14:08.123Z"
 description: "Quick tutorial how to easy copy text to clipboard with native Angular API"
 tags: ["Angular", "Tutorial"]
 duration: Snack
+sticky: true
 ---
 
 **Since Angular 10.0** there is an official clipboard API in the `@angular/cdk` module ([Documentation](https://material.angular.io/cdk/clipboard/overview)). 

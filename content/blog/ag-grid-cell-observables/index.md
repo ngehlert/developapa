@@ -4,6 +4,7 @@ date: "2022-12-15T23:59:08.123Z"
 description: "Guide on how to use AG Grid with observables as individual cell values and display a loading indicator during the loading time"
 tags: ["Angular", "Ag Grid"]
 duration: Dinner
+sticky: true
 ---
 
 AG Grid does support observables as data input, but only one dimensional. If you have an observable that contains other observables
