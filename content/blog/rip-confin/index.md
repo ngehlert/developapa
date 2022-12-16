@@ -4,7 +4,6 @@ date: "2022-07-22T21:59:08.123Z"
 description: "In a summer clean up Apple has removed Confin from the App Store. I want to share my feelings and plans moving forward"
 tags: ["Confin"]
 duration: Snack
-sticky: true
 ---
 
 ## What happened?

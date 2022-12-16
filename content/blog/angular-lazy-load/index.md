@@ -4,6 +4,7 @@ date: "2022-12-01T23:59:08.123Z"
 description: "Guide on how to build a sustainable and lightweight library structure for your own Angular library"
 tags: ["Angular", "Ag Grid", "Architecture"]
 duration: Dinner
+sticky: true
 ---
 
 Using an Angular workspace with your own library you might've noticed that your main bundle size keeps increasing the more features you are adding - even if you 
