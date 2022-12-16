@@ -1,6 +1,6 @@
 ---
 title: "Use AG Grid with Observables as cell values"
-date: "2022-12-15T23:59:08.123Z"
+date: "2022-12-16T23:59:08.123Z"
 description: "Guide on how to use AG Grid with observables as individual cell values and display a loading indicator during the loading time"
 tags: ["Angular", "Ag Grid"]
 duration: Dinner
