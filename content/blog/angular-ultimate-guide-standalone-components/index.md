@@ -32,7 +32,7 @@ with separate directories and module structure just gives an additional kick in 
 And page components tend to contain a lot of application logic, import multiple other modules, services, etc. 
 (more on those points in the next steps)
 
-### You want to export related components/services alongside the component
+### You want to provide related components/services alongside the component
 Standalone components should really follow the single responsibility principle.   
 If you want to provide additional things like 
 * Other (child) components
