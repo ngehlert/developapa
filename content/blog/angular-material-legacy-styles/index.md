@@ -53,14 +53,14 @@ We need to include another scss mixin for the core and legacy styles.
 ...
 ...
 @include mat.all-component-themes($my-theme);
-@include mat.all-legacy-component-themes($app-theme);
+@include mat.all-legacy-component-themes($my-theme);
 
 ```
 
 If you do not include the all-component-mixin you can also include individual legacy themes. They are always prefixed with `legacy-`
 ```scss
-@include mat.button-theme($app-theme);
-@include mat.legacy-button-theme($app-theme);
+@include mat.button-theme($my-theme);
+@include mat.legacy-button-theme($my-theme);
 ```
 
 And now our styles look *just*  like before
