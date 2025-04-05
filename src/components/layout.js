@@ -120,17 +120,6 @@ class Layout extends React.Component {
             }}
           >
             <div>&copy; {new Date().getFullYear()}, Nicolas Gehlert</div>
-            <div style={{ textAlign: 'right' }}>
-              See{' '}
-              <a
-                href={'https://simpleanalytics.com/developapa.com'}
-                target="'blank"
-                rel="noopener noreferrer"
-              >
-                Statistics
-              </a>{' '}
-              for this blog
-            </div>
           </div>
         </footer>
       </AppLayout>
