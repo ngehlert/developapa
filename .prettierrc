@@ -1,8 +1,9 @@
 {
-  "endOfLine": "lf",
-  "semi": true,
-  "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "es5",
-  "arrowParens": "always"
+    "endOfLine": "lf",
+    "singleAttributePerLine": true,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "arrowParens": "always"
 }

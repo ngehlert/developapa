@@ -1,0 +1,43 @@
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.post-summary {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.post-summary h2 {
+    margin-bottom: 0.25rem;
+}
+
+.post-summary h2 a {
+    text-decoration: none;
+    color: #333;
+}
+.post-summary h2 a:hover {
+    color: #007bff;
+}
+
+.date {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: #444;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+.read-more:hover {
+    text-decoration: underline;
+}

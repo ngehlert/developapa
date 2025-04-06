@@ -1,6 +1,7 @@
 ---
-name: "{{name}}"
-slug: "{{slug}}"
-date: "{{date}}"
+name: '{{name}}'
+slug: '{{slug}}'
+date: '{{date}}'
 ---
+
 {{comment}}
