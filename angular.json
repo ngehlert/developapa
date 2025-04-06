@@ -31,8 +31,9 @@
                         "inlineStyleLanguage": "scss",
                         "assets": [
                             {
-                                "glob": "**/*",
-                                "input": "public"
+                                "glob": "**/*.png",
+                                "input": "src/content",
+                                "output": "assets/content"
                             },
                             "src/*.png",
                             "src/assets"

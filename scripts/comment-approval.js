@@ -17,7 +17,7 @@ const template = Handlebars.compile(
 );
 const siteId = process.env.NETLIFY_SITE_ID;
 const token = process.env.NETLIFY_TOKEN;
-const commentPath = `${__dirname}/content/comments`;
+const commentPath = `${__dirname}/../comments`;
 
 async function main() {
     const client = new NetlifyAPI(token);

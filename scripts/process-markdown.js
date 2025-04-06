@@ -51,8 +51,8 @@ try {
         // --- Store Full Content for Individual Post Pages ---
         const postData = {
             ...metadata,
-            markdownContent: content, // Keep original markdown if needed later
-            htmlContent: marked(content), // Convert markdown to HTML
+            markdownContent: content,
+            htmlContent: marked(content, {renderer: getCustomRenderer()}),
         };
 
         const postOutputPath = path.join(
@@ -100,4 +100,24 @@ function getAllFiles(dirPath, arrayOfFiles) {
     });
 
     return arrayOfFiles;
+}
+
+function getCustomRenderer() {
+    const renderer = new marked.Renderer();
+    const originalImageRenderer = renderer.image;
+
+    renderer.image = ({ href, title, text }) => {
+        // Check if the href is an absolute URL (starts with http, https, //)
+        // Or if it's already an absolute path within the site (starts with /)
+        if (/^(https?:)?\/\//.test(href) || href.startsWith('/')) {
+            return originalImageRenderer.call(renderer, href, title, text);
+        }
+
+        const newHref = `/assets/content/${slug}/${href}`;
+
+        // Construct the image tag with the new path
+        return `<img src="${newHref}" alt="${text}"${title ? ` title="${title}"` : ''}>`;
+    };
+
+    return renderer;
 }
