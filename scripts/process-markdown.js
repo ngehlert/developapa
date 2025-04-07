@@ -52,7 +52,7 @@ try {
         const postData = {
             ...metadata,
             markdownContent: content,
-            htmlContent: marked(content, {renderer: getCustomRenderer()}),
+            htmlContent: marked(content, {renderer: getCustomRenderer(slug)}),
         };
 
         const postOutputPath = path.join(
@@ -102,7 +102,7 @@ function getAllFiles(dirPath, arrayOfFiles) {
     return arrayOfFiles;
 }
 
-function getCustomRenderer() {
+function getCustomRenderer(slug) {
     const renderer = new marked.Renderer();
     const originalImageRenderer = renderer.image;
 

@@ -1,23 +1,17 @@
-<ng-container *ngIf="post$ | async as post; else loadingOrError">
-    <article class="blog-post-content">
-        <h1>{{ post.title }}</h1>
-        <p class="date">{{ post.date | date: 'longDate' }}</p>
+@if (post$ | async; as post) {
+    @if (post) {
+        <article class="blog-post-content">
+            <h1>{{ post.title }}</h1>
+            <p class="date">{{ post.date | date: 'longDate' }}</p>
+            <div [innerHTML]="postContent()"></div>
 
-        <!-- Use [innerHTML] with the SANITIZED SafeHtml -->
-        <div [innerHTML]="postContent"></div>
-
-        <hr />
-        <a routerLink="/blog">← Back to Blog List</a>
-    </article>
-</ng-container>
-
-<ng-template #loadingOrError>
-    <!-- Check if post$ has emitted null (error/not found) or is still loading -->
-    <ng-container *ngIf="(post$ | async) === null; else loading">
+            <hr />
+            <a routerLink="/blog">← Back to Blog List</a>
+        </article>
+    } @else {
         <p>Sorry, this post could not be loaded or was not found.</p>
         <a routerLink="/blog">← Back to Blog List</a>
-    </ng-container>
-    <ng-template #loading>
-        <p>Loading post...</p>
-    </ng-template>
-</ng-template>
+    }
+} @else {
+    <p>Loading post...</p>
+}
