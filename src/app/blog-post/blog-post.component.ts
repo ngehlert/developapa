@@ -2,56 +2,31 @@ import {
     Component,
     OnInit,
     inject,
-    WritableSignal,
-    signal,
-    effect,
-    PLATFORM_ID,
 } from '@angular/core';
-import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { BlogService, Post } from '../blog.service';
+import { BlogService } from '../commons/blog.service';
 import { Observable, switchMap, tap, catchError, of } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
-
-import * as Prism from 'prismjs';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-scss';
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-markdown';
-import 'prismjs/components/prism-markup';
+import { SafeHtmlPipe } from '../commons/safe-html.pipe';
+import { PrismHighlightPipe } from '../commons/prism.pipe';
+import { Post } from '../commons/post';
+import { CommentComponent } from '../commons/comment.component';
 
 @Component({
     selector: 'app-blog-post',
     standalone: true,
-    imports: [CommonModule, RouterModule, DatePipe],
+    imports: [CommonModule, RouterModule, DatePipe, SafeHtmlPipe, PrismHighlightPipe, CommentComponent],
     templateUrl: './blog-post.component.html',
     styleUrls: ['./blog-post.component.scss'],
 })
 export class BlogPostComponent implements OnInit {
-    private platformId = inject(PLATFORM_ID);
     private route = inject(ActivatedRoute);
     private blogService = inject(BlogService);
     private titleService = inject(Title);
     private metaService = inject(Meta);
-    private sanitizer = inject(DomSanitizer);
 
     post$: Observable<Post | null> | undefined;
-    postContent: WritableSignal<SafeHtml | undefined> = signal(undefined);
-
-    constructor() {
-        effect(() => {
-            if (this.postContent() && isPlatformBrowser(this.platformId)) {
-                setTimeout(() => {
-                    Prism.highlightAll();
-                })
-            }
-        })
-    }
 
     ngOnInit(): void {
         this.post$ = this.route.paramMap.pipe(
@@ -86,14 +61,12 @@ export class BlogPostComponent implements OnInit {
                 name: 'description',
                 content: post.description,
             });
-            this.postContent.set(this.sanitizer.bypassSecurityTrustHtml(post.htmlContent));
         } else {
             this.titleService.setTitle('Post Not Found | Developapa');
             this.metaService.updateTag({
                 name: 'description',
                 content: 'The requested blog post could not be found.',
             });
-            this.postContent.set(undefined); // Clear content
         }
     }
 }

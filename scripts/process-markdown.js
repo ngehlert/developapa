@@ -1,17 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-const matter = require('gray-matter'); // For frontmatter
-const { marked } = require('marked'); // For Markdown parsing
+const matter = require('gray-matter');
+const { marked } = require('marked');
 
 const contentDir = path.join(__dirname, '..', 'src', 'content');
+const commentDir = path.join(__dirname, '..', 'src', 'comments');
 const outputDir = path.join(__dirname, '..', 'src', 'assets', 'blog-data');
 const postsListPath = path.join(outputDir, 'posts.json');
 const postsContentDir = path.join(outputDir, 'posts');
-const routesFilePath = path.join(__dirname, '..', 'routes.txt'); // For pre-rendering
 
 console.log('Processing markdown files...');
 
-// Ensure output directories exist
 if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
 }
@@ -20,35 +19,29 @@ if (!fs.existsSync(postsContentDir)) {
 }
 
 const postsMetadata = [];
-const routesToPrerender = ['/blog']; // Start with the main blog list page
+const routesToPrerender = ['/blog'];
 
 try {
     const files = getAllFiles(contentDir);
-    console.log(files);
 
     files.forEach((file) => {
-        const fileContent = fs.readFileSync(file, 'utf8');
-        const { data, content } = matter(fileContent); // Parse frontmatter and content
+        const { data, content } = getFrontmatterContent(file);
 
-        // Basic validation
         if (!data.title || !data.date || !data.description || !data.tags) {
-            console.warn(
-                `WARN: Skipping ${file}. Missing required frontmatter (title, date, description, slug).`,
-            );
+            console.warn(`WARN: Skipping ${file}. Missing required frontmatter (title, date, description, slug).`);
             return;
         }
 
         const slug = data.slug || path.basename(path.dirname(file));
-        // --- Store Metadata for the List ---
         const metadata = {
             title: data.title,
             date: data.date,
             description: data.description,
             slug,
+            comments: getComments(slug),
         };
         postsMetadata.push(metadata);
 
-        // --- Store Full Content for Individual Post Pages ---
         const postData = {
             ...metadata,
             markdownContent: content,
@@ -62,28 +55,22 @@ try {
         fs.writeFileSync(postOutputPath, JSON.stringify(postData, null, 2));
         console.log(`Generated content for: ${metadata.slug}.json`);
 
-        // Add route to the list for pre-rendering
         routesToPrerender.push(`/blog/${metadata.slug}`);
     });
 
-    // Sort posts by date (newest first)
-    postsMetadata.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
+    postsMetadata.sort(sortDateDescending);
 
-    // Write the list of posts metadata
     fs.writeFileSync(postsListPath, JSON.stringify(postsMetadata, null, 2));
     console.log(`Generated posts list: ${postsListPath}`);
-
-    // Write the routes file for pre-rendering
-    // currently doing this manually
-    //  fs.writeFileSync(routesFilePath, routesToPrerender.join('\n'));
-    // console.log(`Generated routes file for pre-rendering: ${routesFilePath}`);
-
     console.log('Markdown processing complete.');
 } catch (error) {
     console.error('Error processing markdown files:', error);
-    process.exit(1); // Exit with error code
+    process.exit(1);
+}
+
+function getFrontmatterContent(file) {
+    const fileContent = fs.readFileSync(file, 'utf8');
+    return matter(fileContent);
 }
 
 function getAllFiles(dirPath, arrayOfFiles) {
@@ -100,6 +87,43 @@ function getAllFiles(dirPath, arrayOfFiles) {
     });
 
     return arrayOfFiles;
+}
+
+function sortDateDescending(a, b) {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+}
+
+function getComments(slug) {
+    const postCommentDir = path.join(commentDir, slug);
+    if (!fs.existsSync(postCommentDir)) {
+        return [];
+    }
+
+    const commentFiles = getAllFiles(postCommentDir);
+
+    const comments = [];
+    commentFiles.forEach((file) => {
+        const { data, content } = getFrontmatterContent(file);
+        if (!data.name || !data.date || !data.slug) {
+            console.warn(`WARN: Skipping ${file}. Missing required frontmatter (name, date, slug).`);
+            return;
+        }
+
+        if (`/${slug}/` !== data.slug) {
+            console.warn('comment is in the wrong directory', data.name);
+            return;
+        }
+
+        const commentData = {
+            name: data.name,
+            date: data.date,
+            markdownContent: content,
+            htmlContent: marked(content),
+        };
+        comments.push(commentData);
+    });
+
+    return comments.sort(sortDateDescending);
 }
 
 function getCustomRenderer(slug) {

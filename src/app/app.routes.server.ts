@@ -2,6 +2,7 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { PostMetadata } from './commons/post';
 
 export const serverRoutes: ServerRoute[] = [
     {
@@ -9,11 +10,11 @@ export const serverRoutes: ServerRoute[] = [
         renderMode: RenderMode.Prerender,
         async getPrerenderParams(): Promise<Array<Record<string, string>>> {
             const postsJsonRelativePath = 'assets/blog-data/posts.json';
-            const postsJson: Array<IPost> = (await firstValueFrom(
+            const postsJson: Array<PostMetadata> = (await firstValueFrom(
                 inject(HttpClient).get(postsJsonRelativePath),
-            )) as any as Array<IPost>;
+            )) as any as Array<PostMetadata>;
 
-            return postsJson.map((post: IPost) => {
+            return postsJson.map((post: PostMetadata) => {
                 return { slug: post.slug };
             });
         },
@@ -23,10 +24,3 @@ export const serverRoutes: ServerRoute[] = [
         renderMode: RenderMode.Prerender,
     },
 ];
-
-interface IPost {
-    slug: string;
-    title: string;
-    description: string;
-    date: string;
-}

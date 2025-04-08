@@ -2,8 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BlogService, PostMetadata } from '../blog.service';
+import { BlogService } from '../commons/blog.service';
 import { Title } from '@angular/platform-browser';
+import { PostMetadata } from '../commons/post';
 
 @Component({
     selector: 'app-blog-list',

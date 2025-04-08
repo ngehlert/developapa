@@ -3,11 +3,20 @@
         <article class="blog-post-content">
             <h1>{{ post.title }}</h1>
             <p class="date">{{ post.date | date: 'longDate' }}</p>
-            <div [innerHTML]="postContent()"></div>
+            <div [innerHTML]="post.htmlContent | safeHtml | prismHighlight"></div>
 
             <hr />
             <a routerLink="/blog">← Back to Blog List</a>
         </article>
+
+        <section class="blog-post-content">
+            <h2>Comments</h2>
+            @for (comment of post.comments; track comment.date; let i = $index) {
+                <app-comment [commentData]="comment" [index]="i"></app-comment>
+            } @empty {
+                <p>No comments yet. Be the first to comment!</p>
+            }
+        </section>
     } @else {
         <p>Sorry, this post could not be loaded or was not found.</p>
         <a routerLink="/blog">← Back to Blog List</a>
