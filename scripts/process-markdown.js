@@ -8,6 +8,7 @@ const commentDir = path.join(__dirname, '..', 'src', 'comments');
 const outputDir = path.join(__dirname, '..', 'src', 'assets', 'blog-data');
 const postsListPath = path.join(outputDir, 'posts.json');
 const postsContentDir = path.join(outputDir, 'posts');
+const routesFilePath = path.join(__dirname, '..', 'routes.txt');
 
 console.log('Processing markdown files...');
 
@@ -63,6 +64,10 @@ try {
 
     fs.writeFileSync(postsListPath, JSON.stringify(postsMetadata, null, 2));
     console.log(`Generated posts list: ${postsListPath}`);
+
+    fs.writeFileSync(routesFilePath, routesToPrerender.join('\n'));
+    console.log(`Generated routes file for pre-rendering: ${routesFilePath}`);
+
     console.log('Markdown processing complete.');
 } catch (error) {
     console.error('Error processing markdown files:', error);

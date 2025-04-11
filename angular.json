@@ -17,9 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:application",
                     "options": {
-                        "allowedCommonJsDependencies": [
-                            "prismjs"
-                        ],
+                        "allowedCommonJsDependencies": ["prismjs"],
                         "outputPath": "dist/developapa",
                         "index": "src/index.html",
                         "browser": "src/main.ts",
@@ -41,14 +39,21 @@
                             "node_modules/prismjs/themes/prism-coy.css"
                         ],
                         "scripts": [],
-                        "server": "src/main.server.ts",
-                        "prerender": true,
-                        "outputMode": "server",
-                        "ssr": {
-                            "entry": "src/server.ts"
-                        }
+                        "server": "src/main.server.ts"
                     },
                     "configurations": {
+                        "prerender": {
+                            "prerender": {
+                                "discoverRoutes": false,
+                                "routesFile": "routes.txt"
+                            }
+                        },
+                        "ssr": {
+                            "outputMode": "server",
+                            "ssr": {
+                                "entry": "src/server.ts"
+                            }
+                        },
                         "production": {
                             "budgets": [
                                 {
@@ -76,10 +81,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "developapa:build:production"
+                            "buildTarget": "developapa:build:ssr,production"
                         },
                         "development": {
-                            "buildTarget": "developapa:build:development"
+                            "buildTarget": "developapa:build:ssr,development"
                         }
                     },
                     "defaultConfiguration": "development"
