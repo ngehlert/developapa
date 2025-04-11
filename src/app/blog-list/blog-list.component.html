@@ -1,29 +1,26 @@
-<h1>Blog Posts</h1>
-
-<ng-container *ngIf="posts$ | async as posts; else loading">
-    <ul *ngIf="posts.length > 0; else noPosts">
-        <li
-            *ngFor="let post of posts"
-            class="post-summary"
-        >
-            <h2>
-                <a [routerLink]="['/blog', post.slug]">{{ post.title }}</a>
-            </h2>
-            <p class="date">{{ post.date | date: 'longDate' }}</p>
-            <!-- Format date -->
-            <p class="description">{{ post.description }}</p>
-            <a
-                [routerLink]="['/blog', post.slug]"
-                class="read-more"
-                >Read More →</a
-            >
-        </li>
-    </ul>
-    <ng-template #noPosts>
-        <p>No blog posts found yet.</p>
-    </ng-template>
-</ng-container>
-
-<ng-template #loading>
-    <p>Loading posts...</p>
-</ng-template>
+<div class="blog-list-container">
+    <section class="blog-list-header">
+        <app-select
+            [(selectedOption)]="selectedTag"
+            [options]="tagOptions()"
+            [placeholder]="'Find posts by topic'"
+            class=""
+        ></app-select>
+    </section>
+        @for (post of filteredPosts(); track post.slug) {
+            <article class="post-summary">
+                <header>
+                    <h2 class="post-title">
+                        <a [routerLink]="['/blog', post.slug]">{{ post.title }}</a>
+                    </h2>
+                    <p class="post-meta">
+                        <span class="post-date">{{ post.date | date:'longDate' }}</span>
+                    </p>
+                </header>
+                <p class="post-description">{{ post.description }}</p>
+                <a [routerLink]="['/blog', post.slug]" class="read-more-link">Read More →</a>
+            </article>
+        } @empty {
+            <!-- p class="info-message">Loading posts...</p -->
+        }
+</div>

@@ -14,15 +14,12 @@
             "sourceRoot": "src",
             "prefix": "app",
             "architect": {
-                "prerender": {
-                    "builder": "@angular/ssr:prerender",
-                    "options": {
-                        "routesFile": "routes.txt"
-                    }
-                },
                 "build": {
                     "builder": "@angular-devkit/build-angular:application",
                     "options": {
+                        "allowedCommonJsDependencies": [
+                            "prismjs"
+                        ],
                         "outputPath": "dist/developapa",
                         "index": "src/index.html",
                         "browser": "src/main.ts",
@@ -36,7 +33,8 @@
                                 "output": "assets/content"
                             },
                             "src/*.png",
-                            "src/assets"
+                            "src/assets",
+                            "src/robots.txt"
                         ],
                         "styles": [
                             "src/styles.scss",

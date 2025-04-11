@@ -37,6 +37,7 @@ try {
             title: data.title,
             date: data.date,
             description: data.description,
+            tags: data.tags,
             slug,
             comments: getComments(slug),
         };

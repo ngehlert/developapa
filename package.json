@@ -7,8 +7,7 @@
         "process:content": "node ./scripts/process-markdown.js",
         "build": "npm run process:content && ng build",
         "serve:ssr": "node dist/developapa/server/server.mjs",
-        "dev:ssr": "npm run process:content && ng run developapa:serve",
-        "prerender": "npm run process:content && ng run developapa:prerender"
+        "dev:ssr": "npm run process:content && ng run developapa:serve"
     },
     "private": true,
     "description": "Personal blog",

@@ -78,7 +78,7 @@ import { DatePipe } from '@angular/common';
 
         .comment-date {
             font-size: 0.8em;
-            color: #555;
+            color: var(--base-color);
         }
 
         .comment-message {

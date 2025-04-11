@@ -1,5 +1,5 @@
 .blog-post-content {
-    max-width: 800px;
+    max-width: var(--content-width);
     margin: 1rem auto;
     padding: 1rem;
 }

@@ -61,7 +61,7 @@ The result looks something like this ![Source Map Image Bad Library](source-map-
 
 ## Problem analysis
 
-Let's have a look at our sample application. We are using a small service and a component to display a simple table ![Bad lib directory](bad-lib-directory.png).
+Let's have a look at our sample application. We are using a small service and a component to display a simple table ![Bad lib directory](bad-lib-directory.png)
 
 In our `app.component.ts` we are using the `RandomService` and in our lazy loaded route the `TableComponent`.  
 But if we have a look at our bundle analysis (see screenshot above) we will notice that AG Grid is actually added to the main module, instead of the lazy loaded one.

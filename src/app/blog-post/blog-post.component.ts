@@ -1,57 +1,58 @@
 import {
     Component,
-    OnInit,
     inject,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
-import { Observable, switchMap, tap, catchError, of } from 'rxjs';
+import { Observable, tap, catchError, of } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
 import { SafeHtmlPipe } from '../commons/safe-html.pipe';
 import { PrismHighlightPipe } from '../commons/prism.pipe';
 import { Post } from '../commons/post';
 import { CommentComponent } from '../commons/comment.component';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
     selector: 'app-blog-post',
     standalone: true,
-    imports: [CommonModule, RouterModule, DatePipe, SafeHtmlPipe, PrismHighlightPipe, CommentComponent],
+    imports: [
+        CommonModule,
+        RouterModule,
+        DatePipe,
+        SafeHtmlPipe,
+        PrismHighlightPipe,
+        CommentComponent,
+    ],
     templateUrl: './blog-post.component.html',
     styleUrls: ['./blog-post.component.scss'],
 })
-export class BlogPostComponent implements OnInit {
+export class BlogPostComponent {
     private route = inject(ActivatedRoute);
     private blogService = inject(BlogService);
     private titleService = inject(Title);
     private metaService = inject(Meta);
 
-    post$: Observable<Post | null> | undefined;
+    post$: Observable<Post | HttpStatusCode | null> | undefined;
 
-    ngOnInit(): void {
-        this.post$ = this.route.paramMap.pipe(
-            switchMap((params) => {
-                const slug = params.get('slug');
-                if (!slug) {
-                    console.error('No slug provided!');
+    constructor() {
+        const slug = this.route.snapshot.paramMap.get('slug');
+        if (slug) {
+            this.post$ = this.blogService.getPost(slug).pipe(
+                tap((post) => {
+                    this.updateMeta(post);
+                }),
+                catchError((error) => {
+                    console.error('Error fetching post:', error);
                     this.updateMeta(null);
-                    return of(null);
-                }
-                return this.blogService.getPost(slug).pipe(
-                    tap((post) => {
-                        this.updateMeta(post);
-                    }),
-                    catchError((error) => {
-                        console.error('Error fetching post:', error);
-                        this.updateMeta(null);
-                        if (error.status === 404) {
-                            console.log(`Post with slug '${slug}' not found.`);
-                        }
-                        return of(null);
-                    }),
-                );
-            }),
-        );
+                    return of(HttpStatusCode.NotFound);
+                }),
+            );
+        }
+    }
+
+    public isPost(post: Post | HttpStatusCode | null): post is Post {
+        return post !== null && post !== HttpStatusCode.NotFound;
     }
 
     private updateMeta(post: Post | null): void {

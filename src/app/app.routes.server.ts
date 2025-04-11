@@ -6,6 +6,10 @@ import { PostMetadata } from './commons/post';
 
 export const serverRoutes: ServerRoute[] = [
     {
+        path: 'blog',
+        renderMode: RenderMode.Prerender,
+    },
+    {
         path: 'blog/:slug',
         renderMode: RenderMode.Prerender,
         async getPrerenderParams(): Promise<Array<Record<string, string>>> {
@@ -18,6 +22,10 @@ export const serverRoutes: ServerRoute[] = [
                 return { slug: post.slug };
             });
         },
+    },
+    {
+        path: ':slug',
+        renderMode: RenderMode.Client,
     },
     {
         path: '**',
