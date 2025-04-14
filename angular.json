@@ -1,0 +1,114 @@
+{
+    "$schema": "developapa/node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "developapa": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:application",
+                    "options": {
+                        "allowedCommonJsDependencies": ["prismjs"],
+                        "outputPath": "dist/developapa",
+                        "index": "src/index.html",
+                        "browser": "src/main.ts",
+                        "polyfills": ["zone.js"],
+                        "tsConfig": "tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            {
+                                "glob": "**/*.png",
+                                "input": "src/content",
+                                "output": "assets/content"
+                            },
+                            "src/*.png",
+                            "src/assets",
+                            "src/robots.txt"
+                        ],
+                        "styles": [
+                            "src/styles.scss",
+                            "node_modules/prismjs/themes/prism-coy.css"
+                        ],
+                        "scripts": [],
+                        "server": "src/main.server.ts"
+                    },
+                    "configurations": {
+                        "prerender": {
+                            "prerender": {
+                                "discoverRoutes": false,
+                                "routesFile": "routes.txt"
+                            }
+                        },
+                        "ssr": {
+                            "outputMode": "server",
+                            "ssr": {
+                                "entry": "src/server.ts"
+                            }
+                        },
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "500kB",
+                                    "maximumError": "1MB"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "4kB",
+                                    "maximumError": "8kB"
+                                }
+                            ],
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "optimization": false,
+                            "extractLicenses": false,
+                            "sourceMap": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "buildTarget": "developapa:build:ssr,production"
+                        },
+                        "development": {
+                            "buildTarget": "developapa:build:ssr,development"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n"
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "polyfills": ["zone.js", "zone.js/testing"],
+                        "tsConfig": "tsconfig.spec.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "public"
+                            }
+                        ],
+                        "styles": ["src/styles.scss"],
+                        "scripts": []
+                    }
+                }
+            }
+        }
+    }
+}
