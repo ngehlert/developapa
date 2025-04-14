@@ -11,6 +11,8 @@
 
         @defer (on viewport(backLink)) {
             <section class="blog-post-content">
+                <h2>Add new comment</h2>
+                <app-comment-form></app-comment-form>
                 <h2>Comments</h2>
                 @for (comment of post.comments; track comment.date; let i = $index) {
                     <app-comment [commentData]="comment" [index]="i"></app-comment>

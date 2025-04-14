@@ -12,6 +12,7 @@ import { PrismHighlightPipe } from '../commons/prism.pipe';
 import { Post } from '../commons/post';
 import { CommentComponent } from '../commons/comment.component';
 import { HttpStatusCode } from '@angular/common/http';
+import { CommentFormComponent } from '../commons/comment-form.component';
 
 @Component({
     selector: 'app-blog-post',
@@ -23,6 +24,7 @@ import { HttpStatusCode } from '@angular/common/http';
         SafeHtmlPipe,
         PrismHighlightPipe,
         CommentComponent,
+        CommentFormComponent,
     ],
     templateUrl: './blog-post.component.html',
     styleUrls: ['./blog-post.component.scss'],
