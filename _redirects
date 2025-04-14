@@ -2,3 +2,50 @@
 
 # Redirect default Netlify subdomain to primary domain
 https://developapa.netlify.com/* https://developapa.com/:splat 301!
+
+# Keep old links working
+/ag-grid-cell-observables               /blog/ag-grid-cell-observables
+/angular-clipboard                      /blog/angular-clipboard
+/angular-custom-webpack-configuration   /blog/angular-custom-webpack-configuration
+/angular-inline-lazy-load               /blog/angular-inline-lazy-load
+/angular-jest-karma-config              /blog/angular-jest-karma-config
+/angular-lazy-load                      /blog/angular-lazy-load
+/angular-localize                       /blog/angular-localize
+/angular-material-legacy-styles         /blog/angular-material-legacy-styles
+/angular-rerender                       /blog/angular-rerender
+/angular-singleton-service              /blog/angular-singleton-service
+/angular-state-management               /blog/angular-state-management
+/angular-theming                        /blog/angular-theming
+/angular-trace-request-time             /blog/angular-trace-request-time
+/beach-driven-development               /blog/beach-driven-development
+/call-setter-once                       /blog/call-setter-once
+/confin                                 /blog/confin
+/destructuring-into-class-variables     /blog/destructuring-into-class-variables
+/excel-column-sort                      /blog/excel-column-sort
+/gatsby-static-comments                 /blog/gatsby-static-comments
+/iphone-camera-repair                   /blog/iphone-camera-repair
+/lets-get-started                       /blog/lets-get-started
+/made-my-day                            /blog/made-my-day
+/made-my-day-2                          /blog/made-my-day-2
+/made-my-day-3                          /blog/made-my-day-3
+/made-my-day-4                          /blog/made-my-day-4
+/made-my-day-5                          /blog/made-my-day-5
+/method-time-log                        /blog/method-time-log
+/jul-20                                 /blog/jul-20
+/may-21                                 /blog/may-21
+/oct-20                                 /blog/oct-20
+/monthly-update-corona                  /blog/monthly-update-corona
+/monthly-update-feb-20                  /blog/monthly-update-feb-20
+/monthly-update-jan-20                  /blog/monthly-update-jan-20
+/object-ids                             /blog/object-ids
+/open-source                            /blog/open-source
+/responsive-column-layout               /blog/responsive-column-layout
+/mx-keys                                /blog/mx-keys
+/mx-master                              /blog/mx-master
+/rip-confin                             /blog/rip-confin
+/rxjs-teardown                          /blog/rxjs-teardown
+/security-scoped-bookmark               /blog/security-scoped-bookmark
+/siedler-von-catan                      /blog/siedler-von-catan
+/signals                                /blog/signals
+/static-site-generators                 /blog/static-site-generators
+/user-defined-type-guards               /blog/user-defined-type-guards
