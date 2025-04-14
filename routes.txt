@@ -18,6 +18,7 @@
 /blog/destructuring-into-class-variables
 /blog/excel-column-sort
 /blog/gatsby-static-comments
+/blog/gatsby-to-angular-migration
 /blog/iphone-camera-repair
 /blog/lets-get-started
 /blog/made-my-day
