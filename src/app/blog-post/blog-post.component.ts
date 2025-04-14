@@ -13,6 +13,7 @@ import { Post } from '../commons/post';
 import { CommentComponent } from '../commons/comment.component';
 import { HttpStatusCode } from '@angular/common/http';
 import { CommentFormComponent } from '../commons/comment-form.component';
+import { TraceClass } from '@sentry/angular';
 
 @Component({
     selector: 'app-blog-post',
@@ -29,6 +30,7 @@ import { CommentFormComponent } from '../commons/comment-form.component';
     templateUrl: './blog-post.component.html',
     styleUrls: ['./blog-post.component.scss'],
 })
+@TraceClass()
 export class BlogPostComponent {
     private route = inject(ActivatedRoute);
     private blogService = inject(BlogService);

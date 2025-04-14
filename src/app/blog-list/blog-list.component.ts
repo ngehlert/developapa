@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { PostMetadata } from '../commons/post';
 import { SelectComponent } from '../commons/select.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TraceClass } from '@sentry/angular';
 
 @Component({
     selector: 'app-blog-list',
@@ -14,6 +15,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     templateUrl: './blog-list.component.html',
     styleUrls: ['./blog-list.component.scss'],
 })
+@TraceClass()
 export class BlogListComponent {
     private blogService = inject(BlogService);
 
