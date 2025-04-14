@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
     template: `
         <form autocomplete="off" name="comment-form" method="post" data-netlify-honeypot="bot-field" data-netlify="true">
             <input type="text" name="bot-field" style="display:none" aria-label="Don't fill this out if you are breathing" />
+            <input type="hidden" name="form-name" value="comment-form" />
             <input
                 type="text"
                 id="name"
