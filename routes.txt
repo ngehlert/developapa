@@ -9,6 +9,7 @@
 /blog/angular-material-legacy-styles
 /blog/angular-rerender
 /blog/angular-singleton-service
+/blog/angular-ssg
 /blog/angular-state-management
 /blog/angular-theming
 /blog/angular-trace-request-time
