@@ -13,7 +13,7 @@ Sentry.init({
             blockAllMedia: true,
         })
     ],
-    replaysSessionSampleRate: 0.1,
+    replaysSessionSampleRate: 0,
     replaysOnErrorSampleRate: 1,
     tracesSampleRate: 0.25,
     tracePropagationTargets: ['localhost', /^https:\/\/developapa\.com\//],

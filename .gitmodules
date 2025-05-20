@@ -1,0 +1,3 @@
+[submodule "src/app/kurve"]
+	path = src/app/kurve
+	url = git@github.com:ngehlert/kurve.git
