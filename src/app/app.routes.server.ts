@@ -10,6 +10,14 @@ export const serverRoutes: ServerRoute[] = [
         renderMode: RenderMode.Prerender,
     },
     {
+        path: 'portfolio',
+        renderMode: RenderMode.Prerender,
+    },
+    {
+        path: 'kurve',
+        renderMode: RenderMode.Client,
+    },
+    {
         path: 'blog/:slug',
         renderMode: RenderMode.Prerender,
         async getPrerenderParams(): Promise<Array<Record<string, string>>> {

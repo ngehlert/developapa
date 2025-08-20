@@ -11,90 +11,201 @@ body, html {
     margin: 0;
     padding: 0;
     font: 100% / 1.75 'Georgia', serif;
+    scroll-behavior: smooth;
 }
 
-/* Blogpost Styles */
-.blog-post-content {
+/**
+ * headlines
+ */
+h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 3rem;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
 
+app-blog-post {
     h1 {
-        margin-bottom: 0.5rem;
+        font-size: 2em;
+        margin-bottom: .5rem;
         line-height: 1.2;
     }
 
-    h2,
-    h3,
-    h4 {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        line-height: 1.3;
+    h2 {
+        font-size: 1.5em;
     }
+}
 
-    p {
-        line-height: 1.7;
-        margin-bottom: 1rem;
-    }
+h2 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--alternative-base-color);
+    margin: 2rem 0 0.4rem 0;
+    line-height: 1.3;
+    position: relative;
 
     a {
+        text-decoration: none;
+        color: var(--alternative-base-color);
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--base-app-color);
+        transition: width 0.4s ease-out;
+    }
+
+    &:hover::after {
+        width: 150px;
+    }
+
+
+    & a:hover {
         color: var(--base-app-color);
     }
+}
 
-    a:hover {
+h3,
+h4 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+p {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--base-app-color);
+    &:focus-visible {
+        outline: none;
+    }
+    &:hover {
         text-decoration: underline;
     }
+}
 
-    ul,
-    ol {
-        margin-bottom: 1rem;
-        padding-left: 2rem;
+
+ul,
+ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+blockquote {
+    border-left: 4px solid #eee;
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1rem;
+    color: var(--base-color);
+    font-style: italic;
+}
+
+hr {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+pre {
+    padding: 1em;
+    margin: 1.5em 0;
+    overflow: auto;
+    border-radius: 0.3em;
+    background-color: #f5f2f0;
+}
+
+pre code {
+    font-size: 0.9em !important;
+}
+
+code {
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: .3em;
+    color: #c92c2c;
+    display: inline;
+    padding: .2em;
+    position: relative;
+    white-space: normal;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.limit-content-width-container {
+    max-width: var(--content-width);
+    margin: 1rem auto;
+}
+
+article {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #c0e7e7;
+
+    &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
 
-    li {
-        margin-bottom: 0.5rem;
-        line-height: 1.6;
+    header {
+        margin-bottom: 0.75rem;
     }
+}
 
-    blockquote {
-        border-left: 4px solid #eee;
-        padding-left: 1rem;
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: 1rem;
-        color: var(--base-color);
-        font-style: italic;
+
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.4rem;
+        margin-bottom: 2rem;
     }
-
-    hr {
-        margin: 2rem 0;
-        border: 0;
-        border-top: 1px solid #eee;
+    .post-title {
+        font-size: 1.6rem;
     }
-
-    pre {
-        padding: 1em;
-        margin: 1.5em 0;
-        overflow: auto;
-        border-radius: 0.3em;
-        background-color: #f5f2f0;
+    .post-summary {
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
     }
+}
 
-    pre code {
-        font-size: 0.9em;
-        white-space: pre;
+@media (max-width: 480px) {
+    .blog-list-container {
+        margin: 1.5rem auto;
     }
-
-    code {
-        border: 1px solid rgba(0, 0, 0, .1);
-        border-radius: .3em;
-        color: #c92c2c;
-        display: inline;
-        padding: .2em;
-        position: relative;
-        white-space: normal;
+    h1 {
+        font-size: 2.1rem;
     }
-
-    img {
-        max-width: 100%;
-        display: block;
-        margin: 0 auto;
+    .post-title {
+        font-size: 1.4rem;
+    }
+    .post-description {
+        font-size: 1rem;
+    }
+    .read-more-link {
+        font-size: 0.9rem;
     }
 }

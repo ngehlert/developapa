@@ -2,8 +2,8 @@ import {
     Component,
     inject,
 } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule, DatePipe, ViewportScroller } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
 import { Observable, tap, catchError, of } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
@@ -39,7 +39,10 @@ export class BlogPostComponent {
 
     post$: Observable<Post | HttpStatusCode | null> | undefined;
 
-    constructor() {
+    constructor(
+        private router: Router,
+        private viewportScroller: ViewportScroller,
+    ) {
         const slug = this.route.snapshot.paramMap.get('slug');
         if (slug) {
             this.post$ = this.blogService.getPost(slug).pipe(
@@ -52,6 +55,17 @@ export class BlogPostComponent {
                     return of(HttpStatusCode.NotFound);
                 }),
             );
+        }
+    }
+
+    public processLinks(e: any) {
+        const element: HTMLElement | null = e.target;
+        if (element?.nodeName === 'A') {
+            e.preventDefault();
+            const link: string = element.getAttribute('href') || '';
+            const [baseUrl, fragment] = link.split('#');
+            void this.router.navigate([baseUrl], {fragment});
+            this.viewportScroller.scrollToAnchor(fragment);
         }
     }
 

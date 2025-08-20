@@ -135,6 +135,20 @@ function getComments(slug) {
 function getCustomRenderer(slug) {
     const renderer = new marked.Renderer();
     const originalImageRenderer = renderer.image;
+    const originalLinkRenderer = renderer.link;
+
+    renderer.link = ({ href, title, text }) => {
+        console.log(href, title, text);
+        // Check if the href is an absolute URL (starts with http, https, //)
+        // Or if it's already an absolute path within the site (starts with /)
+        if (/^(https?:)?\/\//.test(href) || href.startsWith('/')) {
+            return '';//originalLinkRenderer.call(renderer, href, title, text);
+        }
+
+        const newHref = `blog/${slug}/${href}`;
+
+        return `<a href="${newHref}" ${title ? ` title="${title}"` : ''}>${text}</a>`;
+    }
 
     renderer.image = ({ href, title, text }) => {
         // Check if the href is an absolute URL (starts with http, https, //)
@@ -147,6 +161,17 @@ function getCustomRenderer(slug) {
 
         // Construct the image tag with the new path
         return `<img src="${newHref}" alt="${text}"${title ? ` title="${title}"` : ''}>`;
+    };
+    renderer.heading = function({ tokens, depth }) {
+        const text = this.parser.parseInline(tokens);
+        const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+
+        return `
+            <h${depth}>
+              <a name="${escapedText}" class="anchor" id="${escapedText}" href="blog/${slug}/#${escapedText}">
+                ${text}
+              </a>
+            </h${depth}>`;
     };
 
     return renderer;

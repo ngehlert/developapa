@@ -1,4 +1,4 @@
-<div class="blog-list-container">
+<div class="limit-content-width-container">
     <section class="blog-list-header">
         <app-select
             [(selectedOption)]="selectedTag"
@@ -8,9 +8,9 @@
         ></app-select>
     </section>
         @for (post of filteredPosts(); track post.slug) {
-            <article class="post-summary">
+            <article>
                 <header>
-                    <h2 class="post-title">
+                    <h2>
                         <a [routerLink]="['/blog', post.slug]">{{ post.title }}</a>
                     </h2>
                     <p class="post-meta">

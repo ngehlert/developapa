@@ -1,16 +1,19 @@
 @if (post$ | async; as post) {
     @if (isPost(post)) {
-        <article class="blog-post-content">
-            <h1>{{ post.title }}</h1>
+        <section class="limit-content-width-container">
+            <h1 routerLink="./">{{ post.title }}</h1>
             <p class="date">{{ post.date | date: 'longDate' }}</p>
-            <div [innerHTML]="post.htmlContent | safeHtml | prismHighlight"></div>
+            <div
+                [innerHTML]="post.htmlContent | safeHtml | prismHighlight"
+                (click)="processLinks($event)"
+            ></div>
 
             <hr />
             <a routerLink="/blog" #backLink>← Back to Blog List</a>
-        </article>
+        </section>
 
         @defer (on viewport(backLink)) {
-            <section class="blog-post-content">
+            <section class="limit-content-width-container">
                 <h2>Add new comment</h2>
                 <app-comment-form></app-comment-form>
                 <h2>Comments</h2>
