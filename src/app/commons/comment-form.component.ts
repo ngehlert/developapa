@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-comment-form',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
         <form autocomplete="off" name="comment-form" method="post" data-netlify-honeypot="bot-field" data-netlify="true">
             <input type="text" name="bot-field" style="display:none" aria-label="Don't fill this out if you are breathing" />
             <input type="hidden" name="form-name" value="comment-form" />
+            <input type="hidden" name="slug" [value]="url" />
             <input
                 type="text"
                 id="name"
@@ -156,6 +158,6 @@ import { Component } from '@angular/core';
     `,
 })
 export class CommentFormComponent {
-
+    public url = inject(Router).url.replace('/blog/', '');
 }
 

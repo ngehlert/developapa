@@ -82,7 +82,7 @@ async function main() {
                         date: submission.created_at,
                         comment: submission.data.comment,
                     });
-                    const directory = `${commentPath}${submission.data.slug}`;
+                    const directory = `${commentPath}/${submission.data.slug}/`;
                     if (!fs.existsSync(directory)) {
                         await util.promisify(fs.mkdir)(directory, {
                             recursive: true,
