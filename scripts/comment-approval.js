@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const template = Handlebars.compile(
-    fs.readFileSync('./comment-template.md', 'utf8'),
+    fs.readFileSync('./scripts/comment-template.md', 'utf8'),
 );
 const siteId = process.env.NETLIFY_SITE_ID;
 const token = process.env.NETLIFY_TOKEN;
