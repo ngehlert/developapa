@@ -1,3 +1,5 @@
+/kurve
+/portfolio
 /blog
 /blog/ag-grid-cell-observables
 /blog/angular-clipboard

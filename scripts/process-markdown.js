@@ -20,7 +20,7 @@ if (!fs.existsSync(postsContentDir)) {
 }
 
 const postsMetadata = [];
-const routesToPrerender = ['/blog'];
+const routesToPrerender = ['/kurve', '/portfolio', '/blog'];
 
 try {
     const files = getAllFiles(contentDir);
