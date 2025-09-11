@@ -1,3 +1,6 @@
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
+
 :root {
     --base-app-color: rgba(0, 132, 120, 1);
     --base-app-color-20: rgba(0, 132, 120, 0.2);
@@ -5,6 +8,7 @@
     --base-color: #555;
     --alternative-base-color: #34495e;
     --light-color: #6c7778;
+    --light-background-color: #f8f9fa;
 }
 
 body, html {
@@ -12,6 +16,11 @@ body, html {
     padding: 0;
     font: 100% / 1.75 'Georgia', serif;
     scroll-behavior: smooth;
+}
+
+.mat-mdc-card-content {
+    padding: 0 !important;
+    overflow: auto;
 }
 
 /**

@@ -1,6 +1,9 @@
 /kurve
 /portfolio
 /blog
+/boardgame-tracker/stats
+/boardgame-tracker/main
+/boardgame-tracker/admin
 /blog/ag-grid-cell-observables
 /blog/angular-clipboard
 /blog/angular-custom-webpack-configuration

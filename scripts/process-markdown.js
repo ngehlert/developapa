@@ -20,7 +20,14 @@ if (!fs.existsSync(postsContentDir)) {
 }
 
 const postsMetadata = [];
-const routesToPrerender = ['/kurve', '/portfolio', '/blog'];
+const routesToPrerender = [
+    '/kurve',
+    '/portfolio',
+    '/blog',
+    '/boardgame-tracker/stats',
+    '/boardgame-tracker/main',
+    '/boardgame-tracker/admin',
+];
 
 try {
     const files = getAllFiles(contentDir);
@@ -138,7 +145,6 @@ function getCustomRenderer(slug) {
     const originalLinkRenderer = renderer.link;
 
     renderer.link = ({ href, title, text }) => {
-        console.log(href, title, text);
         // Check if the href is an absolute URL (starts with http, https, //)
         // Or if it's already an absolute path within the site (starts with /)
         if (/^(https?:)?\/\//.test(href) || href.startsWith('/')) {

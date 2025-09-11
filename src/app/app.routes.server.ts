@@ -18,6 +18,18 @@ export const serverRoutes: ServerRoute[] = [
         renderMode: RenderMode.Client,
     },
     {
+        path: 'boardgame-tracker/stats',
+        renderMode: RenderMode.Client,
+    },
+    {
+        path: 'boardgame-tracker/main',
+        renderMode: RenderMode.Client,
+    },
+    {
+        path: 'boardgame-tracker/admin',
+        renderMode: RenderMode.Client,
+    },
+    {
         path: 'blog/:slug',
         renderMode: RenderMode.Prerender,
         async getPrerenderParams(): Promise<Array<Record<string, string>>> {

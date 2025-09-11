@@ -1,0 +1,38 @@
+<section class="container">
+  <mat-card class="card players mat-elevation-z4">
+    <mat-card-title>
+      Players
+    </mat-card-title>
+    <mat-card-content>
+      <p>List of all players</p>
+      <textarea [(ngModel)]="players"></textarea>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="updatePlayers()" type="button">Update</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="card games mat-elevation-z4">
+    <mat-card-title>
+      Games
+    </mat-card-title>
+    <mat-card-content>
+      <p>Liste of all games</p>
+      <textarea [(ngModel)]="games"></textarea>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="updateGames()" type="button">Update</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="card playedGames mat-elevation-z4">
+    <mat-card-title>
+      Played games
+    </mat-card-title>
+    <mat-card-content>
+      <p>List of all played games</p>
+      <textarea [(ngModel)]="playedGames"></textarea>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="updatePlayedGames()" type="button">Update</button>
+    </mat-card-actions>
+  </mat-card>
+</section>
