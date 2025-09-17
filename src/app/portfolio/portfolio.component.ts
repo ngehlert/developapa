@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'portfolio',
@@ -28,6 +29,15 @@ import { NgOptimizedImage } from '@angular/common';
                 <header>
                     <h2>
                         <a [routerLink]="['/kurve']">Zatacka - Achtung die Kurve</a>
+                        <a href="https://github.com/ngehlert/kurve" target="_blank" matTooltip="Show on GitHub">
+                            <img
+                                ngSrc="assets/github-mark.png"
+                                alt="GitHub Logo"
+                                height="24"
+                                width="24"
+                                style="display: inline-block; margin-left: 0.75rem;"
+                            />
+                        </a>
                     </h2>
                 </header>
                 <p class='post-description'>
@@ -37,6 +47,10 @@ import { NgOptimizedImage } from '@angular/common';
 
                 </p>
                 <a [routerLink]="['/kurve']" class="read-more-link">Read More →</a>
+
+                <div class="image-preview">
+                    <img ngSrc="./assets/portfolio/zatacka-1.png" alt="Zatacka Demo" height="169" width="270" priority/>
+                </div>
             </article>
 
             <article class='limit-content-width-container'>
@@ -118,6 +132,7 @@ import { NgOptimizedImage } from '@angular/common';
     imports: [
         RouterLink,
         NgOptimizedImage,
+        MatTooltipModule,
     ],
 })
 class PortfolioComponent {

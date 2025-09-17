@@ -1,16 +1,16 @@
 header {
     background-color: var(--light-background-color);
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 0;
     border-bottom: 1px solid #dee2e6;
     display: grid;
-    grid-template-columns: 1fr var(--content-width) 1fr;
+    grid-template-columns: minmax(2rem, 1fr) var(--content-width) minmax(2rem, 1fr);
     grid-template-areas: ". header .";
 
     .header {
         grid-area: header;
-        display: flex;
+        display: grid;
         align-items: center;
-        justify-content: space-between;
+        grid-template-columns: 1fr auto;
 
         img {
             margin: 0;
@@ -117,4 +117,131 @@ footer {
     text-align: center;
     color: var(--alternative-base-color);
     margin-top: 2rem;
+}
+
+@media (max-width: 850px) {
+    header {
+        grid-template-columns: 2rem 1fr 2rem;
+
+        h1 a {
+            font-size: 36px;
+        }
+
+        img[ngSrc] {
+            width: 100px;
+            height: 100px;
+        }
+    }
+}
+@media (max-width: 425px) {
+    header {
+
+        h1 a {
+            font-size: 24px;
+        }
+
+        img[ngSrc] {
+            width: 80px;
+            height: 80px;
+        }
+    }
+}
+
+a {
+}
+
+.rollerblade-icon {
+    position: fixed;
+    bottom: 16px;
+    right: 38px;
+    display: block;
+    transition: transform 0.5s ease, filter 0.3s ease; /* Smooth transition for movement and color */
+    filter: grayscale(100%); /* Initially grayscale */
+}
+
+.rollerblade-icon:hover {
+    animation: hoverMotion 1.5s ease-in-out infinite alternate; /* Apply the hover motion animation */
+    filter: grayscale(0%); /* Remove grayscale on hover */
+}
+
+.rollerblade-icon:hover .blade-body {
+    fill: #007bff; /* Change color on hover (example: blue) */
+}
+
+/* Motion Lines */
+.rollerblade-icon:hover::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -20px; /* Start position of lines */
+    width: 20px;
+    height: 2px;
+    background-color: rgba(0, 123, 255, 0.5); /* Same color as blade with transparency */
+    animation: motionLines 0.7s linear infinite;
+    transform-origin: right center;
+    transform: translateY(-50%);
+}
+
+.rollerblade-icon:hover::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -20px; /* Start position of lines */
+    width: 20px;
+    height: 2px;
+    background-color: rgba(0, 123, 255, 0.5); /* Same color as blade with transparency */
+    animation: motionLines 0.7s linear infinite reverse;
+    transform-origin: left center;
+    transform: translateY(-50%);
+}
+
+/* Wheel Light Rotation */
+.rollerblade-icon:hover .wheel-light {
+    animation: rotateWheelLight 2s linear infinite;
+    transform-origin: 0 4px;
+    transform-box: fill-box;
+}
+
+@keyframes rotateWheelLight {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes motionLines {
+    0% {
+        transform: translateX(0) translateY(-50%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(15px) translateY(-50%); /* Adjust length of lines */
+        opacity: 0;
+    }
+}
+
+/* Optional: Adjust wheel colors on hover */
+.rollerblade-icon:hover .wheel {
+    // fill: #333; /* Darker wheel color */
+}
+
+/* Optional: Adjust wheel light colors on hover */
+.rollerblade-icon:hover .wheel-light {
+    // fill: #ff0; /* Yellow light */
+}
+
+/* Keyframe Animation for Hover Motion */
+@keyframes hoverMotion {
+    0% {
+        transform: translateY(0) translateX(0); /* Start position */
+    }
+    50% {
+        transform: translateY(-8px) translateX(3px); /* Move up and slightly forward */
+    }
+    100% {
+        transform: translateY(0) translateX(0);  /* Return to start */
+    }
 }

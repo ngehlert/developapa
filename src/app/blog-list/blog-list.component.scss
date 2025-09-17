@@ -7,6 +7,12 @@
     grid-template-columns: 1fr 1fr;
 }
 
+@media (max-width: 600px) {
+    .blog-list-header {
+        grid-template-columns: 1fr;
+    }
+}
+
 .post-meta {
     margin: 0;
     font-size: 0.9rem;
