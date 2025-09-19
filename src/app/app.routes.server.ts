@@ -6,6 +6,18 @@ import { PostMetadata } from './commons/post';
 
 export const serverRoutes: ServerRoute[] = [
     {
+        path: 'privacy-policy',
+        renderMode: RenderMode.Prerender,
+    },
+    {
+        path: 'terms',
+        renderMode: RenderMode.Prerender,
+    },
+    {
+        path: 'impressum',
+        renderMode: RenderMode.Prerender,
+    },
+    {
         path: 'blog',
         renderMode: RenderMode.Prerender,
     },

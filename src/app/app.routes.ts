@@ -4,8 +4,23 @@ import { BlogPostComponent } from './blog-post/blog-post.component';
 import { inject, Type } from '@angular/core';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { KurveComponent } from './portfolio/kurve.component';
+import { PrivacyPolicyComponent } from './privacy-policy.component';
+import { TermsOfUseComponent } from './terms.component';
+import { ImpressumComponent } from './impressum.component';
 
 export const routes: Routes = [
+    {
+        path: 'privacy-policy',
+        component: PrivacyPolicyComponent,
+    },
+    {
+        path: 'terms',
+        component: TermsOfUseComponent,
+    },
+    {
+        path: 'impressum',
+        component: ImpressumComponent,
+    },
     {
         path: 'blog',
         component: BlogListComponent,

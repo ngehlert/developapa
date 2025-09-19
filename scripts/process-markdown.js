@@ -21,6 +21,9 @@ if (!fs.existsSync(postsContentDir)) {
 
 const postsMetadata = [];
 const routesToPrerender = [
+    '/privacy-policy',
+    '/terms',
+    '/impressum',
     '/kurve',
     '/portfolio',
     '/blog',
