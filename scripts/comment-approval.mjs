@@ -17,7 +17,7 @@ const template = Handlebars.compile(
 );
 const siteId = process.env.NETLIFY_SITE_ID;
 const token = process.env.NETLIFY_TOKEN;
-const commentPath = `${__dirname}/../comments`;
+const commentPath = `${__dirname}/../src/comments`;
 
 async function main() {
     const client = new NetlifyAPI(token);
@@ -78,7 +78,7 @@ async function main() {
                     }
                     const contents = template({
                         name: submission.data.name,
-                        slug: submission.data.slug,
+                        slug: submission.data.slug.startsWith('/') ? submission.data.slug : `/${submission.data.slug}/`,
                         date: submission.created_at,
                         comment: submission.data.comment,
                     });

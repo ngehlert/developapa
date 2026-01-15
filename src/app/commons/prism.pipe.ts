@@ -10,6 +10,7 @@ import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-markdown';
 import 'prismjs/components/prism-markup';
 import { isPlatformBrowser } from '@angular/common';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Pipe({
     name: 'prismHighlight',
@@ -18,7 +19,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class PrismHighlightPipe {
     private platformId = inject(PLATFORM_ID);
 
-    transform(html: any): any {
+    transform(html: SafeHtml): SafeHtml {
         if (isPlatformBrowser(this.platformId)) {
             setTimeout(() => {
                 Prism.highlightAll();

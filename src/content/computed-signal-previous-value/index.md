@@ -23,11 +23,11 @@ import { linkedSignal } from '@angular/core';
 
 const linkedValue = linkedSignal({
   source: sourceSignal,
-  computation: (sourceSignal, previousValue) => {
+  computation: (newValue, previousValue) => {
       if (previousValue.length > 2) {
           return previousValue;
       } else {
-          return sourceSignal;
+          return newValue;
       }
   },
 });

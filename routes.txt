@@ -1,3 +1,6 @@
+/privacy-policy
+/terms
+/impressum
 /kurve
 /portfolio
 /blog
@@ -26,6 +29,7 @@
 /blog/excel-column-sort
 /blog/gatsby-static-comments
 /blog/gatsby-to-angular-migration
+/blog/inverse-throttle
 /blog/iphone-camera-repair
 /blog/lets-get-started
 /blog/made-my-day

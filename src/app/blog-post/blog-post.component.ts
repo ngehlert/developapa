@@ -61,8 +61,12 @@ export class BlogPostComponent {
     public processLinks(e: any) {
         const element: HTMLElement | null = e.target;
         if (element?.nodeName === 'A') {
-            e.preventDefault();
             const link: string = element.getAttribute('href') || '';
+            const target: string = element.getAttribute('target') || '';
+            if (target === '_blank') {
+                return;
+            }
+            e.preventDefault();
             const [baseUrl, fragment] = link.split('#');
             void this.router.navigate([baseUrl], {fragment});
             this.viewportScroller.scrollToAnchor(fragment);

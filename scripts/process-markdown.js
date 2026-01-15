@@ -145,13 +145,12 @@ function getComments(slug) {
 function getCustomRenderer(slug) {
     const renderer = new marked.Renderer();
     const originalImageRenderer = renderer.image;
-    const originalLinkRenderer = renderer.link;
 
     renderer.link = ({ href, title, text }) => {
         // Check if the href is an absolute URL (starts with http, https, //)
         // Or if it's already an absolute path within the site (starts with /)
         if (/^(https?:)?\/\//.test(href) || href.startsWith('/')) {
-            return '';//originalLinkRenderer.call(renderer, href, title, text);
+            return `<a href="${href}" target="_blank" ${title ? ` title="${title}"` : ''}>${text}</a>`;
         }
 
         const newHref = `blog/${slug}/${href}`;
