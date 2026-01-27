@@ -117,8 +117,12 @@ export class StatsComponent implements OnInit {
             return;
           }
           let score: number = 0;
-          if (players.length === 1 || game.isCoopGame) {
-            const amountOfTeamsInvolved: number = playedGame.placements.filter((players: Array<Player>) => players.length).length;
+          if (game.isCoopGame) {
+            let amountOfTeamsInvolved: number = playedGame.placements.filter((players: Array<Player>) => players.length).length;
+            if (amountOfTeamsInvolved === 1) {
+                // if there is only one team at least at a second game opponent for the point calculation to work properly
+                amountOfTeamsInvolved = 2;
+            }
             score = (amountOfTeamsInvolved - index) * gameTime;
           } else {
             for (let i: number = 0; i < players.length; i++) {
