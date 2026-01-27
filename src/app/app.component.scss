@@ -6,6 +6,10 @@ header {
     grid-template-columns: minmax(2rem, 1fr) var(--content-width) minmax(2rem, 1fr);
     grid-template-areas: ". header .";
 
+    &.hidden {
+        display: none;
+    }
+
     .header {
         grid-area: header;
         display: grid;
@@ -117,6 +121,10 @@ footer {
     text-align: center;
     color: var(--alternative-base-color);
     margin-top: 2rem;
+
+    &.hidden {
+        display: none;
+    }
 }
 
 @media (max-width: 850px) {
@@ -157,6 +165,10 @@ a {
     display: block;
     transition: transform 0.5s ease, filter 0.3s ease; /* Smooth transition for movement and color */
     filter: grayscale(100%); /* Initially grayscale */
+
+    &.hidden {
+        display: none;
+    }
 }
 
 .rollerblade-icon:hover {

@@ -1,5 +1,8 @@
 <section class="container">
     <div class="rules">
+        <button mat-icon-button matTooltip="Fullscreen" (click)="toggleFullscreen()">
+            <mat-icon>{{ fullscreenService.isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+        </button>
         <button mat-icon-button matTooltip="Admin Area" (click)="openAdminPage()">
             <mat-icon>security</mat-icon>
         </button>
@@ -96,22 +99,23 @@
                         >
                     </mat-form-field>
                     <mat-checkbox [(ngModel)]="newGameIsCoopGame" name="isCoopGame" color="primary">Co-op game</mat-checkbox>
-                    @if (isAdmin) {
-                        <mat-checkbox
-                            [(ngModel)]="newGameIsSpecialGame"
-                            name="isSpecialGame"
+                    <div style="display: flex; gap: 8px;">
+                        <button
+                            mat-stroked-button
+                            (click)="toggleAddGameForm()"
+                            type="button"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            mat-stroked-button
                             color="primary"
-                        >Special Game</mat-checkbox>
-                    }
-                    <button
-                        mat-stroked-button
-                        color="primary"
-                        (click)="saveNewGame()"
-                        type="submit"
-                        style="display: block;"
-                    >
-                        Add
-                    </button>
+                            (click)="saveNewGame()"
+                            type="submit"
+                        >
+                            Add
+                        </button>
+                    </div>
                 </form>
 
                 <div
@@ -121,6 +125,7 @@
                     [cdkDropListConnectedTo]="[playedGameList]"
                     class="list"
                     cdkDropListSortingDisabled
+                    *ngIf="!isAddingGameOpen"
                 >
                     <div
                         class="list-entry"
@@ -210,12 +215,6 @@
                         <span matListItemTitle>{{playedGame.game.name}}</span>
                         <span matListItemLine>{{getTimeFromTimestamp(playedGame.timestamp)}}</span>
                         <span matListItemLine>{{getPlayersFromPlacements(playedGame.placements)}}</span>
-                        @if (isAdmin) {
-                            <button mat-icon-button (click)="deletePlayedGame(playedGame)" style="position: absolute; right: 8px; top: 8px;">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        }
-
                     </mat-list-item>
                 }
             </mat-list>

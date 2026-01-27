@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, ViewChild} from '@angular/core';
 import {
   AgGridEvent,
   AllCommunityModule,
@@ -10,8 +10,10 @@ import {
 } from 'ag-grid-community';
 import {DataStorageService} from '../data-storage.service';
 import {Game, PlayedGame, Player} from '../types';
-import {CommonModule, DecimalPipe} from '@angular/common';
+import {CommonModule, DecimalPipe, Location} from '@angular/common';
 import {AgGridAngular, AgGridModule} from 'ag-grid-angular';
+import {MatDialog} from '@angular/material/dialog';
+import {PasswordDialogComponent} from '../password-dialog.component';
 
 // Register all community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -40,10 +42,15 @@ export class StatsComponent implements OnInit {
   public defaultColDef: ColDef = this.getDefaultColDef();
   public rowData: Array<TableEntry> = [];
   public players: Array<Player>;
+  public isUnlocked = false;
 
   public totalGames: number = 0;
   public totalUniqueGames: Set<string> = new Set();
   public gamesPerPlayer: Map<string, Array<[PlayedGame, number]>> = new Map();
+
+  private dialog = inject(MatDialog);
+  private cdr = inject(ChangeDetectorRef);
+  private location = inject(Location);
 
   constructor(
     private store: DataStorageService,
@@ -62,6 +69,21 @@ export class StatsComponent implements OnInit {
     });
   }
 
+  public showPasswordDialog(): void {
+    const dialogRef = this.dialog.open(PasswordDialogComponent, {
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((success: boolean) => {
+      if (success) {
+        this.isUnlocked = true;
+        this.cdr.detectChanges();
+      } else {
+        this.location.back();
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.columnDefs = this.getColumnDefs();
     this.rowData = this.getRowData();
@@ -69,6 +91,8 @@ export class StatsComponent implements OnInit {
     this.agGrid.gridReady.subscribe((() => {
       this.agGrid.api.sizeColumnsToFit();
     }));
+
+    this.showPasswordDialog();
   }
 
   public onSortChanged(e: AgGridEvent) {

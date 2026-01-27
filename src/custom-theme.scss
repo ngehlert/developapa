@@ -1,0 +1,52 @@
+@use '@angular/material' as mat;
+
+// Define custom palette based on #008478
+$custom-primary-palette: (
+  50: #e0f0ee,
+  100: #b3dad5,
+  200: #80c2ba,
+  300: #4daa9e,
+  400: #269789,
+  500: #008478,
+  600: #007c70,
+  700: #007165,
+  800: #00675b,
+  900: #005448,
+  A100: #80ffe8,
+  A200: #4dffde,
+  A400: #1affd4,
+  A700: #00ffcf,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
+    A700: rgba(black, 0.87),
+  )
+);
+
+$custom-primary: mat.m2-define-palette($custom-primary-palette, 500);
+$custom-accent: mat.m2-define-palette(mat.$m2-amber-palette, A200, A100, A400);
+$custom-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$custom-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $custom-primary,
+    accent: $custom-accent,
+    warn: $custom-warn,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
+
+@include mat.core();
+@include mat.all-component-themes($custom-theme);

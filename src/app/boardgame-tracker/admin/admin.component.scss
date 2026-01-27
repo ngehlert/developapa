@@ -1,26 +1,14 @@
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "players games"
-    "playedGames playedGames";
-  gap: 12px 24px;
-  justify-items: stretch;
-  align-items: stretch;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
   padding: 24px;
   height: calc(100vh - 48px);
   width: calc(100% - 48px);
 }
 
-.players {
-  grid-area: players;
-}
-.games {
-  grid-area: games;
-}
 .playedGames {
-  grid-area: playedGames;
+  flex: 1;
+  overflow: auto;
 }
 
 .card {
@@ -30,7 +18,60 @@
     background: var(--light-background-color);
 }
 
-textarea {
-  width: calc(100% - 32px);
-  height: 300px;
+.top-actions {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.game-info {
+  flex: 1;
+  word-wrap: break-word;
+  white-space: normal;
+  line-height: 1.5;
+}
+
+.protected-content {
+  &.blurred {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+
+  p {
+    font-size: 24px;
+    color: #333;
+    padding: 16px 32px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
 }

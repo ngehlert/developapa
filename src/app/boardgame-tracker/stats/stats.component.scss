@@ -1,0 +1,30 @@
+.protected-content {
+  &.blurred {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+
+  p {
+    font-size: 24px;
+    color: #333;
+    padding: 16px 32px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}

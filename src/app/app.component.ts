@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatTooltip } from '@angular/material/tooltip';
+import { FullscreenService } from './boardgame-tracker/fullscreen.service';
 
 @Component({
     selector: 'app-root',
@@ -19,4 +20,5 @@ import { MatTooltip } from '@angular/material/tooltip';
 export class AppComponent {
     title = 'Developapa';
     currentYear = signal(new Date().getFullYear());
+    fullscreenService = inject(FullscreenService);
 }

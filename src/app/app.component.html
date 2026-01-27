@@ -1,4 +1,4 @@
-<header>
+<header [class.hidden]="fullscreenService.isFullscreen()">
     <section class="header">
         <h1>
             <a routerLink="/" class="link">
@@ -20,7 +20,7 @@
     <router-outlet></router-outlet>
 </main>
 
-<footer>
+<footer [class.hidden]="fullscreenService.isFullscreen()">
     <p>
         © {{ currentYear() }} Developapa
         | <a routerLink="/privacy-policy">Privacy Policy</a>
@@ -32,6 +32,7 @@
 <a
     routerLink="portfolio"
     class="rollerblade-icon"
+    [class.hidden]="fullscreenService.isFullscreen()"
     matTooltip="Fun area"
 >
     <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 40 40" height="40px" viewBox="0 0 40 40" width="40px">

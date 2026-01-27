@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, inject, LOCALE_ID } from '@angular/core';
 import { Game, PlayedGame, Player } from '../types';
 import {
     CdkDragDrop,
@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RulesDialogComponent } from './rules.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FullscreenService } from '../fullscreen.service';
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 @Component({
@@ -49,7 +50,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
         DecimalPipe,
     ],
 })
-export class MainComponent implements OnInit {
+export class MainComponent {
     private players: Array<Player> = [];
     public availablePlayers: Array<Player> = [];
     public games: Array<Game> = [];
@@ -63,12 +64,11 @@ export class MainComponent implements OnInit {
     public newGameName: string = '';
     public newGameDuration: string = '30';
     public newGameIsCoopGame: boolean = false;
-    public newGameIsSpecialGame: boolean = false;
 
     public isAddingPlayerOpen: boolean = false;
     public newPlayerName: string = '';
 
-    public isAdmin: boolean = false;
+    public fullscreenService = inject(FullscreenService);
 
     constructor(
         private store: DataStorageService,
@@ -86,10 +86,6 @@ export class MainComponent implements OnInit {
         this.lastPlayedGames = this.getLastPlayedGames();
     }
 
-    public ngOnInit(): void {
-        this.isAdmin = new URLSearchParams(window.location.search).get('admin') === 'start01';
-    }
-
     public openRulesDialog(): void {
         this.dialog.open(RulesDialogComponent, {});
     }
@@ -100,6 +96,10 @@ export class MainComponent implements OnInit {
 
     public openAdminPage(): void {
         void this.router.navigate(['..', 'admin'], { relativeTo: this.activeRoute });
+    }
+
+    public toggleFullscreen(): void {
+        this.fullscreenService.toggle();
     }
 
     public handleDropOutOfBound(
@@ -210,7 +210,7 @@ export class MainComponent implements OnInit {
             name: this.newGameName,
             duration: parseInt(String(this.newGameDuration), 10),
             isCoopGame: this.newGameIsCoopGame,
-            isSpecialGame: this.newGameIsSpecialGame,
+            isSpecialGame: false,
         });
         this.newGameName = '';
         this.newGameDuration = '30';
@@ -256,13 +256,6 @@ export class MainComponent implements OnInit {
             }, [])
             .map((player: Player) => player.name)
             .join(', ');
-    }
-
-    public deletePlayedGame(playedGame: PlayedGame): void {
-        this.store.removePlayedGame(playedGame);
-
-        this.playedGames = this.store.getPlayedGames();
-        this.lastPlayedGames = this.getLastPlayedGames();
     }
 
     private validatePlacements(): void {

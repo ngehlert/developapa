@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Location } from '@angular/common';
 import { DataStorageService } from '../data-storage.service';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -10,6 +11,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PlayedGame, Player } from '../types';
+import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog.component';
+import { ConfirmImportDialogComponent } from './confirm-import-dialog.component';
+import { PasswordDialogComponent } from '../password-dialog.component';
+import { StorageData } from '../types';
 
 @Component({
     selector: 'app-admin',
@@ -27,39 +34,140 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatCardModule,
         MatListModule,
         MatCheckboxModule,
+        MatDialogModule,
     ],
 })
 export class AdminComponent {
-    public players: string;
-    public games: string;
-    public playedGames: string;
+    public playedGamesList: Array<PlayedGame> = [];
+    public isUnlocked = false;
+    private dialog = inject(MatDialog);
+    private location = inject(Location);
 
     constructor(private store: DataStorageService) {
-        this.players = JSON.stringify(this.store.getPlayers(), null, 4);
-        this.games = JSON.stringify(this.store.getGames(), null, 4);
-        this.playedGames = JSON.stringify(this.store.getPlayedGames(), null, 4);
+        this.loadPlayedGames();
+        this.showPasswordDialog();
     }
 
-    public updatePlayers(): void {
-        try {
-            this.store.dangerouslySetPlayers(JSON.parse(this.players));
-        } catch (error) {
-            alert(error);
-        }
+    public showPasswordDialog(): void {
+        const dialogRef = this.dialog.open(PasswordDialogComponent, {
+            disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe((success: boolean) => {
+            if (success) {
+                this.isUnlocked = true;
+            } else {
+                this.location.back();
+            }
+        });
     }
 
-    public updateGames(): void {
-        try {
-            this.store.dangerouslySetGames(JSON.parse(this.games));
-        } catch (error) {
-            alert(error);
-        }
+    public goBack(): void {
+        this.location.back();
     }
-    public updatePlayedGames(): void {
-        try {
-            this.store.dangerouslySetPlayedGames(JSON.parse(this.playedGames));
-        } catch (error) {
-            alert(error);
+
+    private loadPlayedGames(): void {
+        this.playedGamesList = this.store.getPlayedGames()
+            .sort((a, b) => b.timestamp - a.timestamp);
+    }
+
+    public formatDate(timestamp: number): string {
+        const date = new Date(timestamp);
+        return date.toLocaleDateString('de-DE', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    public formatPlayers(playedGame: PlayedGame): string {
+        const playerStrings: Array<string> = [];
+        playedGame.placements.forEach((placementGroup: Array<Player>, index: number) => {
+            const placement = index + 1;
+            placementGroup.forEach((player: Player) => {
+                playerStrings.push(`${player.name} (${placement})`);
+            });
+        });
+        return playerStrings.join(', ');
+    }
+
+    public confirmDelete(playedGame: PlayedGame): void {
+        const summary = `${this.formatDate(playedGame.timestamp)} - ${playedGame.game.name}\nPlayers: ${this.formatPlayers(playedGame)}`;
+        
+        const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+            data: { summary }
+        });
+
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+                this.store.removePlayedGame(playedGame);
+                this.loadPlayedGames();
+            }
+        });
+    }
+
+    public exportData(): void {
+        const data = this.store.load();
+        const jsonString = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const date = new Date();
+        const dateString = date.toISOString().split('T')[0];
+        const filename = `saved-data-${dateString}.json`;
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.click();
+
+        URL.revokeObjectURL(url);
+    }
+
+    public onFileSelected(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        if (!input.files || input.files.length === 0) {
+            return;
         }
+
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            try {
+                const data = JSON.parse(reader.result as string) as StorageData;
+                this.confirmImport(data);
+            } catch (error) {
+                alert('Invalid JSON file');
+            }
+            input.value = '';
+        };
+
+        reader.readAsText(file);
+    }
+
+    private confirmImport(data: StorageData): void {
+        const summary = `Players: ${data.players?.length || 0}\nGames: ${data.games?.length || 0}\nPlayed Games: ${data.playedGames?.length || 0}`;
+
+        const dialogRef = this.dialog.open(ConfirmImportDialogComponent, {
+            data: { summary }
+        });
+
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+                if (data.players) {
+                    this.store.dangerouslySetPlayers(data.players);
+                }
+                if (data.games) {
+                    this.store.dangerouslySetGames(data.games);
+                }
+                if (data.playedGames) {
+                    this.store.dangerouslySetPlayedGames(data.playedGames);
+                }
+                this.loadPlayedGames();
+            }
+        });
     }
 }
