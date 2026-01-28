@@ -6,6 +6,9 @@
         "start": "ng serve",
         "process:content": "node ./scripts/process-markdown.js",
         "build": "npm run process:content && ng run developapa:build:ssr,production",
+        "serve:ssr": "node dist/developapa/server/server.mjs",
+        "dev:ssr": "npm run process:content && ng run developapa:serve",
+        "prerender": "ng run developapa:build:prerender,production && mv dist/developapa/browser/index.csr.html dist/developapa/browser/index.html",
         "serve:prerender": "http-server dist/developapa/browser -p 8080",
         "deploy": "npm run process:content && npm run prerender && cp _redirects dist/developapa/browser/_redirects"
     },
