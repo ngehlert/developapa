@@ -7,20 +7,24 @@
             class=""
         ></app-select>
     </section>
-        @for (post of filteredPosts(); track post.slug) {
-            <article>
-                <header>
-                    <h2>
-                        <a [routerLink]="['/blog', post.slug]">{{ post.title }}</a>
-                    </h2>
-                    <p class="post-meta">
-                        <span class="post-date">{{ post.date | date:'longDate' }}</span>
-                    </p>
-                </header>
-                <p class="post-description">{{ post.description }}</p>
-                <a [routerLink]="['/blog', post.slug]" class="read-more-link">Read More →</a>
-            </article>
-        } @empty {
-            <!-- p class="info-message">Loading posts...</p -->
-        }
+    @for (post of filteredPosts(); track post.slug) {
+        <article>
+            <header>
+                <h2>
+                    <a [routerLink]="['/blog', post.slug]">{{ post.title }}</a>
+                </h2>
+                <p class="post-meta">
+                    <span class="post-date">{{ post.date | date: 'longDate' }}</span>
+                </p>
+            </header>
+            <p class="post-description">{{ post.description }}</p>
+            <a
+                [routerLink]="['/blog', post.slug]"
+                class="read-more-link"
+                >Read More →</a
+            >
+        </article>
+    } @empty {
+        <!-- p class="info-message">Loading posts...</p -->
+    }
 </div>

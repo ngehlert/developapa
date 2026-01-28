@@ -21,9 +21,4 @@ interface PlayedGame {
     timestamp: number;
 }
 
-export {
-    type Player,
-    type Game,
-    type PlayedGame,
-    type StorageData
-}
+export { type Player, type Game, type PlayedGame, type StorageData };

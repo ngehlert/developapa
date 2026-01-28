@@ -1,48 +1,74 @@
 <section class="container">
     <div class="rules">
-        <button mat-icon-button matTooltip="Fullscreen" (click)="toggleFullscreen()">
+        <button
+            mat-icon-button
+            matTooltip="Fullscreen"
+            (click)="toggleFullscreen()"
+        >
             <mat-icon>{{ fullscreenService.isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Admin Area" (click)="openAdminPage()">
+        <button
+            mat-icon-button
+            matTooltip="Admin Area"
+            (click)="openAdminPage()"
+        >
             <mat-icon>security</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Stats" (click)="openStatsPage()">
+        <button
+            mat-icon-button
+            matTooltip="Stats"
+            (click)="openStatsPage()"
+        >
             <mat-icon>insert_chart</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Rules" (click)="openRulesDialog()">
+        <button
+            mat-icon-button
+            matTooltip="Rules"
+            (click)="openRulesDialog()"
+        >
             <mat-icon>description</mat-icon>
         </button>
     </div>
     <mat-card class="card players mat-elevation-z4">
         <mat-card-title>
             Players
-            <button mat-mini-fab color="primary" (click)="toggleAddPlayerForm()" class="fixed-card-button">
+            <button
+                mat-mini-fab
+                color="primary"
+                (click)="toggleAddPlayerForm()"
+                class="fixed-card-button"
+            >
                 <mat-icon>add</mat-icon>
             </button>
         </mat-card-title>
         <mat-card-subtitle>List of all players</mat-card-subtitle>
         <mat-card-content>
             <div class="content-wrapper">
-                <form (submit)="saveNewPlayer()" class="content-wrapper"  *ngIf="isAddingPlayerOpen">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Name</mat-label>
-                        <input
-                            matInput
-                            type="text"
-                            [(ngModel)]="newPlayerName"
-                            name="playerName"
-                        >
-                    </mat-form-field>
-                    <button
-                        mat-stroked-button
-                        color="primary"
-                        (click)="saveNewPlayer()"
-                        type="submit"
-                        style="display: block;"
+                @if (isAddingPlayerOpen) {
+                    <form
+                        (submit)="saveNewPlayer()"
+                        class="content-wrapper"
                     >
-                        Add
-                    </button>
-                </form>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input
+                                matInput
+                                type="text"
+                                [(ngModel)]="newPlayerName"
+                                name="playerName"
+                            />
+                        </mat-form-field>
+                        <button
+                            mat-stroked-button
+                            color="primary"
+                            (click)="saveNewPlayer()"
+                            type="submit"
+                            style="display: block"
+                        >
+                            Add
+                        </button>
+                    </form>
+                }
                 <div
                     cdkDropList
                     #playersList="cdkDropList"
@@ -51,95 +77,122 @@
                     class="list"
                     cdkDropListSortingDisabled
                 >
-                    <div
-                        class="list-entry"
-                        *ngFor="let item of availablePlayers"
-                        cdkDrag
-                        (click)="selectPlayer(item)"
-                    >
-                        {{item.name}}
-                        <div *cdkDragPreview class="list-entry list-entry--preview">{{item.name}}</div>
-                    </div>
+                    @for (item of availablePlayers; track item) {
+                        <div
+                            class="list-entry"
+                            cdkDrag
+                            (click)="selectPlayer(item)"
+                        >
+                            {{ item.name }}
+                            <div
+                                *cdkDragPreview
+                                class="list-entry list-entry--preview"
+                            >
+                                {{ item.name }}
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </mat-card-content>
         @if (playedGame === null) {
-            <div class="card--disabled">
-                Please select a game first
-            </div>
+            <div class="card--disabled">Please select a game first</div>
         }
     </mat-card>
     <mat-card class="card games mat-elevation-z4">
         <mat-card-title>
             Games
-            <button mat-mini-fab color="primary" (click)="toggleAddGameForm()" class="fixed-card-button">
+            <button
+                mat-mini-fab
+                color="primary"
+                (click)="toggleAddGameForm()"
+                class="fixed-card-button"
+            >
                 <mat-icon>add</mat-icon>
             </button>
         </mat-card-title>
         <mat-card-subtitle>List of all games</mat-card-subtitle>
         <mat-card-content>
             <div class="content-wrapper">
-                <form (submit)="saveNewGame()" class="content-wrapper" *ngIf="isAddingGameOpen">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Name</mat-label>
-                        <input
-                            matInput
-                            type="text"
-                            [(ngModel)]="newGameName"
-                            name="gameName"
-                        >
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Duration</mat-label>
-                        <input
-                            matInput
-                            type="text"
-                            [(ngModel)]="newGameDuration"
-                            name="gameDuration"
-                        >
-                    </mat-form-field>
-                    <mat-checkbox [(ngModel)]="newGameIsCoopGame" name="isCoopGame" color="primary">Co-op game</mat-checkbox>
-                    <div style="display: flex; gap: 8px;">
-                        <button
-                            mat-stroked-button
-                            (click)="toggleAddGameForm()"
-                            type="button"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            mat-stroked-button
-                            color="primary"
-                            (click)="saveNewGame()"
-                            type="submit"
-                        >
-                            Add
-                        </button>
-                    </div>
-                </form>
-
-                <div
-                    cdkDropList
-                    #gamesList="cdkDropList"
-                    [cdkDropListData]="games"
-                    [cdkDropListConnectedTo]="[playedGameList]"
-                    class="list"
-                    cdkDropListSortingDisabled
-                    *ngIf="!isAddingGameOpen"
-                >
-                    <div
-                        class="list-entry"
-                        *ngFor="let item of games"
-                        cdkDrag
-                        [class.list-entry--special-game]="item.isSpecialGame"
-                        (click)="selectGame(item)"
+                @if (isAddingGameOpen) {
+                    <form
+                        (submit)="saveNewGame()"
+                        class="content-wrapper"
                     >
-                        {{item.name}} ({{item.duration}}) <mat-icon *ngIf="item.isCoopGame">groups</mat-icon>
-                        <div *cdkDragPreview class="list-entry list-entry--preview">
-                            {{item.name}} ({{item.duration}})
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input
+                                matInput
+                                type="text"
+                                [(ngModel)]="newGameName"
+                                name="gameName"
+                            />
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Duration</mat-label>
+                            <input
+                                matInput
+                                type="text"
+                                [(ngModel)]="newGameDuration"
+                                name="gameDuration"
+                            />
+                        </mat-form-field>
+                        <mat-checkbox
+                            [(ngModel)]="newGameIsCoopGame"
+                            name="isCoopGame"
+                            color="primary"
+                            >Co-op game</mat-checkbox
+                        >
+                        <div style="display: flex; gap: 8px">
+                            <button
+                                mat-stroked-button
+                                (click)="toggleAddGameForm()"
+                                type="button"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                mat-stroked-button
+                                color="primary"
+                                (click)="saveNewGame()"
+                                type="submit"
+                            >
+                                Add
+                            </button>
                         </div>
+                    </form>
+                }
+
+                @if (!isAddingGameOpen) {
+                    <div
+                        cdkDropList
+                        #gamesList="cdkDropList"
+                        [cdkDropListData]="games"
+                        [cdkDropListConnectedTo]="[playedGameList]"
+                        class="list"
+                        cdkDropListSortingDisabled
+                    >
+                        @for (item of games; track item) {
+                            <div
+                                class="list-entry"
+                                cdkDrag
+                                [class.list-entry--special-game]="item.isSpecialGame"
+                                (click)="selectGame(item)"
+                            >
+                                {{ item.name }} ({{ item.duration }})
+                                @if (item.isCoopGame) {
+                                    <mat-icon>groups</mat-icon>
+                                }
+                                <div
+                                    *cdkDragPreview
+                                    class="list-entry list-entry--preview"
+                                >
+                                    {{ item.name }} ({{ item.duration }})
+                                </div>
+                            </div>
+                        }
                     </div>
-                </div>
+                }
             </div>
         </mat-card-content>
     </mat-card>
@@ -156,33 +209,35 @@
                     class="list"
                     (cdkDropListDropped)="dropPlayer($event)"
                 >
-                    <div
-                        class="list-entry list-entry--nested-list"
-                        *ngFor="let placement of placements; let i = index"
-                        cdkDrag
-                    >
-                        {{i + 1}}.
+                    @for (placement of placements; track placement; let i = $index) {
                         <div
-                            cdkDropList
-                            cdkDropListOrientation="horizontal"
-                            class="horizontal-list"
-                            (cdkDropListDropped)="dropPlayer($event)"
-                            [cdkDropListConnectedTo]="[placementsList]"
-                            cdkDropListSortingDisabled
+                            class="list-entry list-entry--nested-list"
+                            cdkDrag
                         >
+                            {{ i + 1 }}.
                             <div
-                                class="horizontal-box"
-                                *ngFor="let player of placement"
-                                cdkDrag
-                                [cdkDragData]="i"
-                                (cdkDragDropped)="handleDropOutOfBound($event)"
+                                cdkDropList
+                                cdkDropListOrientation="horizontal"
+                                class="horizontal-list"
+                                (cdkDropListDropped)="dropPlayer($event)"
+                                [cdkDropListConnectedTo]="[placementsList]"
+                                cdkDropListSortingDisabled
                             >
-                                {{player.name}}
+                                @for (player of placement; track player) {
+                                    <div
+                                        class="horizontal-box"
+                                        cdkDrag
+                                        [cdkDragData]="i"
+                                        (cdkDragDropped)="handleDropOutOfBound($event)"
+                                    >
+                                        {{ player.name }}
+                                    </div>
+                                }
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
-                <h2 style="margin-top: 24px;">Game</h2>
+                <h2 style="margin-top: 24px">Game</h2>
                 <div
                     cdkDropList
                     #playedGameList="cdkDropList"
@@ -190,31 +245,43 @@
                     class="list"
                     (cdkDropListDropped)="dropGame($event)"
                 >
-                    <div
-                        class="list-entry"
-                        [class.list-entry--special-game]="playedGame && playedGame.isSpecialGame"
-                        cdkDrag
-                        *ngIf="playedGame"
-                    >
-                        {{playedGame.name}} ({{playedGame.duration}}) <mat-icon *ngIf="playedGame.isCoopGame">groups</mat-icon>
-                    </div>
+                    @if (playedGame) {
+                        <div
+                            class="list-entry"
+                            [class.list-entry--special-game]="playedGame && playedGame.isSpecialGame"
+                            cdkDrag
+                        >
+                            {{ playedGame.name }} ({{ playedGame.duration }})
+                            @if (playedGame.isCoopGame) {
+                                <mat-icon>groups</mat-icon>
+                            }
+                        </div>
+                    }
                 </div>
-                <div style="gap: 16px; margin-top: 16px; display: flex;">
+                <div style="gap: 16px; margin-top: 16px; display: flex">
                     <button
                         mat-raised-button
                         (click)="clearPlayedGame()"
-                    >Clear</button>
-                    <button mat-raised-button color="primary" (click)="savePlayedGame()">Save</button>
+                    >
+                        Clear
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="savePlayedGame()"
+                    >
+                        Save
+                    </button>
                 </div>
 
-                <h2 style="margin-top: 36px;">Last entries</h2>
+                <h2 style="margin-top: 36px">Last entries</h2>
             </section>
             <mat-list>
-                @for(playedGame of lastPlayedGames; track playedGame.timestamp) {
+                @for (playedGame of lastPlayedGames; track playedGame.timestamp) {
                     <mat-list-item style="border-bottom: 1px solid rgba(0, 0, 0, 0.2)">
-                        <span matListItemTitle>{{playedGame.game.name}}</span>
-                        <span matListItemLine>{{getTimeFromTimestamp(playedGame.timestamp)}}</span>
-                        <span matListItemLine>{{getPlayersFromPlacements(playedGame.placements)}}</span>
+                        <span matListItemTitle>{{ playedGame.game.name }}</span>
+                        <span matListItemLine>{{ getTimeFromTimestamp(playedGame.timestamp) }}</span>
+                        <span matListItemLine>{{ getPlayersFromPlacements(playedGame.placements) }}</span>
                     </mat-list-item>
                 }
             </mat-list>

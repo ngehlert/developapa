@@ -5,8 +5,15 @@ import { initGame } from '../kurve/src/index-ssr';
 @Component({
     selector: 'kurve',
     template: `
-        <section #section oncontextmenu="return false;" class='flex-container'>
-            <canvas id="canvas" #canvas></canvas>
+        <section
+            #section
+            oncontextmenu="return false;"
+            class="flex-container"
+        >
+            <canvas
+                id="canvas"
+                #canvas
+            ></canvas>
         </section>
     `,
     styles: `
@@ -30,8 +37,7 @@ import { initGame } from '../kurve/src/index-ssr';
         }
     `,
     standalone: true,
-    imports: [
-    ],
+    imports: [],
 })
 class KurveComponent implements OnInit {
     public container: Signal<ElementRef> = viewChild.required('section');

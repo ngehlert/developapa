@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -11,44 +11,53 @@ import { MatInputModule } from '@angular/material/input';
     template: `
         <h2 mat-dialog-title>Enter Password</h2>
         <mat-dialog-content>
-            <mat-form-field appearance="outline" class="password-field">
+            <mat-form-field
+                appearance="outline"
+                class="password-field"
+            >
                 <mat-label>Password</mat-label>
                 <input
                     matInput
                     type="password"
                     [(ngModel)]="password"
                     (keyup.enter)="onSubmit()"
-                >
+                />
             </mat-form-field>
             @if (error) {
                 <p class="error">Invalid password</p>
             }
         </mat-dialog-content>
         <mat-dialog-actions align="end">
-            <button mat-button (click)="onCancel()">Cancel</button>
-            <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+            <button
+                mat-button
+                (click)="onCancel()"
+            >
+                Cancel
+            </button>
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="onSubmit()"
+            >
+                Submit
+            </button>
         </mat-dialog-actions>
     `,
-    styles: [`
-        .error {
-            color: #f44336;
-            margin: 0;
-            font-size: 14px;
-        }
-        .password-field {
-            width: 100%;
-            margin-top: 16px;
-        }
-    `],
-    standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
+    styles: [
+        `
+            .error {
+                color: #f44336;
+                margin: 0;
+                font-size: 14px;
+            }
+            .password-field {
+                width: 100%;
+                margin-top: 16px;
+            }
+        `,
     ],
+    standalone: true,
+    imports: [FormsModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule],
 })
 export class PasswordDialogComponent {
     public password = '';

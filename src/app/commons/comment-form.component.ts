@@ -5,10 +5,29 @@ import { Router } from '@angular/router';
     selector: 'app-comment-form',
     standalone: true,
     template: `
-        <form autocomplete="off" name="comment-form" method="post" data-netlify-honeypot="bot-field" data-netlify="true">
-            <input type="text" name="bot-field" style="display:none" aria-label="Don't fill this out if you are breathing" />
-            <input type="hidden" name="form-name" value="comment-form" />
-            <input type="hidden" name="slug" [value]="url" />
+        <form
+            autocomplete="off"
+            name="comment-form"
+            method="post"
+            data-netlify-honeypot="bot-field"
+            data-netlify="true"
+        >
+            <input
+                type="text"
+                name="bot-field"
+                style="display:none"
+                aria-label="Don't fill this out if you are breathing"
+            />
+            <input
+                type="hidden"
+                name="form-name"
+                value="comment-form"
+            />
+            <input
+                type="hidden"
+                name="slug"
+                [value]="url"
+            />
             <input
                 type="text"
                 id="name"
@@ -29,9 +48,19 @@ import { Router } from '@angular/router';
                     name="gdpr"
                     value="checkedGdpr"
                     required
-                ><label for="gdpr">I agree that my name will be stored in connection with my comment and will be visible to others after a review. To change/delete the comment later please contact me via mail at info [at] ngehlert.de</label>
+                /><label for="gdpr"
+                    >I agree that my name will be stored in connection with my comment and will be visible to others
+                    after a review. To change/delete the comment later please contact me via mail at info [at]
+                    ngehlert.de</label
+                >
             </div>
-            <button type="submit" class="button" role="button">Submit</button>
+            <button
+                type="submit"
+                class="button"
+                role="button"
+            >
+                Submit
+            </button>
         </form>
     `,
     styles: `
@@ -43,7 +72,7 @@ import { Router } from '@angular/router';
         }
 
         textarea,
-        input[type="text"] {
+        input[type='text'] {
             border: 1px solid var(--light-color);
             padding: 1em;
             border-radius: 0.5em;
@@ -54,7 +83,7 @@ import { Router } from '@angular/router';
                 box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
             }
         }
-        input[type="text"] {
+        input[type='text'] {
             width: 240px;
         }
         textarea {
@@ -62,7 +91,7 @@ import { Router } from '@angular/router';
             min-height: 120px;
         }
 
-        input[type="checkbox"] {
+        input[type='checkbox'] {
             -webkit-appearance: none;
             appearance: none;
             background-color: var(--form-background);
@@ -80,8 +109,8 @@ import { Router } from '@angular/router';
             place-content: center;
         }
 
-        input[type="checkbox"]::before {
-            content: "";
+        input[type='checkbox']::before {
+            content: '';
             width: 1em;
             height: 1em;
             clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
@@ -93,11 +122,11 @@ import { Router } from '@angular/router';
             background-color: CanvasText;
         }
 
-        input[type="checkbox"]:checked::before {
+        input[type='checkbox']:checked::before {
             transform: scale(1);
         }
 
-        input[type="checkbox"]:focus {
+        input[type='checkbox']:focus {
             outline: max(2px, 0.15em) solid var(--base-app-color);
             outline-offset: max(2px, 0.15em);
         }
@@ -121,7 +150,7 @@ import { Router } from '@angular/router';
             background-size: 4px 3px;
             border-style: solid;
             border-width: 2px;
-            box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+            box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
             box-sizing: border-box;
             color: #41403e;
             cursor: pointer;
@@ -130,7 +159,7 @@ import { Router } from '@angular/router';
             font-size: 1rem;
             line-height: 23px;
             outline: none;
-            padding: .75rem;
+            padding: 0.75rem;
             text-decoration: none;
             transition: all 235ms ease-in-out;
             border-bottom-left-radius: 15px 255px;
@@ -142,22 +171,20 @@ import { Router } from '@angular/router';
             touch-action: manipulation;
 
             &:hover {
-                box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+                box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
                 transform: translate3d(0, 2px, 0);
             }
 
             &:focus {
-                box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+                box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
             }
 
             &:active {
                 background-color: var(--base-app-color-20);
             }
         }
-
     `,
 })
 export class CommentFormComponent {
     public url = inject(Router).url.replace('/blog/', '');
 }
-

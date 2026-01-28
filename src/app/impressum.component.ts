@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
     selector: 'impressum-component',
     template: `
         <section>
-
             <h2>Impressum</h2>
 
             <p>
@@ -21,11 +20,19 @@ import { RouterLink } from '@angular/router';
 
             <h3>Disclaimer:</h3>
 
-            <p>The content on this blog is for informational and educational purposes only. I make no warranties about the accuracy, completeness, or suitability of the information provided. Use of this blog is at your own risk. I am not responsible for the content of external websites linked from this blog.</p>
+            <p>
+                The content on this blog is for informational and educational purposes only. I make no warranties about
+                the accuracy, completeness, or suitability of the information provided. Use of this blog is at your own
+                risk. I am not responsible for the content of external websites linked from this blog.
+            </p>
 
             <h3>Data Protection Information:</h3>
 
-            <p>This blog collects minimal personal data. If you leave a comment, your name (or alias) and comment content will be stored. No other personal data is collected. Please see my <a routerLink="/privacy-policy">Privacy Policy</a> for full details. This blog does not use cookies.</p>
+            <p>
+                This blog collects minimal personal data. If you leave a comment, your name (or alias) and comment
+                content will be stored. No other personal data is collected. Please see my
+                <a routerLink="/privacy-policy">Privacy Policy</a> for full details. This blog does not use cookies.
+            </p>
         </section>
     `,
     standalone: true,
@@ -35,9 +42,7 @@ import { RouterLink } from '@angular/router';
             margin: 1rem auto;
         }
     `,
-    imports: [
-        RouterLink,
-    ],
+    imports: [RouterLink],
 })
 class ImpressumComponent {}
 

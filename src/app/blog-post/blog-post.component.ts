@@ -1,7 +1,4 @@
-import {
-    Component,
-    inject,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule, DatePipe, ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
@@ -68,7 +65,7 @@ export class BlogPostComponent {
             }
             e.preventDefault();
             const [baseUrl, fragment] = link.split('#');
-            void this.router.navigate([baseUrl], {fragment});
+            void this.router.navigate([baseUrl], { fragment });
             this.viewportScroller.scrollToAnchor(fragment);
         }
     }

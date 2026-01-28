@@ -1,7 +1,8 @@
 import {
     Component,
     computed,
-    ElementRef, inject,
+    ElementRef,
+    inject,
     input,
     InputSignal,
     model,
@@ -27,20 +28,23 @@ import { FormsModule } from '@angular/forms';
                 (focusin)="onFocusIn()"
             />
             @if (isFocused()) {
-                <ul class="value-list" #optionList>
+                <ul
+                    class="value-list"
+                    #optionList
+                >
                     @for (option of filteredOptions(); track option; let i = $index) {
                         <li
                             tabindex="0"
                             (click)="onSearchChange(option)"
-                        >{{ option }}</li>
+                        >
+                            {{ option }}
+                        </li>
                     }
                 </ul>
             }
         </section>
     `,
-    imports: [
-        FormsModule,
-    ],
+    imports: [FormsModule],
     styles: `
         section {
             position: relative;
@@ -54,9 +58,9 @@ import { FormsModule } from '@angular/forms';
             font-weight: 500;
             font-size: 1em;
             padding: 1em;
-            background-color: #FAFCFD;
+            background-color: #fafcfd;
             border: 1px solid var(--base-app-color);
-            transition: .3s ease-in-out;
+            transition: 0.3s ease-in-out;
 
             &::-webkit-input-placeholder {
                 color: var(--alternative-base-color);
@@ -89,18 +93,18 @@ import { FormsModule } from '@angular/forms';
             padding: 0;
             box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
             z-index: 2;
-            background: #FAFCFD;
+            background: #fafcfd;
             max-height: 320px;
             overflow: auto;
 
             li {
                 position: relative;
                 padding: 1em;
-                background-color: #FAFCFD;
+                background-color: #fafcfd;
                 display: flex;
                 align-items: center;
                 cursor: pointer;
-                transition: background-color .3s;
+                transition: background-color 0.3s;
                 opacity: 1;
 
                 &:focus,
@@ -124,10 +128,8 @@ export class SelectComponent {
     optionList: Signal<ElementRef | undefined> = viewChild('optionList');
 
     filteredOptions: Signal<string[]> = computed(() => {
-        return this.options().filter((option) =>
-            option.toLowerCase().includes(this.searchString().toLowerCase())
-        );
-    })
+        return this.options().filter((option) => option.toLowerCase().includes(this.searchString().toLowerCase()));
+    });
 
     isFocused: WritableSignal<boolean> = signal(false);
     searchString: WritableSignal<string> = signal('');
@@ -160,7 +162,7 @@ export class SelectComponent {
             if (activeIndex > -1) {
                 const activeOption = childList[activeIndex].textContent;
                 if (activeOption) {
-                    this.onSearchChange(activeOption)
+                    this.onSearchChange(activeOption);
                 }
             }
         }

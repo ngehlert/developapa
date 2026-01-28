@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FullscreenService } from './boardgame-tracker/fullscreen.service';
@@ -7,13 +7,7 @@ import { FullscreenService } from './boardgame-tracker/fullscreen.service';
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [
-        CommonModule,
-        RouterOutlet,
-        RouterModule,
-        NgOptimizedImage,
-        MatTooltip,
-    ],
+    imports: [RouterOutlet, RouterModule, NgOptimizedImage, MatTooltip],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })

@@ -38,18 +38,24 @@ export const routes: Routes = [
         children: [
             {
                 path: 'stats',
-                loadComponent: () => import('./boardgame-tracker/stats/stats.component')
-                    .then((module: {StatsComponent: Type<unknown>}) => module.StatsComponent),
+                loadComponent: () =>
+                    import('./boardgame-tracker/stats/stats.component').then(
+                        (module: { StatsComponent: Type<unknown> }) => module.StatsComponent,
+                    ),
             },
             {
                 path: 'main',
-                loadComponent: () => import('./boardgame-tracker/main/main.component')
-                    .then((module: {MainComponent: Type<unknown>}) => module.MainComponent),
+                loadComponent: () =>
+                    import('./boardgame-tracker/main/main.component').then(
+                        (module: { MainComponent: Type<unknown> }) => module.MainComponent,
+                    ),
             },
             {
                 path: 'admin',
-                loadComponent: () => import('./boardgame-tracker/admin/admin.component')
-                    .then((module: {AdminComponent: Type<unknown>}) => module.AdminComponent),
+                loadComponent: () =>
+                    import('./boardgame-tracker/admin/admin.component').then(
+                        (module: { AdminComponent: Type<unknown> }) => module.AdminComponent,
+                    ),
             },
         ],
     },
@@ -70,6 +76,6 @@ export const routes: Routes = [
                 void inject(Router).navigate([`/blog/${route.params['slug']}`]);
                 return false;
             },
-        ]
+        ],
     },
 ];

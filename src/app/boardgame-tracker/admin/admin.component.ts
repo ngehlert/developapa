@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { DataStorageService } from '../data-storage.service';
-import { CommonModule } from '@angular/common';
+
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +24,6 @@ import { StorageData } from '../types';
     styleUrls: ['./admin.component.scss'],
     standalone: true,
     imports: [
-        CommonModule,
         DragDropModule,
         MatButtonModule,
         MatIconModule,
@@ -50,7 +49,7 @@ export class AdminComponent {
 
     public showPasswordDialog(): void {
         const dialogRef = this.dialog.open(PasswordDialogComponent, {
-            disableClose: true
+            disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe((success: boolean) => {
@@ -67,8 +66,7 @@ export class AdminComponent {
     }
 
     private loadPlayedGames(): void {
-        this.playedGamesList = this.store.getPlayedGames()
-            .sort((a, b) => b.timestamp - a.timestamp);
+        this.playedGamesList = this.store.getPlayedGames().sort((a, b) => b.timestamp - a.timestamp);
     }
 
     public formatDate(timestamp: number): string {
@@ -78,7 +76,7 @@ export class AdminComponent {
             month: '2-digit',
             year: 'numeric',
             hour: '2-digit',
-            minute: '2-digit'
+            minute: '2-digit',
         });
     }
 
@@ -95,9 +93,9 @@ export class AdminComponent {
 
     public confirmDelete(playedGame: PlayedGame): void {
         const summary = `${this.formatDate(playedGame.timestamp)} - ${playedGame.game.name}\nPlayers: ${this.formatPlayers(playedGame)}`;
-        
+
         const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-            data: { summary }
+            data: { summary },
         });
 
         dialogRef.afterClosed().subscribe((confirmed: boolean) => {
@@ -152,7 +150,7 @@ export class AdminComponent {
         const summary = `Players: ${data.players?.length || 0}\nGames: ${data.games?.length || 0}\nPlayed Games: ${data.playedGames?.length || 0}`;
 
         const dialogRef = this.dialog.open(ConfirmImportDialogComponent, {
-            data: { summary }
+            data: { summary },
         });
 
         dialogRef.afterClosed().subscribe((confirmed: boolean) => {

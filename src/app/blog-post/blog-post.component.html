@@ -9,7 +9,11 @@
             ></div>
 
             <hr />
-            <a routerLink="/blog" #backLink>← Back to Blog List</a>
+            <a
+                routerLink="/blog"
+                #backLink
+                >← Back to Blog List</a
+            >
         </section>
 
         @defer (on viewport(backLink)) {
@@ -18,7 +22,10 @@
                 <app-comment-form></app-comment-form>
                 <h2>Comments</h2>
                 @for (comment of post.comments; track comment.date; let i = $index) {
-                    <app-comment [commentData]="comment" [index]="i"></app-comment>
+                    <app-comment
+                        [commentData]="comment"
+                        [index]="i"
+                    ></app-comment>
                 } @empty {
                     <p>No comments yet. Be the first to comment!</p>
                 }

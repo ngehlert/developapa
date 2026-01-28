@@ -23,7 +23,7 @@ export class PrismHighlightPipe {
         if (isPlatformBrowser(this.platformId)) {
             setTimeout(() => {
                 Prism.highlightAll();
-            })
+            });
         }
 
         return html;

@@ -1,13 +1,8 @@
 import { Component, inject, LOCALE_ID } from '@angular/core';
 import { Game, PlayedGame, Player } from '../types';
-import {
-    CdkDragDrop,
-    DragDropModule,
-    moveItemInArray,
-    transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DataStorageService } from '../data-storage.service';
-import { CommonModule, DatePipe, DecimalPipe, registerLocaleData } from '@angular/common';
+import { DatePipe, DecimalPipe, registerLocaleData } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,7 +26,6 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     styleUrls: ['./main.component.scss'],
     standalone: true,
     imports: [
-        CommonModule,
         DragDropModule,
         MatButtonModule,
         MatIconModule,
@@ -44,11 +38,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
         MatTooltipModule,
         MatDialogModule,
     ],
-    providers: [
-        { provide: LOCALE_ID, useValue: 'de-DE' },
-        DatePipe,
-        DecimalPipe,
-    ],
+    providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }, DatePipe, DecimalPipe],
 })
 export class MainComponent {
     private players: Array<Player> = [];
@@ -77,11 +67,7 @@ export class MainComponent {
         private router: Router,
         private activeRoute: ActivatedRoute,
     ) {
-        ({
-            games: this.games,
-            players: this.players,
-            playedGames: this.playedGames,
-        } = this.store.load());
+        ({ games: this.games, players: this.players, playedGames: this.playedGames } = this.store.load());
         this.availablePlayers = [...this.players];
         this.lastPlayedGames = this.getLastPlayedGames();
     }
@@ -102,9 +88,7 @@ export class MainComponent {
         this.fullscreenService.toggle();
     }
 
-    public handleDropOutOfBound(
-        event: CdkDragDrop<Array<Array<Player>>, Array<Player>>,
-    ): void {
+    public handleDropOutOfBound(event: CdkDragDrop<Array<Array<Player>>, Array<Player>>): void {
         if (!event.isPointerOverContainer) {
             this.placements[event.item.data].splice(event.previousIndex, 1);
         }
@@ -112,11 +96,7 @@ export class MainComponent {
 
     public dropPlayer(event: CdkDragDrop<Array<Array<Player>>, Array<Player>>) {
         if (event.previousContainer.id === event.container.id) {
-            moveItemInArray(
-                this.placements[event.currentIndex],
-                event.previousIndex,
-                event.currentIndex,
-            );
+            moveItemInArray(this.placements[event.currentIndex], event.previousIndex, event.currentIndex);
         } else if (event.previousContainer.orientation === 'horizontal') {
             if (!this.placements[event.currentIndex]) {
                 this.placements[event.currentIndex] = [];
@@ -144,15 +124,11 @@ export class MainComponent {
     }
 
     public selectPlayer(player: Player): void {
-        const placementIndex: number = this.placements.findIndex(
-            (current) => current.length === 0,
-        );
+        const placementIndex: number = this.placements.findIndex((current) => current.length === 0);
         if (placementIndex > -1) {
             this.placements[placementIndex] = [player];
         }
-        const playerIndex: number = this.availablePlayers.findIndex(
-            (current) => current === player,
-        );
+        const playerIndex: number = this.availablePlayers.findIndex((current) => current === player);
         if (playerIndex > -1) {
             this.availablePlayers.splice(playerIndex, 1);
         }
@@ -170,11 +146,9 @@ export class MainComponent {
     }
 
     public savePlayedGame(): void {
-        const placementsContainNoPlayer: boolean = this.placements.every(
-            (players: Array<Player>) => {
-                return players.length === 0;
-            },
-        );
+        const placementsContainNoPlayer: boolean = this.placements.every((players: Array<Player>) => {
+            return players.length === 0;
+        });
         if (placementsContainNoPlayer || !this.playedGame) {
             return;
         }

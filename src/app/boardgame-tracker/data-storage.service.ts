@@ -8,13 +8,13 @@ enum DataKeys {
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class DataStorageService {
     private readonly storageKey: string = 'board-game-data';
-    private customGameName: string = 'default'
+    private customGameName: string = 'default';
 
-    constructor() { }
+    constructor() {}
 
     public setGameName(name: string): void {
         this.customGameName = name;
@@ -25,21 +25,19 @@ export class DataStorageService {
             players: this.getPlayers(),
             games: this.getGames(),
             playedGames: this.getPlayedGames(),
-        }
+        };
     }
 
     public getPlayers(): Array<Player> {
-        return this.getLocalStorageData<Array<Player>>(DataKeys.Players)
-            .sort((playerA: Player, playerB: Player) => {
-                return playerA.name.localeCompare(playerB.name);
-            });
+        return this.getLocalStorageData<Array<Player>>(DataKeys.Players).sort((playerA: Player, playerB: Player) => {
+            return playerA.name.localeCompare(playerB.name);
+        });
     }
 
     public getGames(): Array<Game> {
-        return this.getLocalStorageData<Array<Game>>(DataKeys.Games)
-            .sort((playerA: Game, playerB: Game) => {
-                return playerA.name.localeCompare(playerB.name);
-            });
+        return this.getLocalStorageData<Array<Game>>(DataKeys.Games).sort((playerA: Game, playerB: Game) => {
+            return playerA.name.localeCompare(playerB.name);
+        });
     }
 
     public getPlayedGames(): Array<PlayedGame> {
@@ -116,7 +114,6 @@ export class DataStorageService {
     }
 
     private arePlayedGamesEqual(gameA: PlayedGame, gameB: PlayedGame): boolean {
-        return gameA.game.name === gameB.game.name
-            && gameA.timestamp === gameB.timestamp;
+        return gameA.game.name === gameB.game.name && gameA.timestamp === gameB.timestamp;
     }
 }

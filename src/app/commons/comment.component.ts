@@ -3,30 +3,29 @@ import { Comment } from './comment';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { DatePipe } from '@angular/common';
 
-
 @Component({
     selector: 'app-comment',
     standalone: true,
-    imports: [
-        SafeHtmlPipe,
-        DatePipe,
-    ],
+    imports: [SafeHtmlPipe, DatePipe],
     template: `
         <div class="comment-note">
             @if (applyRedPin()) {
-              <i class="red-pin"></i>
+                <i class="red-pin"></i>
             }
             @if (applyBluePin()) {
-              <i class="blue-pin"></i>
+                <i class="blue-pin"></i>
             }
             @if (applyScotchTape()) {
                 <div class="scotch-tape"></div>
             }
             <div class="comment-header">
                 <strong class="comment-author">{{ commentData().name }}</strong>
-                <span class="comment-date">{{ commentData().date | date:'longDate' }}</span>
+                <span class="comment-date">{{ commentData().date | date: 'longDate' }}</span>
             </div>
-            <p class="comment-message" [innerHtml]="commentData().htmlContent | safeHtml"></p>
+            <p
+                class="comment-message"
+                [innerHtml]="commentData().htmlContent | safeHtml"
+            ></p>
         </div>
     `,
     styles: `
@@ -35,7 +34,9 @@ import { DatePipe } from '@angular/common';
             padding: 5px;
             --initial-rotate: -1deg;
             transform: rotate(var(--initial-rotate));
-            transition: transform 0.15s linear, box-shadow 0.15s linear;
+            transition:
+                transform 0.15s linear,
+                box-shadow 0.15s linear;
             margin-bottom: 12px;
         }
 
@@ -53,7 +54,10 @@ import { DatePipe } from '@angular/common';
             width: 60%;
             box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
             transform: rotate(-1deg);
-            transition: transform 0.15s linear, box-shadow 0.15s linear, z-index 0s 0.15s linear;
+            transition:
+                transform 0.15s linear,
+                box-shadow 0.15s linear,
+                z-index 0s 0.15s linear;
             word-wrap: break-word;
             position: relative;
         }
@@ -101,10 +105,14 @@ import { DatePipe } from '@angular/common';
             transform: rotate(5deg);
 
             &:after {
-                background-color: #A31;
-                background-image: radial-gradient(25% 25%, circle, hsla(0, 0%, 100%, .3), hsla(0, 0%, 0%, .3));
+                background-color: #a31;
+                background-image: radial-gradient(25% 25%, circle, hsla(0, 0%, 100%, 0.3), hsla(0, 0%, 0%, 0.3));
                 border-radius: 50%;
-                box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, .1), inset 3px 3px 3px hsla(0, 0%, 100%, .2), inset -3px -3px 3px hsla(0, 0%, 0%, .2), 23px 20px 3px hsla(0, 0%, 0%, .15);
+                box-shadow:
+                    inset 0 0 0 1px hsla(0, 0%, 0%, 0.1),
+                    inset 3px 3px 3px hsla(0, 0%, 100%, 0.2),
+                    inset -3px -3px 3px hsla(0, 0%, 0%, 0.2),
+                    23px 20px 3px hsla(0, 0%, 0%, 0.15);
                 content: '';
                 height: 12px;
                 left: -5px;
@@ -115,7 +123,7 @@ import { DatePipe } from '@angular/common';
 
             &:before {
                 background-color: hsla(0, 0%, 0%, 0.1);
-                box-shadow: 0 0 .25em hsla(0, 0%, 0%, .1);
+                box-shadow: 0 0 0.25em hsla(0, 0%, 0%, 0.1);
                 content: '';
 
                 height: 24px;
@@ -134,7 +142,11 @@ import { DatePipe } from '@angular/common';
 
             &:after {
                 background-color: #007afc;
-                box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, .1), inset 3px 3px 3px hsla(0, 0%, 100%, .2), inset -3px -3px 3px hsla(0, 0%, 0%, .2), 27px 29px 3px hsla(0, 0%, 0%, .15);
+                box-shadow:
+                    inset 0 0 0 1px hsla(0, 0%, 0%, 0.1),
+                    inset 3px 3px 3px hsla(0, 0%, 100%, 0.2),
+                    inset -3px -3px 3px hsla(0, 0%, 0%, 0.2),
+                    27px 29px 3px hsla(0, 0%, 0%, 0.15);
             }
 
             &:before {
@@ -146,7 +158,7 @@ import { DatePipe } from '@angular/common';
                 bottom: 6px;
                 background: rgba(255, 255, 235, 0.6);
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-                content: "";
+                content: '';
                 display: block;
                 height: 30px;
                 position: absolute;
@@ -158,7 +170,7 @@ import { DatePipe } from '@angular/common';
                 top: 10px;
                 background: rgba(255, 255, 235, 0.6);
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-                content: "";
+                content: '';
                 display: block;
                 height: 30px;
                 position: absolute;
@@ -167,7 +179,6 @@ import { DatePipe } from '@angular/common';
                 transform: rotate(45deg);
             }
         }
-
     `,
 })
 export class CommentComponent {
@@ -176,15 +187,15 @@ export class CommentComponent {
 
     applyRedPin = computed(() => {
         return this.index() % 4 === 0;
-    })
+    });
 
     applyBluePin = computed(() => {
         return this.index() % 4 === 2;
-    })
+    });
 
     applyScotchTape = computed(() => {
         return this.index() % 4 === 1;
-    })
+    });
 
     @HostBinding('style.--initial-rotate.deg')
     get rotationDegrees(): number {

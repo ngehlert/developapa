@@ -21,10 +21,7 @@ export class BlogListComponent {
 
     selectedTag: WritableSignal<string | null> = signal(null);
 
-    posts: Signal<PostMetadata[]> = toSignal(
-        this.blogService.getPostsMetadata(),
-        {initialValue: []},
-    );
+    posts: Signal<PostMetadata[]> = toSignal(this.blogService.getPostsMetadata(), { initialValue: [] });
     filteredPosts: Signal<PostMetadata[]> = computed(() => {
         return this.posts().filter((post) => {
             const selectedTag = this.selectedTag();
@@ -36,29 +33,29 @@ export class BlogListComponent {
         });
     });
     tagOptions: Signal<string[]> = computed(() => {
-            const tagsWithCount: Map<string, number> = new Map();
-            this.posts().forEach((post) => {
-                post.tags.forEach((tag => {
-                    if (tagsWithCount.has(tag)) {
-                        tagsWithCount.set(tag, tagsWithCount.get(tag)! + 1);
-                    } else {
-                        tagsWithCount.set(tag, 1);
-                    }
-                }));
+        const tagsWithCount: Map<string, number> = new Map();
+        this.posts().forEach((post) => {
+            post.tags.forEach((tag) => {
+                if (tagsWithCount.has(tag)) {
+                    tagsWithCount.set(tag, tagsWithCount.get(tag)! + 1);
+                } else {
+                    tagsWithCount.set(tag, 1);
+                }
             });
-            const options = Array.from(tagsWithCount.entries())
-                .sort((a: [string, number], b: [string, number]) => {
-                    if (a[1] === b[1]) {
-                        return a[0].localeCompare(b[0]);
-                    }
+        });
+        const options = Array.from(tagsWithCount.entries())
+            .sort((a: [string, number], b: [string, number]) => {
+                if (a[1] === b[1]) {
+                    return a[0].localeCompare(b[0]);
+                }
 
-                    return b[1] - a[1];
-                })
-                .map((tag: [string, number]) => {
-                    return `${tag[0]} (${tag[1]})`;
-                });
+                return b[1] - a[1];
+            })
+            .map((tag: [string, number]) => {
+                return `${tag[0]} (${tag[1]})`;
+            });
 
-            return options;
+        return options;
     });
 
     constructor() {
