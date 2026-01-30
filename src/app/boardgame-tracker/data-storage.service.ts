@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Game, PlayedGame, Player, StorageData } from './types';
 
 enum DataKeys {
@@ -13,6 +14,7 @@ enum DataKeys {
 export class DataStorageService {
     private readonly storageKey: string = 'board-game-data';
     private customGameName: string = 'default';
+    private readonly platformId = inject(PLATFORM_ID);
 
     constructor() {}
 
@@ -102,10 +104,16 @@ export class DataStorageService {
     }
 
     private getLocalStorageData<T>(key: DataKeys): T {
+        if (!isPlatformBrowser(this.platformId)) {
+            return [] as unknown as T;
+        }
         return JSON.parse(localStorage.getItem(this.getLocalStorageKey(key)) || '[]');
     }
 
     private setLocalStorageData(key: DataKeys, data: unknown): void {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
         return localStorage.setItem(this.getLocalStorageKey(key), JSON.stringify(data));
     }
 

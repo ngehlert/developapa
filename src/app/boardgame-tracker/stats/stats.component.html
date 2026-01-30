@@ -2,16 +2,18 @@
     class="protected-content"
     [class.blurred]="!isUnlocked"
 >
-    <ag-grid-angular
-        #agGrid
-        style="width: 100%; height: 1100px"
-        class="ag-theme-alpine"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
-        [defaultColDef]="defaultColDef"
-        (sortChanged)="onSortChanged($event)"
-    >
-    </ag-grid-angular>
+    @if (isPlatformBrowser) {
+        <ag-grid-angular
+            #agGrid
+            style="width: 100%; height: 1100px"
+            class="ag-theme-alpine"
+            [rowData]="rowData"
+            [columnDefs]="columnDefs"
+            [defaultColDef]="defaultColDef"
+            (sortChanged)="onSortChanged($event)"
+        >
+        </ag-grid-angular>
+    }
 
     <h1>Total Unique Games: {{ totalUniqueGames.size }}</h1>
     <h1>Total Games: {{ totalGames }}</h1>

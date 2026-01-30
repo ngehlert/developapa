@@ -75,7 +75,7 @@ try {
     fs.writeFileSync(postsListPath, JSON.stringify(postsMetadata, null, 2));
     console.log(`Generated posts list: ${postsListPath}`);
 
-    fs.writeFileSync(routesFilePath, routesToPrerender.join('\n'));
+    fs.writeFileSync(routesFilePath, routesToPrerender.join('\n') + '\n');
     console.log(`Generated routes file for pre-rendering: ${routesFilePath}`);
 
     console.log('Markdown processing complete.');

@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    inject,
+    OnInit,
+    PLATFORM_ID,
+    ViewChild,
+} from '@angular/core';
 import {
     AgGridEvent,
     AllCommunityModule,
@@ -10,7 +18,7 @@ import {
 } from 'ag-grid-community';
 import { DataStorageService } from '../data-storage.service';
 import { Game, PlayedGame, Player } from '../types';
-import { DecimalPipe, Location } from '@angular/common';
+import { DecimalPipe, isPlatformBrowser, Location } from '@angular/common';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordDialogComponent } from '../password-dialog.component';
@@ -31,13 +39,15 @@ provideGlobalGridOptions({ theme: 'legacy' });
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsComponent implements OnInit {
-    @ViewChild('agGrid', { static: true }) public agGrid!: AgGridAngular;
+    @ViewChild('agGrid', { static: true }) public agGrid?: AgGridAngular;
 
     public columnDefs: Array<ColDef> = [];
     public defaultColDef: ColDef = this.getDefaultColDef();
     public rowData: Array<TableEntry> = [];
     public players: Array<Player>;
     public isUnlocked = false;
+    public readonly platformId = inject(PLATFORM_ID);
+    public readonly isPlatformBrowser = isPlatformBrowser(this.platformId);
 
     public totalGames: number = 0;
     public totalUniqueGames: Set<string> = new Set();
@@ -83,11 +93,13 @@ export class StatsComponent implements OnInit {
         this.columnDefs = this.getColumnDefs();
         this.rowData = this.getRowData();
 
-        this.agGrid.gridReady.subscribe(() => {
-            this.agGrid.api.sizeColumnsToFit();
+        this.agGrid?.gridReady.subscribe(() => {
+            this.agGrid?.api.sizeColumnsToFit();
         });
 
-        this.showPasswordDialog();
+        if (this.isPlatformBrowser) {
+            this.showPasswordDialog();
+        }
     }
 
     public onSortChanged(e: AgGridEvent) {

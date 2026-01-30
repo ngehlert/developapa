@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, Signal, viewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Signal, viewChild, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Config } from '../kurve/src/config';
 import { initGame } from '../kurve/src/index-ssr';
 
@@ -42,11 +43,15 @@ import { initGame } from '../kurve/src/index-ssr';
 class KurveComponent implements OnInit {
     public container: Signal<ElementRef> = viewChild.required('section');
     public canvas: Signal<any> = viewChild.required('canvas');
+    private platformId = inject(PLATFORM_ID);
 
     public ngOnInit(): void {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
         Config.customCanvasWidth = this.container().nativeElement.clientWidth;
         Config.customCanvasHeight = this.container().nativeElement.clientHeight;
-        window.IS_ELECTRON_BUILD = false;
+        (window as any).IS_ELECTRON_BUILD = false;
         initGame();
     }
 }
