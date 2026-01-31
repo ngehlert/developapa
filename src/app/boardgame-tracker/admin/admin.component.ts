@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { DataStorageService } from '../data-storage.service';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -42,9 +42,14 @@ export class AdminComponent {
     private dialog = inject(MatDialog);
     private location = inject(Location);
 
+    public readonly platformId = inject(PLATFORM_ID);
+    public readonly isPlatformBrowser = isPlatformBrowser(this.platformId);
+
     constructor(private store: DataStorageService) {
         this.loadPlayedGames();
-        this.showPasswordDialog();
+        if (this.isPlatformBrowser) {
+            this.showPasswordDialog();
+        }
     }
 
     public showPasswordDialog(): void {
