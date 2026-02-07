@@ -68,31 +68,32 @@
                             Add
                         </button>
                     </form>
-                }
-                <div
-                    cdkDropList
-                    #playersList="cdkDropList"
-                    [cdkDropListConnectedTo]="[placementsList]"
-                    [cdkDropListData]="availablePlayers"
-                    class="list"
-                    cdkDropListSortingDisabled
-                >
-                    @for (item of availablePlayers; track item) {
-                        <div
-                            class="list-entry"
-                            cdkDrag
-                            (click)="selectPlayer(item)"
-                        >
-                            {{ item.name }}
+                } @else {
+                    <div
+                        cdkDropList
+                        #playersList="cdkDropList"
+                        [cdkDropListConnectedTo]="[placementsList]"
+                        [cdkDropListData]="availablePlayers"
+                        class="list"
+                        cdkDropListSortingDisabled
+                    >
+                        @for (item of availablePlayers; track item) {
                             <div
-                                *cdkDragPreview
-                                class="list-entry list-entry--preview"
+                                class="list-entry"
+                                cdkDrag
+                                (click)="selectPlayer(item)"
                             >
                                 {{ item.name }}
+                                <div
+                                    *cdkDragPreview
+                                    class="list-entry list-entry--preview"
+                                >
+                                    {{ item.name }}
+                                </div>
                             </div>
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
+                }
             </div>
         </mat-card-content>
         @if (playedGame === null) {
@@ -161,37 +162,32 @@
                             </button>
                         </div>
                     </form>
-                }
-
-                @if (!isAddingGameOpen) {
-                    <div
-                        cdkDropList
-                        #gamesList="cdkDropList"
-                        [cdkDropListData]="games"
-                        [cdkDropListConnectedTo]="[playedGameList]"
-                        class="list"
-                        cdkDropListSortingDisabled
-                    >
+                } @else {
+                    <div class="list">
                         @for (item of games; track item) {
                             <div
-                                class="list-entry"
-                                cdkDrag
+                                class="list-entry list-entry--clickable"
                                 [class.list-entry--special-game]="item.isSpecialGame"
                                 (click)="selectGame(item)"
+                                (contextmenu)="onGameRightClick($event, item, gameMenuTrigger)"
                             >
                                 {{ item.name }} ({{ item.duration }})
                                 @if (item.isCoopGame) {
                                     <mat-icon>groups</mat-icon>
                                 }
-                                <div
-                                    *cdkDragPreview
-                                    class="list-entry list-entry--preview"
-                                >
-                                    {{ item.name }} ({{ item.duration }})
-                                </div>
+                                <span
+                                    class="context-menu-trigger"
+                                    [matMenuTriggerFor]="gameContextMenu"
+                                    #gameMenuTrigger="matMenuTrigger"
+                                ></span>
                             </div>
                         }
                     </div>
+                    <mat-menu #gameContextMenu="matMenu">
+                        <button mat-menu-item (click)="toggleSpecialGame()">
+                            Toggle special game
+                        </button>
+                    </mat-menu>
                 }
             </div>
         </mat-card-content>
@@ -238,18 +234,11 @@
                     }
                 </div>
                 <h2 style="margin-top: 24px">Game</h2>
-                <div
-                    cdkDropList
-                    #playedGameList="cdkDropList"
-                    [cdkDropListData]="games"
-                    class="list"
-                    (cdkDropListDropped)="dropGame($event)"
-                >
+                <div class="list">
                     @if (playedGame) {
                         <div
-                            class="list-entry"
+                            class="list-entry list-entry--not-clickable"
                             [class.list-entry--special-game]="playedGame && playedGame.isSpecialGame"
-                            cdkDrag
                         >
                             {{ playedGame.name }} ({{ playedGame.duration }})
                             @if (playedGame.isCoopGame) {

@@ -15,7 +15,9 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { RulesDialogComponent } from './rules.component';
+import { PasswordDialogComponent } from '../password-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FullscreenService } from '../fullscreen.service';
 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
@@ -37,6 +39,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
         MatCheckboxModule,
         MatTooltipModule,
         MatDialogModule,
+        MatMenuModule,
     ],
     providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }, DatePipe, DecimalPipe],
 })
@@ -137,10 +140,6 @@ export class MainComponent {
         this.validatePlacements();
     }
 
-    public dropGame(event: CdkDragDrop<Array<Game>>) {
-        this.playedGame = event.previousContainer.data[event.previousIndex];
-    }
-
     public selectGame(game: Game): void {
         this.playedGame = game;
     }
@@ -164,6 +163,10 @@ export class MainComponent {
 
     public clearPlayedGame(): void {
         this.playedGame = null;
+        this.resetPlacements();
+    }
+
+    public resetPlacements(): void {
         this.placements = this.getEmptyPlacementsList();
         this.availablePlayers = [...this.players];
     }
@@ -204,7 +207,7 @@ export class MainComponent {
 
         this.players = this.store.getPlayers();
         // needed to properly set the available players list
-        this.clearPlayedGame();
+        this.resetPlacements();
     }
 
     public getLastPlayedGames(): Array<PlayedGame> {
@@ -220,6 +223,30 @@ export class MainComponent {
 
         return this.datePipe.transform(date, 'short') || '';
     }
+
+    public onGameRightClick(event: MouseEvent, game: Game, menuTrigger: MatMenuTrigger): void {
+        event.preventDefault();
+        event.stopPropagation();
+        this.contextMenuGame = game;
+        menuTrigger.openMenu();
+    }
+
+    public toggleSpecialGame(): void {
+        if (!this.contextMenuGame) {
+            return;
+        }
+        const game = this.contextMenuGame;
+        const dialogRef = this.dialog.open(PasswordDialogComponent);
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+                game.isSpecialGame = !game.isSpecialGame;
+                this.store.updateGame(game);
+                this.games = this.store.getGames();
+            }
+        });
+    }
+
+    public contextMenuGame: Game | null = null;
 
     public getPlayersFromPlacements(placements: Array<Array<Player>>): string {
         return placements

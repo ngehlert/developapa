@@ -93,6 +93,17 @@ export class DataStorageService {
         this.setLocalStorageData(DataKeys.Games, games);
     }
 
+    public updateGame(game: Game): void {
+        const games: Array<Game> = this.getGames();
+        const existingGame: Game | undefined = games.find((current: Game) => current.name === game.name);
+        if (existingGame) {
+            existingGame.isCoopGame = game.isCoopGame;
+            existingGame.duration = game.duration;
+            existingGame.isSpecialGame = game.isSpecialGame;
+        }
+        this.setLocalStorageData(DataKeys.Games, games);
+    }
+
     public dangerouslySetPlayers(players: Array<Player>) {
         this.setLocalStorageData(DataKeys.Players, players);
     }

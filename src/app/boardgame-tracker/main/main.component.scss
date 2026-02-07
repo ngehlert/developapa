@@ -122,6 +122,14 @@
     &--special-game {
         background-color: #fff8e1;
     }
+
+    &--clickable {
+        cursor: pointer;
+    }
+
+    &--not-clickable {
+        cursor: default;
+    }
 }
 
 .horizontal-list {
@@ -189,4 +197,11 @@ form {
 
 mat-checkbox {
     margin-bottom: 16px;
+}
+
+.context-menu-trigger {
+    position: absolute;
+    visibility: hidden;
+    width: 0;
+    height: 0;
 }
