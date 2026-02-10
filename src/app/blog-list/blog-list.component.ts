@@ -1,4 +1,4 @@
-import { Component, inject, signal, WritableSignal, Signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal, Signal, computed } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
@@ -14,6 +14,7 @@ import { TraceClass } from '@sentry/angular';
     imports: [CommonModule, RouterModule, DatePipe, SelectComponent],
     templateUrl: './blog-list.component.html',
     styleUrls: ['./blog-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @TraceClass()
 export class BlogListComponent {

@@ -3,7 +3,7 @@ import {
     ErrorHandler,
     inject,
     provideAppInitializer,
-    provideZoneChangeDetection,
+    provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { TraceService } from '@sentry/angular';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideZonelessChangeDetection(),
         provideRouter(routes),
         provideClientHydration(withEventReplay()),
         provideHttpClient(withFetch()),

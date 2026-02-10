@@ -1,5 +1,5 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, Location } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser, Location } from '@angular/common';
 import { DataStorageService } from '../data-storage.service';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -35,12 +35,15 @@ import { StorageData } from '../types';
         MatCheckboxModule,
         MatDialogModule,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminComponent {
     public playedGamesList: Array<PlayedGame> = [];
     public isUnlocked = false;
     private dialog = inject(MatDialog);
     private location = inject(Location);
+    private cdr = inject(ChangeDetectorRef);
+    private document = inject(DOCUMENT);
 
     public readonly platformId = inject(PLATFORM_ID);
     public readonly isPlatformBrowser = isPlatformBrowser(this.platformId);
@@ -60,6 +63,7 @@ export class AdminComponent {
         dialogRef.afterClosed().subscribe((success: boolean) => {
             if (success) {
                 this.isUnlocked = true;
+                this.cdr.markForCheck();
             } else {
                 this.location.back();
             }
@@ -107,6 +111,7 @@ export class AdminComponent {
             if (confirmed) {
                 this.store.removePlayedGame(playedGame);
                 this.loadPlayedGames();
+                this.cdr.markForCheck();
             }
         });
     }
@@ -121,7 +126,7 @@ export class AdminComponent {
         const dateString = date.toISOString().split('T')[0];
         const filename = `saved-data-${dateString}.json`;
 
-        const link = document.createElement('a');
+        const link = this.document.createElement('a');
         link.href = url;
         link.download = filename;
         link.click();
@@ -170,6 +175,7 @@ export class AdminComponent {
                     this.store.dangerouslySetPlayedGames(data.playedGames);
                 }
                 this.loadPlayedGames();
+                this.cdr.markForCheck();
             }
         });
     }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -7,6 +7,7 @@ import { OfflineService } from '../commons/offline.service';
 
 @Component({
     selector: 'portfolio',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <section>
             Portfolio sounds way to official. This is just a small collection of things I tried for fun or to learn

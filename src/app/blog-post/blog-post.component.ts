@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule, DatePipe, ViewportScroller } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';import { CommonModule, DatePipe, ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
 import { Observable, tap, catchError, of } from 'rxjs';
@@ -26,6 +25,7 @@ import { TraceClass } from '@sentry/angular';
     ],
     templateUrl: './blog-post.component.html',
     styleUrls: ['./blog-post.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @TraceClass()
 export class BlogPostComponent {

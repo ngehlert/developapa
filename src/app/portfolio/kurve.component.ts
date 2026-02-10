@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Signal, viewChild, PLATFORM_ID, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, Signal, viewChild, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Config } from '../kurve/src/config';
 import { initGame } from '../kurve/src/index-ssr';
@@ -39,6 +39,7 @@ import { initGame } from '../kurve/src/index-ssr';
     `,
     standalone: true,
     imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class KurveComponent implements OnInit {
     public container: Signal<ElementRef> = viewChild.required('section');

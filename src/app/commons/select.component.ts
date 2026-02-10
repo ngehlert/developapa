@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     computed,
     ElementRef,
@@ -12,6 +13,7 @@ import {
     viewChild,
     WritableSignal,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -45,6 +47,7 @@ import { FormsModule } from '@angular/forms';
         </section>
     `,
     imports: [FormsModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: `
         section {
             position: relative;
@@ -136,11 +139,12 @@ export class SelectComponent {
 
     #clickListenerCallback = this.#clickListener.bind(this);
     #elementRef: ElementRef = inject(ElementRef);
+    #document = inject(DOCUMENT);
 
     onListItemKeyDown(event: KeyboardEvent) {
         const childList: HTMLElement[] = Array.from(this.optionList()?.nativeElement.children);
         const activeIndex = childList.findIndex((child) => {
-            return child === document.activeElement;
+            return child === this.#document.activeElement;
         });
         if (event.key === 'ArrowDown') {
             event.preventDefault();
@@ -170,7 +174,7 @@ export class SelectComponent {
 
     onFocusIn() {
         this.isFocused.set(true);
-        document.addEventListener('click', this.#clickListenerCallback);
+        this.#document.addEventListener('click', this.#clickListenerCallback);
     }
 
     onSearchChange(value: string) {
@@ -193,7 +197,7 @@ export class SelectComponent {
     #clickListener(event: MouseEvent) {
         if (!this.#elementRef.nativeElement.contains(event.target)) {
             this.#unfocus();
-            document.removeEventListener('click', this.#clickListenerCallback);
+            this.#document.removeEventListener('click', this.#clickListenerCallback);
         }
     }
 }

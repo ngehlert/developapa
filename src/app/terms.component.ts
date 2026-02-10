@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
     selector: 'terms-of-use-component',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <section>
             <h2>Terms of Use</h2>

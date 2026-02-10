@@ -1,4 +1,4 @@
-import { Component, computed, HostBinding, input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostBinding, input, Signal } from '@angular/core';
 import { Comment } from './comment';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { DatePipe } from '@angular/common';
@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
     selector: 'app-comment',
     standalone: true,
     imports: [SafeHtmlPipe, DatePipe],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <div class="comment-note">
             @if (applyRedPin()) {

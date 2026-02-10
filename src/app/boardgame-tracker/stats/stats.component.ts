@@ -2,11 +2,13 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    DestroyRef,
     inject,
     OnInit,
     PLATFORM_ID,
     ViewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
     AgGridEvent,
     AllCommunityModule,
@@ -56,6 +58,7 @@ export class StatsComponent implements OnInit {
     private dialog = inject(MatDialog);
     private cdr = inject(ChangeDetectorRef);
     private location = inject(Location);
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         private store: DataStorageService,
@@ -93,7 +96,7 @@ export class StatsComponent implements OnInit {
         this.columnDefs = this.getColumnDefs();
         this.rowData = this.getRowData();
 
-        this.agGrid?.gridReady.subscribe(() => {
+        this.agGrid?.gridReady.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.agGrid?.api.sizeColumnsToFit();
         });
 

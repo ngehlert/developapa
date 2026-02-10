@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
     selector: 'privacy-policy-component',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <section>
             <h2>Privacy Policy</h2>

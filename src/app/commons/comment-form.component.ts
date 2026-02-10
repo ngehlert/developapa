@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-comment-form',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <form
             autocomplete="off"

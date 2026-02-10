@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -11,6 +11,7 @@ import { OfflineService } from './commons/offline.service';
     imports: [RouterOutlet, RouterModule, NgOptimizedImage, MatTooltip],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
     title = 'Developapa';

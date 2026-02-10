@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'impressum-component',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <section>
             <h2>Impressum</h2>

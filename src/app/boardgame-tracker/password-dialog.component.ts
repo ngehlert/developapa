@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -58,6 +57,7 @@ import { MatInputModule } from '@angular/material/input';
     ],
     standalone: true,
     imports: [FormsModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PasswordDialogComponent {
     public password = '';

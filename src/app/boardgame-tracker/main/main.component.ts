@@ -1,4 +1,4 @@
-import { Component, inject, LOCALE_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, LOCALE_ID } from '@angular/core';
 import { Game, PlayedGame, Player } from '../types';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DataStorageService } from '../data-storage.service';
@@ -42,6 +42,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
         MatMenuModule,
     ],
     providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }, DatePipe, DecimalPipe],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
     private players: Array<Player> = [];
@@ -62,6 +63,7 @@ export class MainComponent {
     public newPlayerName: string = '';
 
     public fullscreenService = inject(FullscreenService);
+    private cdr = inject(ChangeDetectorRef);
 
     constructor(
         private store: DataStorageService,
@@ -242,6 +244,7 @@ export class MainComponent {
                 game.isSpecialGame = !game.isSpecialGame;
                 this.store.updateGame(game);
                 this.games = this.store.getGames();
+                this.cdr.markForCheck();
             }
         });
     }
