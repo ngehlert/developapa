@@ -4,9 +4,9 @@ import {
     Component,
     DestroyRef,
     inject,
-    OnInit,
     PLATFORM_ID,
-    ViewChild,
+    afterNextRender,
+    viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -39,8 +39,8 @@ provideGlobalGridOptions({ theme: 'legacy' });
     providers: [DecimalPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StatsComponent implements OnInit {
-    @ViewChild('agGrid', { static: true }) public agGrid?: AgGridAngular;
+export class StatsComponent {
+    public agGrid = viewChild<AgGridAngular>('agGrid');
 
     public columnDefs: Array<ColDef> = [];
     public defaultColDef: ColDef = this.getDefaultColDef();
@@ -58,11 +58,10 @@ export class StatsComponent implements OnInit {
     private cdr = inject(ChangeDetectorRef);
     private location = inject(Location);
     private destroyRef = inject(DestroyRef);
+    private store = inject(DataStorageService);
+    private decimalPipe = inject(DecimalPipe);
 
-    constructor(
-        private store: DataStorageService,
-        private decimalPipe: DecimalPipe,
-    ) {
+    constructor() {
         this.players = this.store.getPlayers();
         this.store.getPlayedGames().forEach((playedGame: PlayedGame) => {
             playedGame.placements.forEach((players: Array<Player>, index: number) => {
@@ -73,6 +72,16 @@ export class StatsComponent implements OnInit {
                     this.gamesPerPlayer.get(player.name)?.push([playedGame, index + 1]);
                 });
             });
+        });
+
+        this.columnDefs = this.getColumnDefs();
+        this.rowData = this.getRowData();
+
+        afterNextRender(() => {
+            this.agGrid()?.gridReady.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+                this.agGrid()?.api.sizeColumnsToFit();
+            });
+            this.showPasswordDialog();
         });
     }
 
@@ -89,19 +98,6 @@ export class StatsComponent implements OnInit {
                 this.location.back();
             }
         });
-    }
-
-    ngOnInit(): void {
-        this.columnDefs = this.getColumnDefs();
-        this.rowData = this.getRowData();
-
-        this.agGrid?.gridReady.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            this.agGrid?.api.sizeColumnsToFit();
-        });
-
-        if (this.isPlatformBrowser) {
-            this.showPasswordDialog();
-        }
     }
 
     public onSortChanged(e: AgGridEvent) {

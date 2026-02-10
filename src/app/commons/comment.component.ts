@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, HostBinding, input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Comment } from './comment';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { DatePipe } from '@angular/common';
@@ -7,6 +7,9 @@ import { DatePipe } from '@angular/common';
     selector: 'app-comment',
     imports: [SafeHtmlPipe, DatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[style.--initial-rotate.deg]': 'rotationDegrees()',
+    },
     template: `
         <div class="comment-note">
             @if (applyRedPin()) {
@@ -197,9 +200,8 @@ export class CommentComponent {
         return this.index() % 4 === 1;
     });
 
-    @HostBinding('style.--initial-rotate.deg')
-    get rotationDegrees(): number {
+    rotationDegrees = computed(() => {
         const rotations = [-1, 1, -1, 0];
         return rotations[this.index() % rotations.length] ?? 0;
-    }
+    });
 }

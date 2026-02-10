@@ -46,9 +46,9 @@ export const serverRoutes: ServerRoute[] = [
         renderMode: RenderMode.Prerender,
         async getPrerenderParams(): Promise<Array<Record<string, string>>> {
             const postsJsonRelativePath = 'assets/blog-data/posts.json';
-            const postsJson: Array<PostMetadata> = (await firstValueFrom(
-                inject(HttpClient).get(postsJsonRelativePath),
-            )) as any as Array<PostMetadata>;
+            const postsJson = await firstValueFrom(
+                inject(HttpClient).get<Array<PostMetadata>>(postsJsonRelativePath),
+            );
 
             return postsJson.map((post: PostMetadata) => {
                 return { slug: post.slug };

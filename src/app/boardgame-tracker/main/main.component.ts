@@ -60,14 +60,13 @@ export class MainComponent {
 
     public fullscreenService = inject(FullscreenService);
     private cdr = inject(ChangeDetectorRef);
+    private store = inject(DataStorageService);
+    private datePipe = inject(DatePipe);
+    private dialog = inject(MatDialog);
+    private router = inject(Router);
+    private activeRoute = inject(ActivatedRoute);
 
-    constructor(
-        private store: DataStorageService,
-        private datePipe: DatePipe,
-        private dialog: MatDialog,
-        private router: Router,
-        private activeRoute: ActivatedRoute,
-    ) {
+    constructor() {
         ({ games: this.games, players: this.players, playedGames: this.playedGames } = this.store.load());
         this.availablePlayers = [...this.players];
         this.lastPlayedGames = this.getLastPlayedGames();

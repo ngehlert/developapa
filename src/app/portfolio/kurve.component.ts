@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, Signal, viewChild, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectionStrategy, Component, ElementRef, Signal, viewChild, inject, afterNextRender } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Config } from '../kurve/src/config';
 import { initGame } from '../kurve/src/index-ssr';
 
@@ -40,18 +40,17 @@ import { initGame } from '../kurve/src/index-ssr';
     imports: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KurveComponent implements OnInit {
+export class KurveComponent {
     public container: Signal<ElementRef> = viewChild.required('section');
     public canvas: Signal<any> = viewChild.required('canvas');
-    private platformId = inject(PLATFORM_ID);
+    #document = inject(DOCUMENT);
 
-    public ngOnInit(): void {
-        if (!isPlatformBrowser(this.platformId)) {
-            return;
-        }
-        Config.customCanvasWidth = this.container().nativeElement.clientWidth;
-        Config.customCanvasHeight = this.container().nativeElement.clientHeight;
-        (window as any).IS_ELECTRON_BUILD = false;
-        initGame();
+    constructor() {
+        afterNextRender(() => {
+            Config.customCanvasWidth = this.container().nativeElement.clientWidth;
+            Config.customCanvasHeight = this.container().nativeElement.clientHeight;
+            (this.#document.defaultView as any).IS_ELECTRON_BUILD = false;
+            initGame();
+        });
     }
 }

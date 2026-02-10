@@ -33,12 +33,12 @@ export class BlogPostComponent {
     private titleService = inject(Title);
     private metaService = inject(Meta);
 
+    private router = inject(Router);
+    private viewportScroller = inject(ViewportScroller);
+
     post$: Observable<Post | HttpStatusCode | null> | undefined;
 
-    constructor(
-        private router: Router,
-        private viewportScroller: ViewportScroller,
-    ) {
+    constructor() {
         const slug = this.route.snapshot.paramMap.get('slug');
         if (slug) {
             this.post$ = this.blogService.getPost(slug).pipe(

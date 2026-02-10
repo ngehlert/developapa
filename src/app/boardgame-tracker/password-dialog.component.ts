@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -22,7 +22,7 @@ import { MatInputModule } from '@angular/material/input';
                     (keyup.enter)="onSubmit()"
                 />
             </mat-form-field>
-            @if (error) {
+            @if (error()) {
                 <p class="error">Invalid password</p>
             }
         </mat-dialog-content>
@@ -60,21 +60,26 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class PasswordDialogComponent {
     public password = '';
-    public error = false;
+    public error = signal(false);
     private dialogRef = inject(MatDialogRef<PasswordDialogComponent>);
 
-    private readonly encodedPassword = 'c3RhcnQwMQ==';
+    private readonly passwordHash = 'b1735cd401709051194b97ee74e7b27f2a579209d1866b1b0a1bd448576c3034';
 
     onCancel(): void {
         this.dialogRef.close(false);
     }
 
-    onSubmit(): void {
-        const decoded = atob(this.encodedPassword);
-        if (this.password === decoded) {
+    async onSubmit(): Promise<void> {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(this.password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+        if (hashHex === this.passwordHash) {
             this.dialogRef.close(true);
         } else {
-            this.error = true;
+            this.error.set(true);
         }
     }
 }

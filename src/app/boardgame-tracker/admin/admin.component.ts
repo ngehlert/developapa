@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser, Location } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, afterNextRender } from '@angular/core';
+import { DOCUMENT, Location } from '@angular/common';
 import { DataStorageService } from '../data-storage.service';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -43,15 +43,13 @@ export class AdminComponent {
     private location = inject(Location);
     private cdr = inject(ChangeDetectorRef);
     private document = inject(DOCUMENT);
+    private store = inject(DataStorageService);
 
-    public readonly platformId = inject(PLATFORM_ID);
-    public readonly isPlatformBrowser = isPlatformBrowser(this.platformId);
-
-    constructor(private store: DataStorageService) {
+    constructor() {
         this.loadPlayedGames();
-        if (this.isPlatformBrowser) {
+        afterNextRender(() => {
             this.showPasswordDialog();
-        }
+        });
     }
 
     public showPasswordDialog(): void {
