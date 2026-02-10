@@ -41,6 +41,7 @@
                             "node_modules/prismjs/themes/prism-coy.css"
                         ],
                         "scripts": [],
+                        "serviceWorker": "ngsw-config.json",
                         "server": "src/main.server.ts"
                     },
                     "configurations": {
@@ -60,8 +61,8 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "1.18MB",
-                                    "maximumError": "1.18MB"
+                                    "maximumWarning": "1.3MB",
+                                    "maximumError": "1.3MB"
                                 },
                                 {
                                     "type": "anyComponentStyle",

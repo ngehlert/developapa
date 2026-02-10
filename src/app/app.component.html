@@ -1,4 +1,7 @@
 <header [class.hidden]="fullscreenService.isFullscreen()">
+    @if (offlineService.isOffline()) {
+        <div class="offline-badge">Offline mode</div>
+    }
     <section class="header">
         <h1>
             <a

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { OfflineService } from '../commons/offline.service';
 
 @Component({
     selector: 'portfolio',
@@ -9,6 +11,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         <section>
             Portfolio sounds way to official. This is just a small collection of things I tried for fun or to learn
             something new. Things I did as contract work are not listed here, due to NDA or other reasons.
+
+            <article class="limit-content-width-container offline-section">
+                <button mat-raised-button (click)="toggleOfflineMode()">
+                    {{ offlineService.isOffline() ? 'Disable Offline Mode' : 'Enable Offline Mode' }}
+                </button>
+                @if (offlineService.status()) {
+                    <span class="offline-status">{{ offlineService.status() }}</span>
+                }
+                @if (offlineService.updateAvailable()) {
+                    <a class="update-link" (click)="offlineService.reload()">There is a new version available. Reload</a>
+                }
+            </article>
 
             <article class="limit-content-width-container">
                 <header>
@@ -205,10 +219,39 @@ import { MatTooltipModule } from '@angular/material/tooltip';
             gap: 1rem;
             flex-wrap: wrap;
         }
+
+        .offline-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .offline-status {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .update-link {
+            font-size: 0.875rem;
+            color: var(--base-app-color, #007bff);
+            cursor: pointer;
+            text-decoration: underline;
+        }
     `,
     standalone: true,
-    imports: [RouterLink, NgOptimizedImage, MatTooltipModule],
+    imports: [RouterLink, NgOptimizedImage, MatTooltipModule, MatButtonModule],
 })
-class PortfolioComponent {}
+class PortfolioComponent {
+    offlineService = inject(OfflineService);
+
+    async toggleOfflineMode(): Promise<void> {
+        if (this.offlineService.isOffline()) {
+            await this.offlineService.disable();
+        } else {
+            await this.offlineService.enable();
+        }
+    }
+}
 
 export { PortfolioComponent };
