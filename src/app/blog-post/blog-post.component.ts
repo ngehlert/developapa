@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';import { CommonModule, DatePipe, ViewportScroller } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';import { AsyncPipe, DatePipe, ViewportScroller } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
 import { Observable, tap, catchError, of } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
@@ -14,8 +14,8 @@ import { TraceClass } from '@sentry/angular';
 @Component({
     selector: 'app-blog-post',
     imports: [
-        CommonModule,
-        RouterModule,
+        AsyncPipe,
+        RouterLink,
         DatePipe,
         SafeHtmlPipe,
         PrismHighlightPipe,

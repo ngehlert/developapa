@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FullscreenService } from './boardgame-tracker/fullscreen.service';
 import { OfflineService } from './commons/offline.service';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, RouterModule, NgOptimizedImage, MatTooltip],
+    imports: [RouterOutlet, RouterLink, NgOptimizedImage, MatTooltip],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

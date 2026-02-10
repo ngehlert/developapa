@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal, Signal, computed } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
 import { Title } from '@angular/platform-browser';
 import { PostMetadata } from '../commons/post';
@@ -10,7 +10,7 @@ import { TraceClass } from '@sentry/angular';
 
 @Component({
     selector: 'app-blog-list',
-    imports: [CommonModule, RouterModule, DatePipe, SelectComponent],
+    imports: [RouterLink, DatePipe, SelectComponent],
     templateUrl: './blog-list.component.html',
     styleUrl: './blog-list.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
