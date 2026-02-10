@@ -10,10 +10,9 @@ import { TraceClass } from '@sentry/angular';
 
 @Component({
     selector: 'app-blog-list',
-    standalone: true,
     imports: [CommonModule, RouterModule, DatePipe, SelectComponent],
     templateUrl: './blog-list.component.html',
-    styleUrls: ['./blog-list.component.scss'],
+    styleUrl: './blog-list.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @TraceClass()

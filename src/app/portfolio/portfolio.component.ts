@@ -57,7 +57,7 @@ import { OfflineService } from '../commons/offline.service';
                                 alt="GitHub Logo"
                                 height="24"
                                 width="24"
-                                style="display: inline-block; margin-left: 0.75rem;"
+                                class="github-logo"
                             />
                         </a>
                     </h2>
@@ -239,11 +239,15 @@ import { OfflineService } from '../commons/offline.service';
             cursor: pointer;
             text-decoration: underline;
         }
+
+        .github-logo {
+            display: inline-block;
+            margin-left: 0.75rem;
+        }
     `,
-    standalone: true,
     imports: [RouterLink, NgOptimizedImage, MatTooltipModule, MatButtonModule],
 })
-class PortfolioComponent {
+export class PortfolioComponent {
     offlineService = inject(OfflineService);
 
     async toggleOfflineMode(): Promise<void> {
@@ -254,5 +258,3 @@ class PortfolioComponent {
         }
     }
 }
-
-export { PortfolioComponent };

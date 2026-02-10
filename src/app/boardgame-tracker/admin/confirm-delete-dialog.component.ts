@@ -44,7 +44,6 @@ interface DialogData {
             }
         `,
     ],
-    standalone: true,
     imports: [MatButtonModule, MatDialogModule],
 })
 export class ConfirmDeleteDialogComponent {

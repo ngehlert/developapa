@@ -63,10 +63,7 @@ import { MatButton } from '@angular/material/button';
             </button>
         </mat-dialog-actions>
     `,
-    standalone: true,
     imports: [MatDialogContent, MatDialogActions, MatButton, MatDialogClose],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-class RulesDialogComponent {}
-
-export { RulesDialogComponent };
+export class RulesDialogComponent {}

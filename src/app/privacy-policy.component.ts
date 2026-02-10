@@ -106,7 +106,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
             <p>If you have any questions about this privacy policy, please contact me at: info&#64;ngehlert.de</p>
         </section>
     `,
-    standalone: true,
     styles: `
         section {
             max-width: var(--content-width);
@@ -114,6 +113,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         }
     `,
 })
-class PrivacyPolicyComponent {}
-
-export { PrivacyPolicyComponent };
+export class PrivacyPolicyComponent {}

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-comment-form',
-    standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <form

@@ -36,7 +36,6 @@ import { RouterLink } from '@angular/router';
             </p>
         </section>
     `,
-    standalone: true,
     styles: `
         section {
             max-width: var(--content-width);
@@ -45,6 +44,4 @@ import { RouterLink } from '@angular/router';
     `,
     imports: [RouterLink],
 })
-class ImpressumComponent {}
-
-export { ImpressumComponent };
+export class ImpressumComponent {}

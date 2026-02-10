@@ -5,7 +5,6 @@ import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-comment',
-    standalone: true,
     imports: [SafeHtmlPipe, DatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `

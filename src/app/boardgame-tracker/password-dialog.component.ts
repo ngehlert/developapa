@@ -55,7 +55,6 @@ import { MatInputModule } from '@angular/material/input';
             }
         `,
     ],
-    standalone: true,
     imports: [FormsModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

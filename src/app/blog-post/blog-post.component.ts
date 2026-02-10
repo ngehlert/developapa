@@ -13,7 +13,6 @@ import { TraceClass } from '@sentry/angular';
 
 @Component({
     selector: 'app-blog-post',
-    standalone: true,
     imports: [
         CommonModule,
         RouterModule,
@@ -24,7 +23,7 @@ import { TraceClass } from '@sentry/angular';
         CommentFormComponent,
     ],
     templateUrl: './blog-post.component.html',
-    styleUrls: ['./blog-post.component.scss'],
+    styleUrl: './blog-post.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @TraceClass()
@@ -55,8 +54,8 @@ export class BlogPostComponent {
         }
     }
 
-    public processLinks(e: any) {
-        const element: HTMLElement | null = e.target;
+    public processLinks(e: MouseEvent) {
+        const element: HTMLElement | null = e.target as HTMLElement;
         if (element?.nodeName === 'A') {
             const link: string = element.getAttribute('href') || '';
             const target: string = element.getAttribute('target') || '';

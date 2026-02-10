@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, LOCALE_I
 import { Game, PlayedGame, Player } from '../types';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DataStorageService } from '../data-storage.service';
-import { DatePipe, DecimalPipe, registerLocaleData } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,8 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import localeDe from '@angular/common/locales/de';
-import localeDeExtra from '@angular/common/locales/extra/de';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -20,13 +18,11 @@ import { RulesDialogComponent } from './rules.component';
 import { PasswordDialogComponent } from '../password-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FullscreenService } from '../fullscreen.service';
-registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
-    styleUrls: ['./main.component.scss'],
-    standalone: true,
+    styleUrl: './main.component.scss',
     imports: [
         DragDropModule,
         MatButtonModule,

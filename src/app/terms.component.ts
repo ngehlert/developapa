@@ -108,7 +108,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
             <p>If you have any questions about these Terms, please contact me at: info&#64;ngehlert.de</p>
         </section>
     `,
-    standalone: true,
     styles: `
         section {
             max-width: var(--content-width);
@@ -116,6 +115,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         }
     `,
 })
-class TermsOfUseComponent {}
-
-export { TermsOfUseComponent };
+export class TermsOfUseComponent {}

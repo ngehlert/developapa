@@ -18,7 +18,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-select',
-    standalone: true,
     template: `
         <section (keydown)="onListItemKeyDown($event)">
             <input

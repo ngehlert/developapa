@@ -3,6 +3,11 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import * as Sentry from '@sentry/angular';
 import { browserTracingIntegration, replayIntegration } from '@sentry/angular';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+
+registerLocaleData(localeDe, 'de-DE', localeDeExtra);
 
 Sentry.init({
     dsn: 'https://2b7277ec914f43308d9f9ac19b63fe77@o299372.ingest.us.sentry.io/1639743',

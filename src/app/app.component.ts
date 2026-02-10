@@ -7,10 +7,9 @@ import { OfflineService } from './commons/offline.service';
 
 @Component({
     selector: 'app-root',
-    standalone: true,
     imports: [RouterOutlet, RouterModule, NgOptimizedImage, MatTooltip],
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    styleUrl: './app.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {

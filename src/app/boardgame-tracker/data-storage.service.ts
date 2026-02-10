@@ -16,8 +16,6 @@ export class DataStorageService {
     private customGameName: string = 'default';
     private readonly platformId = inject(PLATFORM_ID);
 
-    constructor() {}
-
     public setGameName(name: string): void {
         this.customGameName = name;
     }

@@ -37,11 +37,10 @@ import { initGame } from '../kurve/src/index-ssr';
             background-color: #000000;
         }
     `,
-    standalone: true,
     imports: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-class KurveComponent implements OnInit {
+export class KurveComponent implements OnInit {
     public container: Signal<ElementRef> = viewChild.required('section');
     public canvas: Signal<any> = viewChild.required('canvas');
     private platformId = inject(PLATFORM_ID);
@@ -56,5 +55,3 @@ class KurveComponent implements OnInit {
         initGame();
     }
 }
-
-export { KurveComponent };

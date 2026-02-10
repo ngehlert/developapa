@@ -34,8 +34,7 @@ provideGlobalGridOptions({ theme: 'legacy' });
 @Component({
     selector: 'app-stats',
     templateUrl: './stats.component.html',
-    styleUrls: ['./stats.component.scss'],
-    standalone: true,
+    styleUrl: './stats.component.scss',
     imports: [AgGridModule],
     providers: [DecimalPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,

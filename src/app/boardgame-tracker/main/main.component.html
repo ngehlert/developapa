@@ -63,7 +63,7 @@
                             color="primary"
                             (click)="saveNewPlayer()"
                             type="submit"
-                            style="display: block"
+                            class="display-block"
                         >
                             Add
                         </button>
@@ -144,7 +144,7 @@
                             color="primary"
                             >Co-op game</mat-checkbox
                         >
-                        <div style="display: flex; gap: 8px">
+                        <div class="button-group">
                             <button
                                 mat-stroked-button
                                 (click)="toggleAddGameForm()"
@@ -233,7 +233,7 @@
                         </div>
                     }
                 </div>
-                <h2 style="margin-top: 24px">Game</h2>
+                <h2 class="section-heading">Game</h2>
                 <div class="list">
                     @if (playedGame) {
                         <div
@@ -247,7 +247,7 @@
                         </div>
                     }
                 </div>
-                <div style="gap: 16px; margin-top: 16px; display: flex">
+                <div class="game-actions">
                     <button
                         mat-raised-button
                         (click)="clearPlayedGame()"
@@ -263,11 +263,11 @@
                     </button>
                 </div>
 
-                <h2 style="margin-top: 36px">Last entries</h2>
+                <h2 class="section-heading-large">Last entries</h2>
             </section>
             <mat-list>
                 @for (playedGame of lastPlayedGames; track playedGame.timestamp) {
-                    <mat-list-item style="border-bottom: 1px solid rgba(0, 0, 0, 0.2)">
+                    <mat-list-item class="last-entry-item">
                         <span matListItemTitle>{{ playedGame.game.name }}</span>
                         <span matListItemLine>{{ getTimeFromTimestamp(playedGame.timestamp) }}</span>
                         <span matListItemLine>{{ getPlayersFromPlacements(playedGame.placements) }}</span>

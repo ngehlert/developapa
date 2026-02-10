@@ -14,7 +14,6 @@ import { SafeHtml } from '@angular/platform-browser';
 
 @Pipe({
     name: 'prismHighlight',
-    standalone: true,
 })
 export class PrismHighlightPipe {
     private platformId = inject(PLATFORM_ID);

@@ -21,8 +21,7 @@ import { StorageData } from '../types';
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.scss'],
-    standalone: true,
+    styleUrl: './admin.component.scss',
     imports: [
         DragDropModule,
         MatButtonModule,

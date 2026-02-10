@@ -4,7 +4,6 @@
             [(selectedOption)]="selectedTag"
             [options]="tagOptions()"
             [placeholder]="'Find posts by topic'"
-            class=""
         ></app-select>
     </section>
     @for (post of filteredPosts(); track post.slug) {
