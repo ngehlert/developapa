@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     computed,
+    DestroyRef,
     ElementRef,
     inject,
     input,
@@ -139,6 +140,13 @@ export class SelectComponent {
     #clickListenerCallback = this.#clickListener.bind(this);
     #elementRef: ElementRef = inject(ElementRef);
     #document = inject(DOCUMENT);
+    #destroyRef = inject(DestroyRef);
+
+    constructor() {
+        this.#destroyRef.onDestroy(() => {
+            this.#document.removeEventListener('click', this.#clickListenerCallback);
+        });
+    }
 
     onListItemKeyDown(event: KeyboardEvent) {
         const childList: HTMLElement[] = Array.from(this.optionList()?.nativeElement.children);

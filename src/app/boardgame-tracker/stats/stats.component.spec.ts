@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 import { StatsComponent } from './stats.component';
 
@@ -8,7 +10,8 @@ describe('StatsComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [StatsComponent],
+            imports: [StatsComponent],
+            providers: [provideZonelessChangeDetection(), provideRouter([])],
         }).compileComponents();
     });
 
