@@ -5,7 +5,7 @@ import { BlogService } from '../commons/blog.service';
 import { tap, catchError, of } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
 import { SafeHtmlPipe } from '../commons/safe-html.pipe';
-import { PrismHighlightPipe } from '../commons/prism.pipe';
+import { PrismHighlightDirective } from '../commons/prism.pipe';
 import { Post } from '../commons/post';
 import { CommentComponent } from '../commons/comment.component';
 import { HttpStatusCode } from '@angular/common/http';
@@ -19,7 +19,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
         RouterLink,
         DatePipe,
         SafeHtmlPipe,
-        PrismHighlightPipe,
+        PrismHighlightDirective,
         CommentComponent,
         CommentFormComponent,
     ],
