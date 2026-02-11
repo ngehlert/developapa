@@ -1,4 +1,4 @@
-import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject, signal, WritableSignal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -7,9 +7,9 @@ import { isPlatformBrowser } from '@angular/common';
 export class OfflineService {
     private platformId = inject(PLATFORM_ID);
 
-    public isOffline = signal(false);
-    public updateAvailable = signal(false);
-    public status = signal('');
+    public isOffline: WritableSignal<boolean> = signal(false);
+    public updateAvailable: WritableSignal<boolean> = signal(false);
+    public status: WritableSignal<string> = signal('');
 
     constructor() {
         if (isPlatformBrowser(this.platformId) && 'serviceWorker' in navigator) {
@@ -20,7 +20,7 @@ export class OfflineService {
         }
     }
 
-    async enable(): Promise<void> {
+    public async enable(): Promise<void> {
         if (!isPlatformBrowser(this.platformId) || !('serviceWorker' in navigator)) {
             this.status.set('Service workers are not supported in this browser.');
             return;
@@ -28,12 +28,12 @@ export class OfflineService {
 
         try {
             this.status.set('Enabling offline mode...');
-            const registration = await navigator.serviceWorker.register('/ngsw-worker.js');
+            const registration: ServiceWorkerRegistration = await navigator.serviceWorker.register('/ngsw-worker.js');
 
             this.listenForUpdates(registration);
 
             registration.addEventListener('updatefound', () => {
-                const worker = registration.installing;
+                const worker: ServiceWorker | null = registration.installing;
                 worker?.addEventListener('statechange', () => {
                     if (worker.state === 'activated') {
                         this.isOffline.set(true);
@@ -53,7 +53,7 @@ export class OfflineService {
         }
     }
 
-    async disable(): Promise<void> {
+    public async disable(): Promise<void> {
         if (!isPlatformBrowser(this.platformId) || !('serviceWorker' in navigator)) {
             return;
         }
@@ -75,7 +75,7 @@ export class OfflineService {
 
     private listenForUpdates(registration: ServiceWorkerRegistration): void {
         registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
+            const newWorker: ServiceWorker | null = registration.installing;
             if (!newWorker) {
                 return;
             }

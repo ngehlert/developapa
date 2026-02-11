@@ -20,9 +20,6 @@ import { OfflineService } from '../commons/offline.service';
                 @if (offlineService.status()) {
                     <span class="offline-status">{{ offlineService.status() }}</span>
                 }
-                @if (offlineService.updateAvailable()) {
-                    <a class="update-link" (click)="offlineService.reload()">There is a new version available. Reload</a>
-                }
             </article>
 
             <article class="limit-content-width-container">
@@ -231,13 +228,6 @@ import { OfflineService } from '../commons/offline.service';
         .offline-status {
             font-size: 0.875rem;
             color: #666;
-        }
-
-        .update-link {
-            font-size: 0.875rem;
-            color: var(--base-app-color, #007bff);
-            cursor: pointer;
-            text-decoration: underline;
         }
 
         .github-logo {

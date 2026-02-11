@@ -1,6 +1,26 @@
 <header [class.hidden]="fullscreenService.isFullscreen()">
     @if (offlineService.isOffline()) {
-        <div class="offline-badge">Offline mode</div>
+        <section class="offline-container">
+            <button
+                class="offline-badge"
+                matTooltip="The entire page content is currently cached for offline use. By clicking on this button you can disable explicit caching."
+                (click)="disableOffline()"
+            >
+                Offline mode
+            </button>
+            @if (offlineService.updateAvailable()) {
+                <button
+                    mat-icon-button
+                    class="icon-button"
+                    (click)="offlineService.reload()"
+                    aria-label="Update available - Reload"
+                    matTooltip="A new version is available. Click to update."
+                    color="primary"
+                >
+                    <mat-icon>cloud_sync</mat-icon>
+                </button>
+            }
+        </section>
     }
     <section class="header">
         <h1>

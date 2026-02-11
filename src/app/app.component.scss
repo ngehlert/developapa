@@ -8,16 +8,29 @@ header {
     position: relative;
 
     .offline-badge {
-        position: absolute;
-        top: 0.5rem;
-        left: 0.5rem;
-        background-color: #4caf50;
-        color: white;
+        border: 1px dashed #4caf50;
+        background: none;
+        color: #343a40;
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.75rem;
+        line-height: 0.75rem;
+        height: 1.25rem;
         font-weight: 500;
+        cursor: pointer;
+    }
+
+    .offline-container {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
         z-index: 1;
+        display: grid;
+        grid-template-columns: auto auto;
+
+        .icon-button {
+            margin-top: -13px;
+        }
     }
 
     .header {
@@ -45,31 +58,37 @@ header {
         line-height: 1em;
         margin: 0;
 
+        &--top,
+        &--bottom {
+            display: inline-block;
+
+            &:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 4%;
+                background: var(--base-app-color);
+                transform-origin: right top;
+                transition: transform 0.2s ease 0.22s;
+            }
+        }
+
         &--top {
             position: absolute;
             top: 0;
-            display: inline-block;
             clip-path: polygon(0% 66%, 0% 0%, 100% 0%, 100% 40%);
             transition:
                 transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s,
                 color 0.5s ease 0.22s;
 
             &:after {
-                content: '';
-                position: absolute;
                 top: 36%;
-                left: 0;
-                width: 100%;
-                height: 4%;
-                background: var(--base-app-color);
                 transform: rotateZ(-2.2deg) scaleX(0%);
-                transform-origin: right top;
-                transition: transform 0.2s ease 0.22s;
             }
         }
 
         &--bottom {
-            display: inline-block;
             clip-path: polygon(0% 65%, 100% 40%, 100% 110%, 0% 110%);
             transition:
                 color 0.5s ease 0.22s,
@@ -81,16 +100,8 @@ header {
             background-image: linear-gradient(to right, var(--base-app-color) 50%, transparent 50%);
 
             &:after {
-                content: '';
-                position: absolute;
                 top: 40%;
-                left: 0;
-                width: 100%;
-                height: 4%;
-                background: var(--base-app-color);
                 transform: rotateZ(-2deg) scaleX(0%);
-                transform-origin: right top;
-                transition: transform 0.2s ease 0.22s;
             }
         }
 
@@ -191,30 +202,27 @@ footer.hidden,
     fill: #007bff;
 }
 
-.rollerblade-icon:hover::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: -20px;
-    width: 20px;
-    height: 2px;
-    background-color: rgba(0, 123, 255, 0.5);
-    animation: motionLines 0.7s linear infinite;
-    transform-origin: right center;
-    transform: translateY(-50%);
-}
-
+.rollerblade-icon:hover::before,
 .rollerblade-icon:hover::after {
     content: '';
     position: absolute;
     top: 50%;
-    right: -20px;
     width: 20px;
     height: 2px;
     background-color: rgba(0, 123, 255, 0.5);
-    animation: motionLines 0.7s linear infinite reverse;
-    transform-origin: left center;
+    animation: motionLines 0.7s linear infinite;
     transform: translateY(-50%);
+}
+
+.rollerblade-icon:hover::before {
+    left: -20px;
+    transform-origin: right center;
+}
+
+.rollerblade-icon:hover::after {
+    right: -20px;
+    animation-direction: reverse;
+    transform-origin: left center;
 }
 
 .rollerblade-icon:hover .wheel-light {
