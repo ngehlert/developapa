@@ -14,7 +14,7 @@ import 'prismjs/components/prism-markup';
     selector: '[appPrismHighlight]',
 })
 export class PrismHighlightDirective {
-    private el = inject(ElementRef);
+    private el: ElementRef = inject(ElementRef);
 
     constructor() {
         afterNextRender(() => {

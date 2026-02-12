@@ -58,6 +58,7 @@ export class BlogListComponent {
         return options;
     });
 
+    // Still set the title here to change back after post names
     constructor() {
         inject(Title).setTitle('Developapa');
     }

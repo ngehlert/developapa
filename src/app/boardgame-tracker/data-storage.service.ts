@@ -16,10 +16,6 @@ export class DataStorageService {
     private customGameName: string = 'default';
     private readonly platformId = inject(PLATFORM_ID);
 
-    public setGameName(name: string): void {
-        this.customGameName = name;
-    }
-
     public load(): StorageData {
         return {
             players: this.getPlayers(),

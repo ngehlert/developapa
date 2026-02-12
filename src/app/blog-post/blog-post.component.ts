@@ -4,12 +4,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BlogService } from '../commons/blog.service';
 import { tap, catchError, of } from 'rxjs';
 import { Title, Meta } from '@angular/platform-browser';
-import { SafeHtmlPipe } from '../commons/safe-html.pipe';
-import { PrismHighlightDirective } from '../commons/prism.pipe';
+import { SafeHtmlPipe } from '../commons/pipes/safe-html.pipe';
+import { PrismHighlightDirective } from '../commons/pipes/prism.pipe';
 import { Post } from '../commons/post';
-import { CommentComponent } from '../commons/comment.component';
+import { CommentComponent } from '../commons/comment/comment.component';
 import { HttpStatusCode } from '@angular/common/http';
-import { CommentFormComponent } from '../commons/comment-form.component';
+import { CommentFormComponent } from '../commons/comment/comment-form.component';
 import { TraceClass } from '@sentry/angular';
 import { toSignal } from '@angular/core/rxjs-interop';
 

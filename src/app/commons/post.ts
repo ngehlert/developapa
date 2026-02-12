@@ -1,4 +1,4 @@
-import { Comment } from './comment';
+import { Comment } from './comment/comment';
 
 export interface PostMetadata {
     title: string;

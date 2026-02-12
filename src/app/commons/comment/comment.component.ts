@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Comment } from './comment';
-import { SafeHtmlPipe } from './safe-html.pipe';
+import { SafeHtmlPipe } from '../pipes/safe-html.pipe';
 import { DatePipe } from '@angular/common';
 
 @Component({
