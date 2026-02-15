@@ -22,6 +22,8 @@ import { DataStorageService } from '../data-storage.service';
 import { PlayedGame, Player } from '../types';
 import { DecimalPipe, isPlatformBrowser, Location } from '@angular/common';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordDialogComponent } from '../password-dialog.component';
 import { TableEntry, buildGamesPerPlayer, buildRowData } from './scoring';
@@ -36,7 +38,7 @@ provideGlobalGridOptions({ theme: 'legacy' });
     selector: 'app-stats',
     templateUrl: './stats.component.html',
     styleUrl: './stats.component.scss',
-    imports: [AgGridModule],
+    imports: [AgGridModule, MatIconButton, MatIcon],
     providers: [DecimalPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -90,6 +92,10 @@ export class StatsComponent {
                 this.location.back();
             }
         });
+    }
+
+    public goBack(): void {
+        this.location.back();
     }
 
     public onSortChanged(e: AgGridEvent) {
