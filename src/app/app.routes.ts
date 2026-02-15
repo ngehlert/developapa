@@ -28,6 +28,7 @@ export const routes: Routes = [
     },
     {
         path: 'boardgame-tracker',
+        loadComponent: () => import('./boardgame-tracker/layout.component').then(m => m.BoardgameLayoutComponent),
         children: [
             {
                 path: 'stats',

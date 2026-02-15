@@ -20,10 +20,9 @@ import {
 } from 'ag-grid-community';
 import { DataStorageService } from '../data-storage.service';
 import { PlayedGame, Player } from '../types';
-import { DecimalPipe, isPlatformBrowser, Location } from '@angular/common';
+import { DecimalPipe, isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordDialogComponent } from '../password-dialog.component';
 import { TableEntry, buildGamesPerPlayer, buildRowData } from './scoring';
@@ -38,7 +37,7 @@ provideGlobalGridOptions({ theme: 'legacy' });
     selector: 'app-stats',
     templateUrl: './stats.component.html',
     styleUrl: './stats.component.scss',
-    imports: [AgGridModule, MatIconButton, MatIcon],
+    imports: [AgGridModule],
     providers: [DecimalPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -59,7 +58,8 @@ export class StatsComponent {
 
     private dialog = inject(MatDialog);
     private cdr = inject(ChangeDetectorRef);
-    private location = inject(Location);
+    private router = inject(Router);
+    private activeRoute = inject(ActivatedRoute);
     private destroyRef = inject(DestroyRef);
     private store = inject(DataStorageService);
     private decimalPipe = inject(DecimalPipe);
@@ -89,13 +89,9 @@ export class StatsComponent {
                 this.isUnlocked = true;
                 this.cdr.detectChanges();
             } else {
-                this.location.back();
+                void this.router.navigate(['..', 'main'], { relativeTo: this.activeRoute });
             }
         });
-    }
-
-    public goBack(): void {
-        this.location.back();
     }
 
     public onSortChanged(e: AgGridEvent) {

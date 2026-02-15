@@ -2,13 +2,6 @@
     class="protected-content"
     [class.blurred]="!isUnlocked"
 >
-    <button
-        mat-icon-button
-        (click)="goBack()"
-        type="button"
-    >
-        <mat-icon>arrow_back</mat-icon>
-    </button>
     @if (isPlatformBrowser) {
         <ag-grid-angular
             #agGrid

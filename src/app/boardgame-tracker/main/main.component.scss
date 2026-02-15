@@ -4,21 +4,14 @@
     grid-template-rows: 120px 1fr 120px;
     gap: 12px 24px;
     grid-template-areas:
-        '. actions rules'
+        '. actions .'
         'players actions games'
         '. actions .';
     justify-items: stretch;
     align-items: stretch;
     align-content: start;
-    padding: 24px;
-    height: calc(100vh - 80px);
-    width: calc(100% - 48px);
-}
-
-.rules {
-    grid-area: rules;
-    display: flex;
-    justify-content: flex-end;
+    height: calc(100vh - 84px);
+    width: 100%;
 }
 
 .players {

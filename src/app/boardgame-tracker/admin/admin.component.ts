@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, afterNextRender } from '@angular/core';
-import { DOCUMENT, Location } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataStorageService } from '../data-storage.service';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -40,7 +41,8 @@ export class AdminComponent {
     public playedGamesList: Array<PlayedGame> = [];
     public isUnlocked = false;
     private dialog = inject(MatDialog);
-    private location = inject(Location);
+    private router = inject(Router);
+    private activeRoute = inject(ActivatedRoute);
     private cdr = inject(ChangeDetectorRef);
     private document = inject(DOCUMENT);
     private store = inject(DataStorageService);
@@ -62,13 +64,9 @@ export class AdminComponent {
                 this.isUnlocked = true;
                 this.cdr.markForCheck();
             } else {
-                this.location.back();
+                void this.router.navigate(['..', 'main'], { relativeTo: this.activeRoute });
             }
         });
-    }
-
-    public goBack(): void {
-        this.location.back();
     }
 
     private loadPlayedGames(): void {

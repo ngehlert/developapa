@@ -2,7 +2,7 @@
 @import "ag-grid-community/styles/ag-theme-alpine.css";
 
 :root {
-    --base-app-color: rgba(0, 132, 120, 1);
+    --base-app-color: var(--mat-sys-primary, rgba(0, 132, 120, 1));
     --base-app-color-20: rgba(0, 132, 120, 0.2);
     --content-width: 800px;
     --base-color: #555;

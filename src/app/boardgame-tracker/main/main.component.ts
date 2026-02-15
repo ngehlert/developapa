@@ -11,13 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { RulesDialogComponent } from './rules.component';
 import { PasswordDialogComponent } from '../password-dialog.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FullscreenService } from '../fullscreen.service';
 
 @Component({
     selector: 'app-main',
@@ -33,7 +29,6 @@ import { FullscreenService } from '../fullscreen.service';
         MatCardModule,
         MatListModule,
         MatCheckboxModule,
-        MatTooltipModule,
         MatDialogModule,
         MatMenuModule,
     ],
@@ -58,34 +53,15 @@ export class MainComponent {
     public isAddingPlayerOpen: boolean = false;
     public newPlayerName: string = '';
 
-    public fullscreenService = inject(FullscreenService);
     private cdr = inject(ChangeDetectorRef);
     private store = inject(DataStorageService);
     private datePipe = inject(DatePipe);
     private dialog = inject(MatDialog);
-    private router = inject(Router);
-    private activeRoute = inject(ActivatedRoute);
 
     constructor() {
         ({ games: this.games, players: this.players, playedGames: this.playedGames } = this.store.load());
         this.availablePlayers = [...this.players];
         this.lastPlayedGames = this.getLastPlayedGames();
-    }
-
-    public openRulesDialog(): void {
-        this.dialog.open(RulesDialogComponent, {});
-    }
-
-    public openStatsPage(): void {
-        void this.router.navigate(['..', 'stats'], { relativeTo: this.activeRoute });
-    }
-
-    public openAdminPage(): void {
-        void this.router.navigate(['..', 'admin'], { relativeTo: this.activeRoute });
-    }
-
-    public toggleFullscreen(): void {
-        this.fullscreenService.toggle();
     }
 
     public handleDropOutOfBound(event: CdkDragDrop<Array<Array<Player>>, Array<Player>>): void {

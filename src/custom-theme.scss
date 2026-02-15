@@ -1,53 +1,126 @@
 @use '@angular/material' as mat;
 
-// Define custom palette based on #008478
-$custom-primary-palette: (
-  50: #e0f0ee,
-  100: #b3dad5,
-  200: #80c2ba,
-  300: #4daa9e,
-  400: #269789,
-  500: #008478,
-  600: #007c70,
-  700: #007165,
-  800: #00675b,
-  900: #005448,
-  A100: #80ffe8,
-  A200: #4dffde,
-  A400: #1affd4,
-  A700: #00ffcf,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: white,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: rgba(black, 0.87),
-    A200: rgba(black, 0.87),
-    A400: rgba(black, 0.87),
-    A700: rgba(black, 0.87),
-  )
+// Custom M3 tonal palette based on #008478
+// Primary tones derived from the original M2 palette colors
+$custom-palette: (
+  0: #000000,
+  10: #002019,
+  20: #00382f,
+  25: #00453d,
+  30: #005448,
+  35: #006960,
+  40: #008478,
+  50: #269789,
+  60: #4daa9e,
+  70: #80c2ba,
+  80: #b3dad5,
+  90: #e0f0ee,
+  95: #eef7f5,
+  98: #f5fbfa,
+  99: #fafdfb,
+  100: #ffffff,
+  secondary: (
+    0: #000000,
+    10: #051f1f,
+    20: #1b3534,
+    25: #27403f,
+    30: #324b4b,
+    35: #3e5757,
+    40: #4a6363,
+    50: #627c7b,
+    60: #7b9695,
+    70: #95b0b0,
+    80: #b0cccb,
+    90: #cce8e7,
+    95: #daf6f5,
+    98: #e3fffe,
+    99: #f1fffe,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    4: #0b0f0e,
+    6: #101414,
+    10: #191c1c,
+    12: #1c2020,
+    17: #272b2a,
+    20: #2d3131,
+    22: #313635,
+    24: #363a39,
+    25: #383c3c,
+    30: #444747,
+    35: #4f5353,
+    40: #5b5f5f,
+    50: #747877,
+    60: #8e9191,
+    70: #a9acab,
+    80: #c4c7c6,
+    87: #d7dbd9,
+    90: #e0e3e2,
+    92: #e6e9e7,
+    94: #ebefed,
+    95: #eff1f0,
+    96: #f1f4f3,
+    98: #f7faf9,
+    99: #fafdfc,
+    100: #ffffff,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #141d1d,
+    20: #293232,
+    25: #343d3d,
+    30: #3f4948,
+    35: #4a5454,
+    40: #566060,
+    50: #6f7979,
+    60: #889392,
+    70: #a3adad,
+    80: #bec9c8,
+    90: #dae5e4,
+    95: #e9f3f2,
+    98: #f1fbfa,
+    99: #f4fefd,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
 );
 
-$custom-primary: mat.m2-define-palette($custom-primary-palette, 500);
-$custom-accent: mat.m2-define-palette(mat.$m2-amber-palette, A200, A100, A400);
-$custom-warn: mat.m2-define-palette(mat.$m2-red-palette);
-
-$custom-theme: mat.m2-define-light-theme((
+$theme: mat.define-theme((
   color: (
-    primary: $custom-primary,
-    accent: $custom-accent,
-    warn: $custom-warn,
+    theme-type: light,
+    primary: $custom-palette,
   ),
-  typography: mat.m2-define-typography-config(),
-  density: 0,
+  density: (scale: 0),
 ));
 
-@include mat.elevation-classes();
-@include mat.app-background();
-@include mat.all-component-themes($custom-theme);
+html {
+  @include mat.theme((
+    color: (
+      primary: $custom-palette,
+      theme-type: light,
+    ),
+    typography: (Georgia, serif),
+    density: 0,
+  ));
+}
+
+@include mat.all-component-themes($theme);
+@include mat.color-variants-backwards-compatibility($theme);
