@@ -19,11 +19,12 @@ import {
     ValueGetterParams,
 } from 'ag-grid-community';
 import { DataStorageService } from '../data-storage.service';
-import { Game, PlayedGame, Player } from '../types';
+import { PlayedGame, Player } from '../types';
 import { DecimalPipe, isPlatformBrowser, Location } from '@angular/common';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordDialogComponent } from '../password-dialog.component';
+import { TableEntry, buildGamesPerPlayer, buildRowData } from './scoring';
 
 // Register all community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -63,16 +64,7 @@ export class StatsComponent {
 
     constructor() {
         this.players = this.store.getPlayers();
-        this.store.getPlayedGames().forEach((playedGame: PlayedGame) => {
-            playedGame.placements.forEach((players: Array<Player>, index: number) => {
-                players.forEach((player: Player) => {
-                    if (!this.gamesPerPlayer.has(player.name)) {
-                        this.gamesPerPlayer.set(player.name, []);
-                    }
-                    this.gamesPerPlayer.get(player.name)?.push([playedGame, index + 1]);
-                });
-            });
-        });
+        this.gamesPerPlayer = buildGamesPerPlayer(this.store.getPlayedGames());
 
         this.columnDefs = this.getColumnDefs();
         this.rowData = this.getRowData();
@@ -120,65 +112,10 @@ export class StatsComponent {
     }
 
     private getRowData(): Array<TableEntry> {
-        const tableEntryByPlayerName: Map<string, TableEntry> = new Map();
-        this.players.forEach((player: Player) => {
-            tableEntryByPlayerName.set(player.name, {
-                player,
-                uniqueGames: new Set(),
-                totalGames: 0,
-                score: 0,
-                specialGames: new Map(),
-            });
-        });
-        const games: Array<Game> = this.store.getGames();
-
-        this.store.getPlayedGames().forEach((playedGame: PlayedGame) => {
-            const totalAmountOfPlayers: number = this.getTotalAmountOfPlayers(playedGame.placements);
-
-            const game: Game = games.find((current: Game) => current.name === playedGame.game.name) || playedGame.game;
-            const gameTime: number = game.duration;
-            this.totalUniqueGames.add(game.name);
-            this.totalGames++;
-            playedGame.placements.forEach((players: Array<Player>, index: number) => {
-                players.forEach((player: Player) => {
-                    const tableEntry: TableEntry | undefined = tableEntryByPlayerName.get(player.name);
-                    if (!tableEntry) {
-                        return;
-                    }
-                    let score: number = 0;
-                    if (game.isCoopGame) {
-                        let amountOfTeamsInvolved: number = playedGame.placements.filter(
-                            (players: Array<Player>) => players.length,
-                        ).length;
-                        if (amountOfTeamsInvolved === 1) {
-                            // if there is only one team at least at a second game opponent for the point calculation to work properly
-                            amountOfTeamsInvolved = 2;
-                        }
-                        score = (amountOfTeamsInvolved - index) * gameTime;
-                    } else {
-                        for (let i: number = 0; i < players.length; i++) {
-                            score += (totalAmountOfPlayers - index - i) * gameTime;
-                        }
-                        score = score / players.length;
-                    }
-
-                    if (game.isSpecialGame) {
-                        const existingEntry: { score: number; timestamp: number } | undefined =
-                            tableEntry.specialGames.get(game.name);
-
-                        if ((existingEntry && playedGame.timestamp < existingEntry.timestamp) || !existingEntry) {
-                            tableEntry.specialGames.set(game.name, { timestamp: playedGame.timestamp, score });
-                        }
-                    }
-
-                    tableEntry.uniqueGames.add(game.name);
-                    tableEntry.score += score;
-                    tableEntry.totalGames++;
-                });
-            });
-        });
-
-        return Array.from(tableEntryByPlayerName.values());
+        const result = buildRowData(this.players, this.store.getGames(), this.store.getPlayedGames());
+        this.totalGames = result.totalGames;
+        this.totalUniqueGames = result.totalUniqueGames;
+        return result.rowData;
     }
 
     private getColumnDefs(): Array<ColDef> {
@@ -225,17 +162,5 @@ export class StatsComponent {
         ];
     }
 
-    private getTotalAmountOfPlayers(placements: Array<Array<Player>>): number {
-        return placements.reduce((result: number, current: Array<Player>) => {
-            return result + current.length;
-        }, 0);
-    }
 }
 
-interface TableEntry {
-    player: Player;
-    uniqueGames: Set<string>;
-    totalGames: number;
-    score: number;
-    specialGames: Map<string, { score: number; timestamp: number }>;
-}
