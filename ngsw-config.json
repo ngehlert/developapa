@@ -10,7 +10,8 @@
                     "/favicon.ico",
                     "/index.html",
                     "/*.css",
-                    "/*.js"
+                    "/*.js",
+                    "/media/*.(woff2|woff|ttf|eot)"
                 ]
             }
         },
@@ -23,18 +24,6 @@
                     "/assets/**",
                     "/*.(png|jpg|jpeg|gif|svg|ico|webp)"
                 ]
-            }
-        }
-    ],
-    "dataGroups": [
-        {
-            "name": "api-freshness",
-            "urls": ["/**"],
-            "cacheConfig": {
-                "strategy": "freshness",
-                "maxSize": 100,
-                "maxAge": "1d",
-                "timeout": "5s"
             }
         }
     ]

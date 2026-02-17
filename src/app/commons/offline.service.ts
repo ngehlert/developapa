@@ -28,25 +28,24 @@ export class OfflineService {
 
         try {
             this.status.set('Enabling offline mode...');
-            const registration: ServiceWorkerRegistration = await navigator.serviceWorker.register('/ngsw-worker.js');
+            const registration: ServiceWorkerRegistration =
+                await navigator.serviceWorker.register('/ngsw-worker.js');
+
+            if (registration.active && !registration.installing) {
+                this.listenForUpdates(registration);
+                await this.verifyNgswHealth();
+                return;
+            }
+
+            const activated = await this.waitForActivation(registration);
+
+            if (!activated) {
+                this.status.set('Failed to enable offline mode. Installation failed.');
+                return;
+            }
 
             this.listenForUpdates(registration);
-
-            registration.addEventListener('updatefound', () => {
-                const worker: ServiceWorker | null = registration.installing;
-                worker?.addEventListener('statechange', () => {
-                    if (worker.state === 'activated') {
-                        this.isOffline.set(true);
-                        this.status.set('Offline mode enabled. All content cached.');
-                    }
-                });
-            });
-
-            if (registration.active) {
-                this.isOffline.set(true);
-                this.status.set('Offline mode enabled. All content cached.');
-                this.listenForUpdates(registration);
-            }
+            await this.verifyNgswHealth();
         } catch (error) {
             this.status.set('Failed to enable offline mode.');
             console.error('Service worker registration failed:', error);
@@ -70,6 +69,72 @@ export class OfflineService {
     public reload(): void {
         if (isPlatformBrowser(this.platformId)) {
             window.location.reload();
+        }
+    }
+
+    private waitForActivation(registration: ServiceWorkerRegistration): Promise<boolean> {
+        return new Promise((resolve) => {
+            const track = (worker: ServiceWorker): void => {
+                if (worker.state === 'activated') {
+                    resolve(true);
+                    return;
+                }
+                if (worker.state === 'redundant') {
+                    resolve(false);
+                    return;
+                }
+                worker.addEventListener('statechange', () => {
+                    if (worker.state === 'activated') {
+                        resolve(true);
+                    } else if (worker.state === 'redundant') {
+                        resolve(false);
+                    }
+                });
+            };
+
+            const worker = registration.installing || registration.waiting;
+            if (worker) {
+                track(worker);
+            } else {
+                registration.addEventListener(
+                    'updatefound',
+                    () => {
+                        if (registration.installing) {
+                            track(registration.installing);
+                        }
+                    },
+                    { once: true },
+                );
+            }
+        });
+    }
+
+    private async verifyNgswHealth(): Promise<void> {
+        // Wait for the SW to control this page (NGSW calls clients.claim() on activation)
+        if (!navigator.serviceWorker.controller) {
+            await new Promise<void>((resolve) => {
+                navigator.serviceWorker.addEventListener('controllerchange', () => resolve(), {
+                    once: true,
+                });
+            });
+        }
+
+        try {
+            const response = await fetch('/ngsw/state');
+            const text = await response.text();
+            if (text.includes('Driver state: NORMAL')) {
+                this.isOffline.set(true);
+                this.status.set('Offline mode enabled. All content cached.');
+            } else {
+                this.isOffline.set(false);
+                this.status.set(
+                    'Service worker is active but failed to cache all content. Try disabling and re-enabling.',
+                );
+                console.warn('NGSW state:\n', text);
+            }
+        } catch {
+            this.isOffline.set(false);
+            this.status.set('Could not verify offline cache status.');
         }
     }
 
