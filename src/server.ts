@@ -27,6 +27,17 @@ const angularApp = new AngularNodeAppEngine();
  */
 
 /**
+ * Serve NGSW and index.html as static files so SSR never modifies them.
+ * The service worker needs the exact build output for hash verification.
+ */
+app.get('/ngsw.json', (req, res) => {
+    res.sendFile(resolve(browserDistFolder, 'ngsw.json'));
+});
+app.get('/index.html', (req, res) => {
+    res.sendFile(resolve(browserDistFolder, 'index.html'));
+});
+
+/**
  * Serve static files from /browser
  */
 app.use(
