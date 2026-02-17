@@ -10,7 +10,7 @@
         "test:watch": "ng run developapa:test --watch",
         "serve:ssr": "node dist/developapa/server/server.mjs",
         "dev:ssr": "pnpm process:content && ng run developapa:serve",
-        "prerender": "ng run developapa:build:prerender,production && mv dist/developapa/browser/index.csr.html dist/developapa/browser/index.html",
+        "prerender": "ng run developapa:build:prerender,production && mv dist/developapa/browser/index.csr.html dist/developapa/browser/index.html && ngsw-config dist/developapa/browser ngsw-config.json /",
         "serve:prerender": "http-server dist/developapa/browser -p 8080",
         "deploy": "pnpm test && pnpm process:content && pnpm prerender && cp _redirects dist/developapa/browser/_redirects"
     },
