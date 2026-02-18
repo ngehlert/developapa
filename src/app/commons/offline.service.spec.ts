@@ -249,24 +249,29 @@ describe('OfflineService', () => {
                 );
             });
 
-            it('should wait for controllerchange when controller is not yet set', async () => {
+            it('should succeed on fresh install when controller is not yet set', async () => {
+                vi.useFakeTimers();
                 const { worker, setState } = createMockWorker('installing');
                 mockRegistration.installing = worker;
-                mockNgswState('NORMAL');
+                // First attempt: SW not controlling yet, fetch goes to network
+                fetchSpy
+                    .mockResolvedValueOnce({
+                        text: () => Promise.resolve('<!DOCTYPE html>'),
+                    })
+                    .mockResolvedValueOnce({
+                        text: () => Promise.resolve('Driver state: NORMAL\nSome other info'),
+                    });
 
                 const enablePromise = service.enable();
-
-                // Activate without setting controller first
                 setState('activated');
 
-                // verifyNgswHealth waits for controllerchange
-                // Simulate it after a tick
-                await Promise.resolve();
-                (navigator.serviceWorker as any).controller = worker;
-                fireSwEvent('controllerchange');
-
+                // First attempt fails (network response), retry after 1s succeeds
+                await vi.advanceTimersByTimeAsync(1000);
                 await enablePromise;
+
                 expect(service.isOffline()).toBe(true);
+                expect(service.status()).toBe('Offline mode enabled. All content cached.');
+                vi.useRealTimers();
             });
 
             it('should listen for updatefound on the registration', async () => {

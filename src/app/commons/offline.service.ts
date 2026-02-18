@@ -113,15 +113,6 @@ export class OfflineService {
         // Wait for the SW registration to have an active worker
         await navigator.serviceWorker.ready;
 
-        // Wait for the SW to control this page (NGSW calls clients.claim() on activation)
-        if (!navigator.serviceWorker.controller) {
-            await new Promise<void>((resolve) => {
-                navigator.serviceWorker.addEventListener('controllerchange', () => resolve(), {
-                    once: true,
-                });
-            });
-        }
-
         try {
             const response = await fetch('/ngsw/state');
             const text = await response.text();
