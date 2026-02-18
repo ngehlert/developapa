@@ -101,6 +101,7 @@ describe('OfflineService', () => {
             Object.defineProperty(navigator, 'serviceWorker', {
                 value: {
                     controller: null,
+                    ready: Promise.resolve(mockRegistration),
                     register: vi.fn().mockResolvedValue(mockRegistration),
                     getRegistrations: vi.fn().mockResolvedValue([mockRegistration]),
                     addEventListener: vi.fn((event: string, cb: Function) => {
@@ -160,26 +161,62 @@ describe('OfflineService', () => {
                 expect(service.status()).toBe('Offline mode enabled. All content cached.');
             });
 
-            it('should report error when already active but NGSW is degraded', async () => {
+            it('should report error when already active but NGSW is degraded after retries', async () => {
+                vi.useFakeTimers();
                 mockRegistration.active = {};
                 (navigator.serviceWorker as any).controller = {};
                 mockNgswState('EXISTING_CLIENTS_ONLY');
                 const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-                await service.enable();
+                const enablePromise = service.enable();
+                await vi.advanceTimersByTimeAsync(1000);
+                await vi.advanceTimersByTimeAsync(1000);
+                await enablePromise;
+
                 expect(service.isOffline()).toBe(false);
                 expect(service.status()).toContain('failed to cache all content');
+                expect(fetchSpy).toHaveBeenCalledTimes(3);
                 consoleSpy.mockRestore();
+                vi.useRealTimers();
             });
 
-            it('should report error when health check fetch fails', async () => {
+            it('should report error when health check fetch fails after retries', async () => {
+                vi.useFakeTimers();
                 mockRegistration.active = {};
                 (navigator.serviceWorker as any).controller = {};
                 fetchSpy.mockRejectedValue(new Error('Network error'));
 
-                await service.enable();
+                const enablePromise = service.enable();
+                await vi.advanceTimersByTimeAsync(1000);
+                await vi.advanceTimersByTimeAsync(1000);
+                await enablePromise;
+
                 expect(service.isOffline()).toBe(false);
                 expect(service.status()).toBe('Could not verify offline cache status.');
+                expect(fetchSpy).toHaveBeenCalledTimes(3);
+                vi.useRealTimers();
+            });
+
+            it('should retry and succeed when NGSW becomes healthy', async () => {
+                vi.useFakeTimers();
+                mockRegistration.active = {};
+                (navigator.serviceWorker as any).controller = {};
+                fetchSpy
+                    .mockResolvedValueOnce({
+                        text: () => Promise.resolve('Driver state: EXISTING_CLIENTS_ONLY'),
+                    })
+                    .mockResolvedValueOnce({
+                        text: () => Promise.resolve('Driver state: NORMAL\nSome other info'),
+                    });
+
+                const enablePromise = service.enable();
+                await vi.advanceTimersByTimeAsync(1000);
+                await enablePromise;
+
+                expect(service.isOffline()).toBe(true);
+                expect(service.status()).toBe('Offline mode enabled. All content cached.');
+                expect(fetchSpy).toHaveBeenCalledTimes(2);
+                vi.useRealTimers();
             });
 
             it('should detect successful new installation', async () => {

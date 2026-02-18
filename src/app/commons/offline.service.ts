@@ -109,7 +109,10 @@ export class OfflineService {
         });
     }
 
-    private async verifyNgswHealth(): Promise<void> {
+    private async verifyNgswHealth(attempt = 1): Promise<void> {
+        // Wait for the SW registration to have an active worker
+        await navigator.serviceWorker.ready;
+
         // Wait for the SW to control this page (NGSW calls clients.claim() on activation)
         if (!navigator.serviceWorker.controller) {
             await new Promise<void>((resolve) => {
@@ -125,14 +128,22 @@ export class OfflineService {
             if (text.includes('Driver state: NORMAL')) {
                 this.isOffline.set(true);
                 this.status.set('Offline mode enabled. All content cached.');
-            } else {
-                this.isOffline.set(false);
-                this.status.set(
-                    'Service worker is active but failed to cache all content. Try disabling and re-enabling.',
-                );
-                console.warn('NGSW state:\n', text);
+                return;
             }
+            if (attempt < 3) {
+                await new Promise((r) => setTimeout(r, 1000));
+                return this.verifyNgswHealth(attempt + 1);
+            }
+            this.isOffline.set(false);
+            this.status.set(
+                'Service worker is active but failed to cache all content. Try disabling and re-enabling.',
+            );
+            console.warn('NGSW state:\n', text);
         } catch {
+            if (attempt < 3) {
+                await new Promise((r) => setTimeout(r, 1000));
+                return this.verifyNgswHealth(attempt + 1);
+            }
             this.isOffline.set(false);
             this.status.set('Could not verify offline cache status.');
         }
