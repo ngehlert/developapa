@@ -118,7 +118,7 @@ export class OfflineService {
             const text = await response.text();
             if (text.includes('Driver state: NORMAL')) {
                 this.isOffline.set(true);
-                this.status.set('Offline mode enabled. All content cached.');
+                this.status.set('Offline mode enabled. All content will now be cached in the background.');
                 return;
             }
             if (attempt < 3) {
