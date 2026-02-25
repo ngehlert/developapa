@@ -158,7 +158,7 @@ describe('OfflineService', () => {
 
                 await service.enable();
                 expect(service.isOffline()).toBe(true);
-                expect(service.status()).toBe('Offline mode enabled. All content cached.');
+                expect(service.status()).toBe('Offline mode enabled. All content will now be cached in the background.');
             });
 
             it('should report error when already active but NGSW is degraded after retries', async () => {
@@ -214,7 +214,7 @@ describe('OfflineService', () => {
                 await enablePromise;
 
                 expect(service.isOffline()).toBe(true);
-                expect(service.status()).toBe('Offline mode enabled. All content cached.');
+                expect(service.status()).toBe('Offline mode enabled. All content will now be cached in the background.');
                 expect(fetchSpy).toHaveBeenCalledTimes(2);
                 vi.useRealTimers();
             });
@@ -232,7 +232,7 @@ describe('OfflineService', () => {
 
                 await enablePromise;
                 expect(service.isOffline()).toBe(true);
-                expect(service.status()).toBe('Offline mode enabled. All content cached.');
+                expect(service.status()).toBe('Offline mode enabled. All content will now be cached in the background.');
             });
 
             it('should detect installation failure when worker becomes redundant', async () => {
@@ -270,7 +270,7 @@ describe('OfflineService', () => {
                 await enablePromise;
 
                 expect(service.isOffline()).toBe(true);
-                expect(service.status()).toBe('Offline mode enabled. All content cached.');
+                expect(service.status()).toBe('Offline mode enabled. All content will now be cached in the background.');
                 vi.useRealTimers();
             });
 
