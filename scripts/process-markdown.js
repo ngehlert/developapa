@@ -30,6 +30,7 @@ const routesToPrerender = [
     '/boardgame-tracker/stats',
     '/boardgame-tracker/main',
     '/boardgame-tracker/admin',
+    '/kids-game',
 ];
 
 try {

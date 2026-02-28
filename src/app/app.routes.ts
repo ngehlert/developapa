@@ -27,6 +27,10 @@ export const routes: Routes = [
         loadComponent: () => import('./portfolio/kurve.component').then(m => m.KurveComponent),
     },
     {
+        path: 'kids-game',
+        loadComponent: () => import('./kids-game/kids-game.component').then(m => m.KidsGameComponent),
+    },
+    {
         path: 'boardgame-tracker',
         loadComponent: () => import('./boardgame-tracker/layout.component').then(m => m.BoardgameLayoutComponent),
         children: [

@@ -1,0 +1,659 @@
+:host {
+    display: block;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+    box-sizing: border-box;
+}
+
+.game-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+/* ── Game Area ── */
+
+.game-area {
+    position: relative;
+    width: min(560px, 90vmin);
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    border: 4px solid #5aad4e;
+    overflow: hidden;
+
+    /* cqw units for elements inside the game area */
+    container-type: inline-size;
+    container-name: game;
+
+    background-color: #7ecc6a;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 55px,
+            rgba(255, 255, 255, 0.07) 55px,
+            rgba(255, 255, 255, 0.07) 56px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 55px,
+            rgba(255, 255, 255, 0.07) 55px,
+            rgba(255, 255, 255, 0.07) 56px
+        );
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.18),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* ── Character ── */
+
+.character {
+    position: absolute;
+    width: 10%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.22));
+    }
+
+    &.facing-left svg {
+        transform: scaleX(-1);
+    }
+}
+
+/* ── Overlay (backdrop covering game-area) ── */
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ── Victory panel ── */
+
+.victory-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5cqw;
+    background: #fffdf5;
+    border-radius: 4cqw;
+    padding: 5cqw 7cqw;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+    width: 72%;
+    animation: victoryPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes victoryPop {
+    from {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.victory-panel__crown {
+    font-size: 10cqw;
+    margin: 0;
+    animation: crownSpin 0.6s ease-out 0.1s both;
+}
+
+@keyframes crownSpin {
+    from {
+        transform: rotate(-25deg) scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+.victory-panel__title {
+    font-size: 9cqw;
+    font-weight: 900;
+    color: #D4A017;
+    margin: 0;
+    letter-spacing: 0.04em;
+    text-shadow: 0 2px 0 #8B5E00;
+}
+
+.victory-panel__sub {
+    font-size: 3.5cqw;
+    color: #888;
+    margin: 0;
+}
+
+.victory-panel__coins {
+    font-size: 4cqw;
+    font-weight: 700;
+    color: #444;
+    margin: 0;
+}
+
+.victory-play-again {
+    margin-top: 1cqw;
+    font-size: 5cqw;
+    padding: 3cqw 5cqw;
+}
+
+/* ── Pause menu panel ── */
+
+.menu-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3cqw;
+    background: #fffdf5;
+    border-radius: 4cqw;
+    padding: 5cqw 6cqw;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    width: 72%;
+}
+
+.menu-panel__title {
+    font-size: 6.5cqw;
+    font-weight: 800;
+    color: #333;
+    margin: 0;
+    letter-spacing: 0.03em;
+}
+
+.menu-panel__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5cqw;
+    width: 100%;
+}
+
+.menu-panel__hint {
+    font-size: 3cqw;
+    color: #999;
+    margin: 0;
+}
+
+.menu-btn {
+    width: 100%;
+    padding: 2.8cqw 4cqw;
+    font-size: 4.5cqw;
+    font-weight: 700;
+    border-radius: 2.5cqw;
+    border: none;
+    cursor: pointer;
+    background: #e8e8e8;
+    color: #444;
+    box-shadow: 0 3px 0 #bbb;
+    transition:
+        background 0.12s,
+        transform 0.08s,
+        box-shadow 0.08s;
+
+    &:hover {
+        background: #d8d8d8;
+    }
+
+    &:active {
+        transform: translateY(2px);
+        box-shadow: 0 1px 0 #bbb;
+    }
+
+    &--primary {
+        background: #5aad4e;
+        color: white;
+        box-shadow: 0 3px 0 #3d8b2e;
+
+        &:hover {
+            background: #4e9e44;
+        }
+
+        &:active {
+            box-shadow: 0 1px 0 #3d8b2e;
+        }
+    }
+}
+
+/* ── Character select panel ── */
+
+.char-select-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5cqw;
+    background: #fffdf5;
+    border-radius: 4cqw;
+    padding: 5cqw 4cqw;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    width: 85%;
+}
+
+.char-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3cqw;
+    width: 100%;
+}
+
+.char-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5cqw;
+    padding: 3cqw 2cqw 2.5cqw;
+    border: 2.5px solid #ddd;
+    border-radius: 3cqw;
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition:
+        border-color 0.15s,
+        background 0.15s,
+        transform 0.1s;
+
+    &:hover {
+        border-color: #C271E8;
+        background: rgba(194, 113, 232, 0.06);
+        transform: translateY(-2px);
+    }
+
+    &--selected {
+        border-color: #C271E8;
+        background: rgba(194, 113, 232, 0.1);
+        box-shadow: 0 0 0 3px rgba(194, 113, 232, 0.3);
+    }
+}
+
+.char-option__check {
+    position: absolute;
+    top: -1.5cqw;
+    right: -1.5cqw;
+    width: 6cqw;
+    height: 6cqw;
+    border-radius: 50%;
+    background: #C271E8;
+    color: white;
+    font-size: 3.5cqw;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.char-preview {
+    /* Fills the card horizontally; aspect ratio from viewBox keeps it proportional */
+    width: 60%;
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(1px 3px 5px rgba(0, 0, 0, 0.18));
+}
+
+.char-option__label {
+    font-size: 4cqw;
+    font-weight: 700;
+    color: #444;
+}
+
+.back-btn {
+    padding: 2cqw 5cqw;
+    font-size: 3.8cqw;
+    font-weight: 600;
+    border-radius: 2cqw;
+    border: 2px solid #ccc;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+
+    &:hover {
+        background: #f0f0f0;
+        color: #333;
+    }
+}
+
+/* ── Arrows ── */
+
+.arrow {
+    position: absolute;
+    /* Width sets the arrow's apparent length; height is derived from the 20:4 viewBox ratio */
+    width: 4.5%;
+    pointer-events: none;
+
+    svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.45));
+    }
+}
+
+/* ── Sword swing arc ── */
+
+.sword-swing {
+    position: absolute;
+    /* Large enough square to contain the arc radius without clipping */
+    width: 28%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        /* Rotate whole SVG to the heading direction.
+           The default cone points RIGHT (0°). */
+        transform-origin: 50% 50%;
+    }
+
+    &.facing-right svg { transform: rotate(0deg);    }
+    &.facing-down  svg { transform: rotate(90deg);   }
+    &.facing-left  svg { transform: rotate(180deg);  }
+    &.facing-up    svg { transform: rotate(-90deg);  }
+}
+
+/* The inner <g> carries the sweep + fade animation.
+   Duration must match SWORD_DURATION_FRAMES / 60fps ≈ 367ms. */
+.sword-arc-sweep {
+    transform-origin: 0px 0px; /* SVG origin = character centre */
+    animation: swordSwing 0.37s ease-out forwards;
+}
+
+@keyframes swordSwing {
+    0%   { transform: rotate(-42deg); opacity: 1;   }
+    35%  { transform: rotate(0deg);   opacity: 0.9; }
+    100% { transform: rotate(38deg);  opacity: 0;   }
+}
+
+/* ── D-Pad ── */
+
+.d-pad {
+    display: grid;
+    grid-template-areas:
+        '. up .'
+        'left . right'
+        '. down .';
+    grid-template-rows: repeat(3, 56px);
+    grid-template-columns: repeat(3, 56px);
+    gap: 4px;
+}
+
+.d-pad-button {
+    background-color: rgba(90, 173, 78, 0.85);
+    border: 2px solid #3d8b2e;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    box-shadow: 0 3px 0 #2c6b1f;
+    transition:
+        background-color 0.1s,
+        transform 0.08s,
+        box-shadow 0.08s;
+
+    &:hover {
+        background-color: rgba(61, 139, 46, 0.9);
+    }
+
+    &:active {
+        transform: translateY(2px);
+        box-shadow: 0 1px 0 #2c6b1f;
+    }
+
+    &.up {
+        grid-area: up;
+    }
+
+    &.down {
+        grid-area: down;
+    }
+
+    &.left {
+        grid-area: left;
+    }
+
+    &.right {
+        grid-area: right;
+    }
+}
+
+.hint {
+    color: #666;
+    font-size: 0.875rem;
+    margin: 0;
+    text-align: center;
+}
+
+/* ── Slimes ── */
+
+.slime {
+    position: absolute;
+    /* Explicit width required: div is absolutely positioned and the SVG inside
+       uses width: 100%, so the div must have a defined width or the SVG collapses. */
+    width: 9%;
+    aspect-ratio: 40 / 36;  /* matches SVG viewBox dimensions */
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+}
+
+/* ── Boss slime ── */
+
+.boss-slime {
+    position: absolute;
+    width: 25%;
+    aspect-ratio: 40 / 36;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: bossGlow 1.6s ease-in-out infinite alternate;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+}
+
+@keyframes bossGlow {
+    from {
+        filter: drop-shadow(0 0 6px rgba(200, 0, 0, 0.5));
+    }
+    to {
+        filter: drop-shadow(0 0 18px rgba(220, 0, 0, 0.95));
+    }
+}
+
+/* ── Treasure box ── */
+
+.treasure-box {
+    position: absolute;
+    width: 10%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        animation:
+            treasureBob 0.9s ease-in-out infinite alternate,
+            treasureGlow 1.4s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes treasureBob {
+    from {
+        transform: translateY(-5%);
+    }
+    to {
+        transform: translateY(5%);
+    }
+}
+
+@keyframes treasureGlow {
+    from {
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45))
+            drop-shadow(0 0 6px rgba(255, 180, 0, 0.3));
+    }
+    to {
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45))
+            drop-shadow(0 0 20px rgba(255, 180, 0, 0.9));
+    }
+}
+
+/* ── Burst effect ── */
+
+.burst {
+    position: absolute;
+    width: 6%;
+    pointer-events: none;
+
+    svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+}
+
+/* ── Boss health bar HUD ── */
+
+.boss-hud {
+    position: absolute;
+    top: 3cqw;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1cqw;
+    width: 48%;
+    pointer-events: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.boss-hud__label {
+    font-size: 3.2cqw;
+    font-weight: 900;
+    color: #ff2222;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.18em;
+    margin: 0;
+}
+
+.boss-hud__bar-track {
+    position: relative;
+    width: 100%;
+    height: 2.8cqw;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 1.4cqw;
+    border: 0.5cqw solid rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+
+    /* 20-segment tick marks rendered as a repeating gradient overlay */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+            to right,
+            transparent,
+            transparent calc(100% / 20 - 0.5px),
+            rgba(0, 0, 0, 0.25) calc(100% / 20 - 0.5px),
+            rgba(0, 0, 0, 0.25) calc(100% / 20)
+        );
+        pointer-events: none;
+    }
+}
+
+.boss-hud__bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, #990000, #ff3333);
+    transition: width 0.12s ease;
+}
+
+/* ── Coin counter HUD ── */
+
+.coin-counter {
+    position: absolute;
+    top: 3cqw;
+    right: 3cqw;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1.5cqw;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 3cqw;
+    padding: 1.5cqw 3cqw;
+    font-size: 5.5cqw;
+    font-weight: 800;
+    color: #FFD700;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    user-select: none;
+
+    svg {
+        width: 1.1em;
+        height: 1.1em;
+        flex-shrink: 0;
+        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+    }
+}
+
+/* ── Coin ── */
+
+.coin {
+    position: absolute;
+    width: 3.5%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+    }
+}

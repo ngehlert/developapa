@@ -43,6 +43,21 @@ import { OfflineService } from '../commons/offline.service';
             <article class="limit-content-width-container">
                 <header>
                     <h2>
+                        <a [routerLink]="['/kids-game']">Monster Jäger</a>
+                    </h2>
+                </header>
+                <p class="post-description">
+                    A small little monster hunter game my kids build.
+                </p>
+                <a
+                    [routerLink]="['/kids-game']"
+                    class="read-more-link"
+                    >Read More →</a
+                >
+            </article>
+            <article class="limit-content-width-container">
+                <header>
+                    <h2>
                         <a [routerLink]="['/kurve']">Zatacka - Achtung die Kurve</a>
                         <a
                             href="https://github.com/ngehlert/kurve"

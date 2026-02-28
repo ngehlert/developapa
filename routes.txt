@@ -7,6 +7,7 @@
 /boardgame-tracker/stats
 /boardgame-tracker/main
 /boardgame-tracker/admin
+/kids-game
 /blog/ag-grid-cell-observables
 /blog/angular-clipboard
 /blog/angular-custom-webpack-configuration

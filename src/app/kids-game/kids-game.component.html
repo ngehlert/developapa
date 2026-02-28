@@ -1,0 +1,659 @@
+<div class="page-wrapper">
+    <h1 class="game-title">Kids Game</h1>
+
+    <div class="game-area" role="application" aria-label="Game area – use arrow keys to move the character">
+
+        <!-- ═══════════════════════════════════════════════════
+             COMIC CHARACTER
+             SVG order = painter's algorithm (back → front):
+               female hair strands → legs → arms → body → neck → head → face
+        ════════════════════════════════════════════════════════ -->
+        <div
+            class="character"
+            [class.facing-left]="isFacingLeft()"
+            [style.left.%]="characterXPercent()"
+            [style.top.%]="characterYPercent()"
+            aria-hidden="true"
+        >
+            <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+
+                <!-- Ground shadow -->
+                <ellipse cx="25" cy="79" rx="12" ry="4" fill="rgba(0,0,0,0.15)" />
+
+                <!-- ── FEMALE ONLY: long hair strands (drawn first, behind body) ── -->
+                @if (characterGender() === 'female') {
+                    <path d="M 13 12 C 10 22 9 35 11 47" stroke="#5D3A1A" stroke-width="7" fill="none" stroke-linecap="round" />
+                    <path d="M 37 12 C 40 22 41 35 39 47" stroke="#5D3A1A" stroke-width="7" fill="none" stroke-linecap="round" />
+                }
+
+                <!-- ── LEGS ── -->
+                @if (characterGender() === 'female') {
+                    <!-- Female: shorter skin legs below dress (pivot at 60) -->
+                    <g [attr.transform]="'translate(19,60) rotate(' + legSwing() + ')'">
+                        <rect x="-4" y="0" width="8" height="16" rx="4" fill="#FFCB6B" />
+                        <ellipse cx="0" cy="17" rx="6.5" ry="3" fill="#E8449A" />
+                    </g>
+                    <g [attr.transform]="'translate(31,60) rotate(' + (-legSwing()) + ')'">
+                        <rect x="-4" y="0" width="8" height="16" rx="4" fill="#FFCB6B" />
+                        <ellipse cx="0" cy="17" rx="6.5" ry="3" fill="#E8449A" />
+                    </g>
+                } @else {
+                    <!-- Male: full jeans (pivot at 54) -->
+                    <g [attr.transform]="'translate(19,54) rotate(' + legSwing() + ')'">
+                        <rect x="-5" y="0" width="10" height="22" rx="5" fill="#3B74D1" />
+                        <ellipse cx="0" cy="23" rx="7" ry="3.5" fill="#5C3A1E" />
+                    </g>
+                    <g [attr.transform]="'translate(31,54) rotate(' + (-legSwing()) + ')'">
+                        <rect x="-5" y="0" width="10" height="22" rx="5" fill="#3B74D1" />
+                        <ellipse cx="0" cy="23" rx="7" ry="3.5" fill="#5C3A1E" />
+                    </g>
+                }
+
+                <!-- ── ARMS (shared – opposite swing to legs for natural gait) ── -->
+
+                <!-- Left arm + CROSSBOW -->
+                <g [attr.transform]="'translate(11,33) rotate(' + (-legSwing()) + ')'">
+                    <rect x="-4" y="0" width="8" height="19" rx="4" fill="#FFCB6B" />
+                    <!-- Stock body (horizontal through hand) -->
+                    <rect x="-15" y="13" width="30" height="5" rx="2.5" fill="#8B4513" />
+                    <!-- Rail channel -->
+                    <rect x="-13" y="13.5" width="22" height="2.5" rx="1" fill="#6B3000" />
+                    <!-- Trigger housing where grip meets stock -->
+                    <rect x="-3.5" y="11" width="7" height="9" rx="1.5" fill="#6B3000" />
+                    <!-- Left bow limb -->
+                    <path d="M -15,14.5 Q -21,14.5 -20,7" stroke="#5C3010" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <!-- Right bow limb -->
+                    <path d="M 15,14.5 Q 21,14.5 20,7" stroke="#5C3010" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <!-- Bowstring with natural sag -->
+                    <path d="M -20,7 Q 0,10 20,7" stroke="#F5EDD5" stroke-width="1.2" fill="none" />
+                    <!-- Bolt on rail -->
+                    <rect x="-11" y="13" width="18" height="2" rx="1" fill="#9B5B2A" />
+                    <!-- Bolt tip -->
+                    <polygon points="7,14 10,13 10,15" fill="#C0C0C0" />
+                </g>
+
+                <!-- Right arm + SWORD -->
+                <g [attr.transform]="'translate(39,33) rotate(' + legSwing() + ')'">
+                    <rect x="-4" y="0" width="8" height="19" rx="4" fill="#FFCB6B" />
+                    <!-- Crossguard – golden bar with orb tips -->
+                    <rect x="-9.5" y="15" width="19" height="4" rx="2" fill="#D4A000" />
+                    <circle cx="-9.5" cy="17" r="3" fill="#B8860B" />
+                    <circle cx="9.5" cy="17" r="3" fill="#B8860B" />
+                    <!-- Blade – silver with centre highlight -->
+                    <rect x="-2" y="19" width="4" height="21" fill="#D8D8D8" />
+                    <rect x="-0.5" y="19" width="1" height="21" fill="#F0F0F0" />
+                    <!-- Pointed tip -->
+                    <polygon points="-2,40 2,40 0,48" fill="#C8C8C8" />
+                </g>
+
+                <!-- ── BODY ── -->
+                @if (characterGender() === 'female') {
+                    <!-- A-line dress -->
+                    <path d="M 11 29 L 39 29 L 46 62 Q 25 65 4 62 Z" fill="#C271E8" />
+                    <!-- Waist detail -->
+                    <path d="M 12 39 Q 25 41 38 39" stroke="#9B45C9" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <!-- Collar cutout -->
+                    <path d="M 20 29 Q 25 35 30 29" fill="#A855D4" />
+                } @else {
+                    <!-- Red shirt -->
+                    <rect x="11" y="29" width="28" height="26" rx="6" fill="#FF6B6B" />
+                    <path d="M 22 29 L 25 34 L 28 29" fill="#E05555" />
+                    <circle cx="25" cy="40" r="1.5" fill="white" opacity="0.75" />
+                    <circle cx="25" cy="47" r="1.5" fill="white" opacity="0.75" />
+                }
+
+                <!-- ── NECK (shared) ── -->
+                <rect x="21" y="25" width="8" height="7" rx="3" fill="#FFCB6B" />
+
+                <!-- ── HEAD (shared) ── -->
+                <circle cx="25" cy="14" r="13" fill="#FFCB6B" />
+
+                <!-- ── HAIR ── -->
+                <!-- Top hair is the same shape for both; female also has side strands (drawn above) -->
+                <path d="M 13 11 Q 12 1 25 1 Q 38 1 37 11 Q 34 5 25 5 Q 16 5 13 11" fill="#5D3A1A" />
+                <ellipse cx="13.5" cy="10" rx="4" ry="5" fill="#5D3A1A" />
+                <ellipse cx="36.5" cy="10" rx="4" ry="5" fill="#5D3A1A" />
+
+                <!-- ── EYES (shared base) ── -->
+                <circle cx="19" cy="13" r="4" fill="white" />
+                <circle cx="20" cy="13" r="2.3" fill="#222" />
+                <circle cx="21" cy="12" r="0.9" fill="white" />
+
+                <circle cx="31" cy="13" r="4" fill="white" />
+                <circle cx="32" cy="13" r="2.3" fill="#222" />
+                <circle cx="33" cy="12" r="0.9" fill="white" />
+
+                <!-- ── FEMALE ONLY: eyelashes ── -->
+                @if (characterGender() === 'female') {
+                    <path d="M 15 10 Q 16 8 18 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                    <path d="M 18  9 Q 19 7 21 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                    <path d="M 21  9 Q 22 7 24 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                    <path d="M 26  9 Q 28 7 30 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                    <path d="M 29  9 Q 31 7 33 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                    <path d="M 32  9 Q 34 7 35 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                }
+
+                <!-- ── FACE (shared) ── -->
+                <path d="M 14 8 Q 19 6 23 8" stroke="#5D3A1A" stroke-width="1.8" fill="none" stroke-linecap="round" />
+                <path d="M 27 8 Q 31 6 36 8" stroke="#5D3A1A" stroke-width="1.8" fill="none" stroke-linecap="round" />
+                <ellipse cx="25" cy="17" rx="1.8" ry="1.4" fill="#EBB45A" />
+                <path d="M 18 21 Q 25 27 32 21" stroke="#8B4513" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="14" cy="19" rx="4.5" ry="3" fill="#FF9898" opacity="0.45" />
+                <ellipse cx="36" cy="19" rx="4.5" ry="3" fill="#FF9898" opacity="0.45" />
+
+            </svg>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+             BOSS HEALTH BAR (top-centre HUD, visible only when boss is alive)
+        ════════════════════════════════════════════════════════ -->
+        @if (boss()) {
+            <div class="boss-hud">
+                <p class="boss-hud__label">★ BOSS ★</p>
+                <div class="boss-hud__bar-track">
+                    <div class="boss-hud__bar-fill" [style.width.%]="bossHealthPercent()"></div>
+                </div>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             COIN COUNTER (top-right HUD)
+        ════════════════════════════════════════════════════════ -->
+        <div class="coin-counter" aria-live="polite" aria-label="Coins collected">
+            <svg viewBox="-8 -8 16 16" width="1em" height="1em" overflow="visible">
+                <circle cx="0" cy="0" r="7" fill="#FFD700" />
+                <circle cx="0" cy="0" r="7" fill="none" stroke="#B8860B" stroke-width="1.2" />
+                <ellipse cx="-2" cy="-2" rx="2.5" ry="1.5" fill="rgba(255,255,255,0.5)" />
+                <text x="0" y="3" text-anchor="middle" font-size="7" font-weight="bold" fill="#B8860B" font-family="sans-serif">$</text>
+            </svg>
+            {{ coinCount() }}
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+             ARROWS (travel across the game area)
+        ════════════════════════════════════════════════════════ -->
+        @for (arrow of arrows(); track arrow.id) {
+            <div
+                class="arrow"
+                [style.left.%]="arrow.x * 100"
+                [style.top.%]="arrow.y * 100"
+                [style.transform]="'translate(-50%, -50%) rotate(' + getArrowRotationDeg(arrow) + 'deg)'"
+            >
+                <svg viewBox="-10 -2 20 4" overflow="visible">
+                    <!-- Shaft -->
+                    <rect x="-9" y="-0.7" width="15" height="1.4" rx="0.7" fill="#8B5E3C" />
+                    <!-- Head -->
+                    <polygon points="6,-2 10,0 6,2" fill="#A8A8A8" />
+                    <!-- Fletching -->
+                    <polygon points="-9,-0.7 -6,-3.5 -6,-0.7" fill="#CC3333" />
+                    <polygon points="-9,0.7 -6,3.5 -6,0.7" fill="#CC3333" />
+                </svg>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             SWORD SWING ARC
+             @if creates/destroys the element on each swing,
+             which automatically restarts the CSS animation.
+        ════════════════════════════════════════════════════════ -->
+        @if (swordActive()) {
+            <div
+                class="sword-swing"
+                [class.facing-right]="facingDirection() === 'right'"
+                [class.facing-left]="facingDirection() === 'left'"
+                [class.facing-up]="facingDirection() === 'up'"
+                [class.facing-down]="facingDirection() === 'down'"
+                [style.left.%]="characterXPercent()"
+                [style.top.%]="characterYPercent()"
+                aria-hidden="true"
+            >
+                <!--
+                    ViewBox is centred at (0,0) = character centre.
+                    The cone path points RIGHT by default; direction
+                    classes rotate the whole SVG to the correct heading.
+                    The inner <g> carries the sweep animation.
+                -->
+                <svg viewBox="-13 -13 26 26" overflow="visible">
+                    <g class="sword-arc-sweep">
+                        <!-- Filled cone -->
+                        <path
+                            d="M 0,0 L 8.4,-10 A 13,13 0 0 1 8.4,10 Z"
+                            fill="rgba(255,220,60,0.25)"
+                        />
+                        <!-- Bright outer arc edge -->
+                        <path
+                            d="M 8.4,-10 A 13,13 0 0 1 8.4,10"
+                            fill="none"
+                            stroke="rgba(255,235,100,0.95)"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+                        <!-- Radial lines for the glowing slash look -->
+                        <line x1="0" y1="0" x2="8.4" y2="-10" stroke="rgba(255,220,60,0.55)" stroke-width="0.8" stroke-linecap="round" />
+                        <line x1="0" y1="0" x2="13"  y2="0"   stroke="rgba(255,220,60,0.75)" stroke-width="0.8" stroke-linecap="round" />
+                        <line x1="0" y1="0" x2="8.4" y2="10"  stroke="rgba(255,220,60,0.55)" stroke-width="0.8" stroke-linecap="round" />
+                        <!-- Sparkle dot at arc tip -->
+                        <circle cx="13" cy="0" r="1.6" fill="rgba(255,255,200,0.95)" />
+                    </g>
+                </svg>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             SLIMES
+        ════════════════════════════════════════════════════════ -->
+        @for (slime of slimes(); track slime.id) {
+            <div
+                class="slime"
+                aria-hidden="true"
+                [style.left.%]="slime.visualX * 100"
+                [style.top.%]="slime.visualY * 100"
+                [style.width]="(slime.size * 9) + '%'"
+            >
+                <svg viewBox="-20 -18 40 36" overflow="visible">
+                    <!-- Ground shadow -->
+                    <ellipse
+                        cx="0" cy="17"
+                        [attr.rx]="12 * slime.scaleX"
+                        ry="3"
+                        fill="rgba(0,0,0,0.18)"
+                    />
+                    <g [attr.transform]="'scale(' + slime.scaleX + ',' + slime.scaleY + ')'">
+                        <!-- Main blob body -->
+                        <ellipse cx="0" cy="0" rx="18" ry="15" [attr.fill]="slime.color" />
+                        <!-- Highlight shimmer -->
+                        <ellipse cx="-6" cy="-6" rx="6" ry="4" fill="rgba(255,255,255,0.35)" />
+                        <!-- Wobbly bottom drip -->
+                        <path
+                            d="M -10,12 Q -5,18 0,14 Q 5,18 10,12"
+                            [attr.fill]="slime.color"
+                        />
+                        <!-- Shadow underside -->
+                        <ellipse cx="0" cy="8" rx="13" ry="5" [attr.fill]="slime.shadowColor" opacity="0.4" />
+                        <!-- Left eye white -->
+                        <circle cx="-7" cy="-3" r="5" fill="white" />
+                        <!-- Right eye white -->
+                        <circle cx="7" cy="-3" r="5" fill="white" />
+                        <!-- Left pupil -->
+                        <circle cx="-6" cy="-2" r="2.8" [attr.fill]="slime.eyeColor" />
+                        <!-- Right pupil -->
+                        <circle cx="8" cy="-2" r="2.8" [attr.fill]="slime.eyeColor" />
+                        <!-- Eye shine left -->
+                        <circle cx="-5" cy="-3.5" r="1.1" fill="white" />
+                        <!-- Eye shine right -->
+                        <circle cx="9" cy="-3.5" r="1.1" fill="white" />
+                        <!-- Silly grin -->
+                        <path d="M -5,6 Q 0,11 5,6" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                        <!-- Tiny teeth -->
+                        <rect x="-3" y="6" width="2.5" height="2.5" rx="0.5" fill="white" />
+                        <rect x="0.5" y="6" width="2.5" height="2.5" rx="0.5" fill="white" />
+                    </g>
+                </svg>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             BOSS (rendered after slimes so it draws on top)
+        ════════════════════════════════════════════════════════ -->
+        @if (boss(); as b) {
+            <div
+                class="boss-slime"
+                aria-hidden="true"
+                [style.left.%]="b.visualX * 100"
+                [style.top.%]="b.visualY * 100"
+            >
+                <svg viewBox="-20 -18 40 36" overflow="visible">
+                    <!-- Ground shadow -->
+                    <ellipse
+                        cx="0" cy="17"
+                        [attr.rx]="16 * b.scaleX"
+                        ry="5"
+                        fill="rgba(0,0,0,0.28)"
+                    />
+                    <g [attr.transform]="'scale(' + b.scaleX + ',' + b.scaleY + ')'">
+                        <!-- Horns -->
+                        <polygon points="-10,-14 -14,-24 -5,-17" fill="#880000" />
+                        <polygon points="10,-14 14,-24 5,-17" fill="#880000" />
+                        <!-- Main blob body (deep crimson) -->
+                        <ellipse cx="0" cy="0" rx="18" ry="15" fill="#CC0000" />
+                        <!-- Body highlight -->
+                        <ellipse cx="-5" cy="-5" rx="5.5" ry="3.5" fill="rgba(255,255,255,0.18)" />
+                        <!-- Shadow underside -->
+                        <ellipse cx="0" cy="8" rx="13" ry="5" fill="#800000" opacity="0.5" />
+                        <!-- Bottom drip -->
+                        <path d="M -10,12 Q -5,18 0,14 Q 5,18 10,12" fill="#CC0000" />
+                        <!-- Angry V-shaped brows -->
+                        <line x1="-13" y1="-10" x2="-5" y2="-7" stroke="#440000" stroke-width="2.8" stroke-linecap="round" />
+                        <line x1="13" y1="-10" x2="5" y2="-7" stroke="#440000" stroke-width="2.8" stroke-linecap="round" />
+                        <!-- Gold menacing eyes -->
+                        <circle cx="-7" cy="-2" r="5" fill="#FFB300" />
+                        <circle cx="7" cy="-2" r="5" fill="#FFB300" />
+                        <!-- Vertical slit pupils -->
+                        <ellipse cx="-6" cy="-1" rx="1.5" ry="3.2" fill="#1A0000" />
+                        <ellipse cx="8" cy="-1" rx="1.5" ry="3.2" fill="#1A0000" />
+                        <!-- Eye shine -->
+                        <circle cx="-5.5" cy="-3.5" r="0.9" fill="rgba(255,255,255,0.65)" />
+                        <circle cx="8.5" cy="-3.5" r="0.9" fill="rgba(255,255,255,0.65)" />
+                        <!-- Grim frown -->
+                        <path d="M -6,7 Q 0,3 6,7" stroke="#440000" stroke-width="2.2" fill="none" stroke-linecap="round" />
+                        <!-- Fangs pointing down -->
+                        <polygon points="-4,7 -2,7 -3,10.5" fill="#DDDDDD" />
+                        <polygon points="2,7 4,7 3,10.5" fill="#DDDDDD" />
+                        <!-- Battle scar -->
+                        <line x1="-11" y1="-4" x2="-7" y2="3" stroke="#990000" stroke-width="1.8" stroke-linecap="round" />
+                        <!-- Hit flash -->
+                        @if (b.hitFlash > 0) {
+                            <ellipse cx="0" cy="0" rx="19" ry="16" fill="white" [attr.opacity]="getBossFlashOpacity(b)" />
+                        }
+                    </g>
+                </svg>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             BURST EFFECTS (slime death splat)
+        ════════════════════════════════════════════════════════ -->
+        @for (burst of burstParticles(); track burst.id) {
+            <div
+                class="burst"
+                aria-hidden="true"
+                [style.left.%]="burst.x * 100"
+                [style.top.%]="burst.y * 100"
+                [style.opacity]="getBurstOpacity(burst)"
+                [style.transform]="'translate(-50%, -50%) scale(' + getBurstScale(burst) + ')'"
+            >
+                <svg viewBox="-20 -20 40 40" overflow="visible">
+                    <!-- Central splat blob -->
+                    <circle cx="0" cy="0" r="10" [attr.fill]="burst.color" opacity="0.8" />
+                    <!-- Radial droplets -->
+                    <circle cx="16" cy="0"   r="3.5" [attr.fill]="burst.color" />
+                    <circle cx="-16" cy="0"  r="3.5" [attr.fill]="burst.color" />
+                    <circle cx="0" cy="16"   r="3.5" [attr.fill]="burst.color" />
+                    <circle cx="0" cy="-16"  r="3.5" [attr.fill]="burst.color" />
+                    <circle cx="11" cy="11"  r="2.5" [attr.fill]="burst.color" />
+                    <circle cx="-11" cy="11" r="2.5" [attr.fill]="burst.color" />
+                    <circle cx="11" cy="-11" r="2.5" [attr.fill]="burst.color" />
+                    <circle cx="-11" cy="-11" r="2.5" [attr.fill]="burst.color" />
+                    <!-- Star spikes -->
+                    <line x1="0" y1="0" x2="18" y2="0"   [attr.stroke]="burst.color" stroke-width="2" stroke-linecap="round" />
+                    <line x1="0" y1="0" x2="-18" y2="0"  [attr.stroke]="burst.color" stroke-width="2" stroke-linecap="round" />
+                    <line x1="0" y1="0" x2="0" y2="18"   [attr.stroke]="burst.color" stroke-width="2" stroke-linecap="round" />
+                    <line x1="0" y1="0" x2="0" y2="-18"  [attr.stroke]="burst.color" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             COINS (dropped by slimes)
+        ════════════════════════════════════════════════════════ -->
+        @for (coin of coins(); track coin.id) {
+            <div
+                class="coin"
+                aria-hidden="true"
+                [style.left.%]="coin.x * 100"
+                [style.top.%]="coin.y * 100 + getCoinBobY(coin)"
+                [style.opacity]="getCoinOpacity(coin)"
+            >
+                <svg viewBox="-8 -8 16 16" overflow="visible">
+                    <!-- Coin body -->
+                    <circle cx="0" cy="0" r="7" fill="#FFD700" />
+                    <circle cx="0" cy="0" r="7" fill="none" stroke="#B8860B" stroke-width="1.2" />
+                    <!-- Shine -->
+                    <ellipse cx="-2" cy="-2" rx="2.5" ry="1.5" fill="rgba(255,255,255,0.5)" />
+                    <!-- Dollar mark -->
+                    <text
+                        x="0" y="3"
+                        text-anchor="middle"
+                        font-size="7"
+                        font-weight="bold"
+                        fill="#B8860B"
+                        font-family="sans-serif"
+                    >$</text>
+                </svg>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             TREASURE BOXES (dropped by boss, no time limit)
+        ════════════════════════════════════════════════════════ -->
+        @for (box of treasureBoxes(); track box.id) {
+            <div
+                class="treasure-box"
+                aria-hidden="true"
+                [style.left.%]="box.x * 100"
+                [style.top.%]="box.y * 100"
+            >
+                <svg viewBox="-15 -12 30 24" overflow="visible">
+                    <!-- Lid (curved top) -->
+                    <path d="M -13,0 Q -13,-11 0,-11 Q 13,-11 13,0 Z" fill="#7C4422" />
+                    <path d="M -13,0 Q -13,-11 0,-11 Q 13,-11 13,0 Z" fill="none" stroke="#4A2010" stroke-width="1" />
+                    <!-- Gold band on lid -->
+                    <rect x="-13" y="-2.5" width="26" height="2.5" fill="#D4A017" />
+                    <!-- Chest body -->
+                    <rect x="-13" y="0" width="26" height="11" rx="1.5" fill="#8B4513" />
+                    <rect x="-13" y="0" width="26" height="11" rx="1.5" fill="none" stroke="#4A2010" stroke-width="1" />
+                    <!-- Gold band on body -->
+                    <rect x="-13" y="3" width="26" height="2.5" fill="#D4A017" />
+                    <!-- Lock plate -->
+                    <rect x="-4" y="-0.5" width="8" height="6" rx="1.5" fill="#D4A017" />
+                    <!-- Lock shackle -->
+                    <path d="M -2,-0.5 Q -2,-4 0,-4 Q 2,-4 2,-0.5" stroke="#B8860B" stroke-width="1.5" fill="none" />
+                    <!-- Keyhole -->
+                    <circle cx="0" cy="2.5" r="1.5" fill="#8B5E00" />
+                    <!-- Corner studs -->
+                    <circle cx="-11" cy="-8.5" r="1.1" fill="#D4A017" />
+                    <circle cx="11" cy="-8.5" r="1.1" fill="#D4A017" />
+                    <circle cx="-11" cy="9" r="1.1" fill="#D4A017" />
+                    <circle cx="11" cy="9" r="1.1" fill="#D4A017" />
+                    <!-- Lid shine -->
+                    <ellipse cx="-3" cy="-8" rx="4" ry="1.5" fill="rgba(255,255,255,0.22)" />
+                </svg>
+            </div>
+        }
+
+        <!-- ═══════════════════════════════════════════════════
+             OVERLAY (pause menu + character select)
+             Both live inside game-area so the backdrop is
+             clipped to the game boundaries.
+        ════════════════════════════════════════════════════════ -->
+        <!-- ═══════════════════════════════════════════════════
+             VICTORY SCREEN
+        ════════════════════════════════════════════════════════ -->
+        @if (isVictory()) {
+            <div class="overlay">
+                <div class="victory-panel">
+                    <p class="victory-panel__crown">👑</p>
+                    <p class="victory-panel__title">Victory!</p>
+                    <p class="victory-panel__sub">Boss defeated</p>
+                    <p class="victory-panel__coins">
+                        <svg viewBox="-8 -8 16 16" width="1em" height="1em" overflow="visible" style="vertical-align: middle">
+                            <circle cx="0" cy="0" r="7" fill="#FFD700" />
+                            <circle cx="0" cy="0" r="7" fill="none" stroke="#B8860B" stroke-width="1.2" />
+                            <ellipse cx="-2" cy="-2" rx="2.5" ry="1.5" fill="rgba(255,255,255,0.5)" />
+                            <text x="0" y="3" text-anchor="middle" font-size="7" font-weight="bold" fill="#B8860B" font-family="sans-serif">$</text>
+                        </svg>
+                        {{ coinCount() }} coins collected
+                    </p>
+                    <button class="menu-btn menu-btn--primary victory-play-again" (click)="playAgain()">
+                        Play Again
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (isMenuOpen() || isCharacterSelectOpen()) {
+            <div class="overlay">
+
+                <!-- ── PAUSE MENU ── -->
+                @if (isMenuOpen()) {
+                    <div class="menu-panel">
+                        <p class="menu-panel__title">Game paused</p>
+                        <div class="menu-panel__buttons">
+                            <button class="menu-btn" (click)="openCharacterSelect()">
+                                Adapt Character
+                            </button>
+                            <button class="menu-btn menu-btn--primary" (click)="resumeGame()">
+                                Resume Game
+                            </button>
+                        </div>
+                        <p class="menu-panel__hint">Press ESC to resume</p>
+                    </div>
+                }
+
+                <!-- ── CHARACTER SELECT ── -->
+                @if (isCharacterSelectOpen()) {
+                    <div class="char-select-panel">
+                        <p class="menu-panel__title">Choose your character</p>
+
+                        <div class="char-grid">
+
+                            <!-- BOY card -->
+                            <button
+                                class="char-option"
+                                [class.char-option--selected]="characterGender() === 'male'"
+                                (click)="selectCharacter('male')"
+                            >
+                                @if (characterGender() === 'male') {
+                                    <span class="char-option__check">✓</span>
+                                }
+                                <!-- Static male preview SVG (standing, legSwing = 0) -->
+                                <svg class="char-preview" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+                                    <ellipse cx="25" cy="79" rx="12" ry="4" fill="rgba(0,0,0,0.12)" />
+                                    <g transform="translate(19,54)"><rect x="-5" y="0" width="10" height="22" rx="5" fill="#3B74D1" /><ellipse cx="0" cy="23" rx="7" ry="3.5" fill="#5C3A1E" /></g>
+                                    <g transform="translate(31,54)"><rect x="-5" y="0" width="10" height="22" rx="5" fill="#3B74D1" /><ellipse cx="0" cy="23" rx="7" ry="3.5" fill="#5C3A1E" /></g>
+                                    <g transform="translate(11,33)">
+                                        <rect x="-4" y="0" width="8" height="19" rx="4" fill="#FFCB6B" />
+                                        <rect x="-15" y="13" width="30" height="5" rx="2.5" fill="#8B4513" />
+                                        <rect x="-13" y="13.5" width="22" height="2.5" rx="1" fill="#6B3000" />
+                                        <rect x="-3.5" y="11" width="7" height="9" rx="1.5" fill="#6B3000" />
+                                        <path d="M -15,14.5 Q -21,14.5 -20,7" stroke="#5C3010" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                                        <path d="M 15,14.5 Q 21,14.5 20,7" stroke="#5C3010" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                                        <path d="M -20,7 Q 0,10 20,7" stroke="#F5EDD5" stroke-width="1.2" fill="none" />
+                                        <rect x="-11" y="13" width="18" height="2" rx="1" fill="#9B5B2A" />
+                                        <polygon points="7,14 10,13 10,15" fill="#C0C0C0" />
+                                    </g>
+                                    <g transform="translate(39,33)">
+                                        <rect x="-4" y="0" width="8" height="19" rx="4" fill="#FFCB6B" />
+                                        <rect x="-9.5" y="15" width="19" height="4" rx="2" fill="#D4A000" />
+                                        <circle cx="-9.5" cy="17" r="3" fill="#B8860B" />
+                                        <circle cx="9.5" cy="17" r="3" fill="#B8860B" />
+                                        <rect x="-2" y="19" width="4" height="21" fill="#D8D8D8" />
+                                        <rect x="-0.5" y="19" width="1" height="21" fill="#F0F0F0" />
+                                        <polygon points="-2,40 2,40 0,48" fill="#C8C8C8" />
+                                    </g>
+                                    <rect x="11" y="29" width="28" height="26" rx="6" fill="#FF6B6B" />
+                                    <path d="M 22 29 L 25 34 L 28 29" fill="#E05555" />
+                                    <circle cx="25" cy="40" r="1.5" fill="white" opacity="0.75" />
+                                    <circle cx="25" cy="47" r="1.5" fill="white" opacity="0.75" />
+                                    <rect x="21" y="25" width="8" height="7" rx="3" fill="#FFCB6B" />
+                                    <circle cx="25" cy="14" r="13" fill="#FFCB6B" />
+                                    <path d="M 13 11 Q 12 1 25 1 Q 38 1 37 11 Q 34 5 25 5 Q 16 5 13 11" fill="#5D3A1A" />
+                                    <ellipse cx="13.5" cy="10" rx="4" ry="5" fill="#5D3A1A" />
+                                    <ellipse cx="36.5" cy="10" rx="4" ry="5" fill="#5D3A1A" />
+                                    <circle cx="19" cy="13" r="4" fill="white" /><circle cx="20" cy="13" r="2.3" fill="#222" /><circle cx="21" cy="12" r="0.9" fill="white" />
+                                    <circle cx="31" cy="13" r="4" fill="white" /><circle cx="32" cy="13" r="2.3" fill="#222" /><circle cx="33" cy="12" r="0.9" fill="white" />
+                                    <path d="M 14 8 Q 19 6 23 8" stroke="#5D3A1A" stroke-width="1.8" fill="none" stroke-linecap="round" />
+                                    <path d="M 27 8 Q 31 6 36 8" stroke="#5D3A1A" stroke-width="1.8" fill="none" stroke-linecap="round" />
+                                    <ellipse cx="25" cy="17" rx="1.8" ry="1.4" fill="#EBB45A" />
+                                    <path d="M 18 21 Q 25 27 32 21" stroke="#8B4513" stroke-width="2" fill="none" stroke-linecap="round" />
+                                    <ellipse cx="14" cy="19" rx="4.5" ry="3" fill="#FF9898" opacity="0.45" />
+                                    <ellipse cx="36" cy="19" rx="4.5" ry="3" fill="#FF9898" opacity="0.45" />
+                                </svg>
+                                <span class="char-option__label">Boy</span>
+                            </button>
+
+                            <!-- GIRL card -->
+                            <button
+                                class="char-option"
+                                [class.char-option--selected]="characterGender() === 'female'"
+                                (click)="selectCharacter('female')"
+                            >
+                                @if (characterGender() === 'female') {
+                                    <span class="char-option__check">✓</span>
+                                }
+                                <!-- Static female preview SVG (standing, legSwing = 0) -->
+                                <svg class="char-preview" viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+                                    <ellipse cx="25" cy="79" rx="12" ry="4" fill="rgba(0,0,0,0.12)" />
+                                    <path d="M 13 12 C 10 22 9 35 11 47" stroke="#5D3A1A" stroke-width="7" fill="none" stroke-linecap="round" />
+                                    <path d="M 37 12 C 40 22 41 35 39 47" stroke="#5D3A1A" stroke-width="7" fill="none" stroke-linecap="round" />
+                                    <g transform="translate(19,60)"><rect x="-4" y="0" width="8" height="16" rx="4" fill="#FFCB6B" /><ellipse cx="0" cy="17" rx="6.5" ry="3" fill="#E8449A" /></g>
+                                    <g transform="translate(31,60)"><rect x="-4" y="0" width="8" height="16" rx="4" fill="#FFCB6B" /><ellipse cx="0" cy="17" rx="6.5" ry="3" fill="#E8449A" /></g>
+                                    <g transform="translate(11,33)">
+                                        <rect x="-4" y="0" width="8" height="19" rx="4" fill="#FFCB6B" />
+                                        <rect x="-15" y="13" width="30" height="5" rx="2.5" fill="#8B4513" />
+                                        <rect x="-13" y="13.5" width="22" height="2.5" rx="1" fill="#6B3000" />
+                                        <rect x="-3.5" y="11" width="7" height="9" rx="1.5" fill="#6B3000" />
+                                        <path d="M -15,14.5 Q -21,14.5 -20,7" stroke="#5C3010" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                                        <path d="M 15,14.5 Q 21,14.5 20,7" stroke="#5C3010" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                                        <path d="M -20,7 Q 0,10 20,7" stroke="#F5EDD5" stroke-width="1.2" fill="none" />
+                                        <rect x="-11" y="13" width="18" height="2" rx="1" fill="#9B5B2A" />
+                                        <polygon points="7,14 10,13 10,15" fill="#C0C0C0" />
+                                    </g>
+                                    <g transform="translate(39,33)">
+                                        <rect x="-4" y="0" width="8" height="19" rx="4" fill="#FFCB6B" />
+                                        <rect x="-9.5" y="15" width="19" height="4" rx="2" fill="#D4A000" />
+                                        <circle cx="-9.5" cy="17" r="3" fill="#B8860B" />
+                                        <circle cx="9.5" cy="17" r="3" fill="#B8860B" />
+                                        <rect x="-2" y="19" width="4" height="21" fill="#D8D8D8" />
+                                        <rect x="-0.5" y="19" width="1" height="21" fill="#F0F0F0" />
+                                        <polygon points="-2,40 2,40 0,48" fill="#C8C8C8" />
+                                    </g>
+                                    <path d="M 11 29 L 39 29 L 46 62 Q 25 65 4 62 Z" fill="#C271E8" />
+                                    <path d="M 12 39 Q 25 41 38 39" stroke="#9B45C9" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                                    <path d="M 20 29 Q 25 35 30 29" fill="#A855D4" />
+                                    <rect x="21" y="25" width="8" height="7" rx="3" fill="#FFCB6B" />
+                                    <circle cx="25" cy="14" r="13" fill="#FFCB6B" />
+                                    <path d="M 13 11 Q 12 1 25 1 Q 38 1 37 11 Q 34 5 25 5 Q 16 5 13 11" fill="#5D3A1A" />
+                                    <ellipse cx="13.5" cy="10" rx="4" ry="5" fill="#5D3A1A" />
+                                    <ellipse cx="36.5" cy="10" rx="4" ry="5" fill="#5D3A1A" />
+                                    <circle cx="19" cy="13" r="4" fill="white" /><circle cx="20" cy="13" r="2.3" fill="#222" /><circle cx="21" cy="12" r="0.9" fill="white" />
+                                    <circle cx="31" cy="13" r="4" fill="white" /><circle cx="32" cy="13" r="2.3" fill="#222" /><circle cx="33" cy="12" r="0.9" fill="white" />
+                                    <path d="M 15 10 Q 16 8 18 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                                    <path d="M 18  9 Q 19 7 21 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                                    <path d="M 21  9 Q 22 7 24 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                                    <path d="M 26  9 Q 28 7 30 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                                    <path d="M 29  9 Q 31 7 33 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                                    <path d="M 32  9 Q 34 7 35 9" stroke="#333" stroke-width="1.1" fill="none" stroke-linecap="round" />
+                                    <path d="M 14 8 Q 19 6 23 8" stroke="#5D3A1A" stroke-width="1.8" fill="none" stroke-linecap="round" />
+                                    <path d="M 27 8 Q 31 6 36 8" stroke="#5D3A1A" stroke-width="1.8" fill="none" stroke-linecap="round" />
+                                    <ellipse cx="25" cy="17" rx="1.8" ry="1.4" fill="#EBB45A" />
+                                    <path d="M 18 21 Q 25 27 32 21" stroke="#8B4513" stroke-width="2" fill="none" stroke-linecap="round" />
+                                    <ellipse cx="14" cy="19" rx="4.5" ry="3" fill="#FF9898" opacity="0.45" />
+                                    <ellipse cx="36" cy="19" rx="4.5" ry="3" fill="#FF9898" opacity="0.45" />
+                                </svg>
+                                <span class="char-option__label">Girl</span>
+                            </button>
+
+                        </div>
+
+                        <button class="back-btn" (click)="backToMenu()">← Back</button>
+                    </div>
+                }
+
+            </div>
+        }
+
+    </div><!-- /game-area -->
+
+    <!-- On-screen D-pad for mobile / touch -->
+    <div class="d-pad" aria-label="Movement controls">
+        <button class="d-pad-button up" aria-label="Move up"
+            (mousedown)="handleButtonPress('ArrowUp')" (mouseup)="handleButtonRelease('ArrowUp')"
+            (mouseleave)="handleButtonRelease('ArrowUp')" (touchstart)="handleButtonPress('ArrowUp')"
+            (touchend)="handleButtonRelease('ArrowUp')">▲</button>
+        <button class="d-pad-button left" aria-label="Move left"
+            (mousedown)="handleButtonPress('ArrowLeft')" (mouseup)="handleButtonRelease('ArrowLeft')"
+            (mouseleave)="handleButtonRelease('ArrowLeft')" (touchstart)="handleButtonPress('ArrowLeft')"
+            (touchend)="handleButtonRelease('ArrowLeft')">◀</button>
+        <button class="d-pad-button right" aria-label="Move right"
+            (mousedown)="handleButtonPress('ArrowRight')" (mouseup)="handleButtonRelease('ArrowRight')"
+            (mouseleave)="handleButtonRelease('ArrowRight')" (touchstart)="handleButtonPress('ArrowRight')"
+            (touchend)="handleButtonRelease('ArrowRight')">▶</button>
+        <button class="d-pad-button down" aria-label="Move down"
+            (mousedown)="handleButtonPress('ArrowDown')" (mouseup)="handleButtonRelease('ArrowDown')"
+            (mouseleave)="handleButtonRelease('ArrowDown')" (touchstart)="handleButtonPress('ArrowDown')"
+            (touchend)="handleButtonRelease('ArrowDown')">▼</button>
+    </div>
+
+    <p class="hint">Arrow keys ↑ ↓ ← → to move &nbsp;·&nbsp; N = sword &nbsp;·&nbsp; M = shoot &nbsp;·&nbsp; ESC to pause</p>
+</div>
