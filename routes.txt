@@ -48,6 +48,7 @@
 /blog/object-ids
 /blog/open-source
 /blog/responsive-column-layout
+/blog/restangular
 /blog/mx-keys
 /blog/mx-master
 /blog/rip-confin
