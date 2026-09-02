@@ -56,5 +56,6 @@
 /blog/security-scoped-bookmark
 /blog/siedler-von-catan
 /blog/signals
+/blog/signals-predictions-revisited
 /blog/static-site-generators
 /blog/user-defined-type-guards
