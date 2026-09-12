@@ -9,6 +9,7 @@
 /boardgame-tracker/admin
 /kids-game
 /blog/ag-grid-cell-observables
+/blog/ag-ui-client-side-tools
 /blog/angular-clipboard
 /blog/angular-custom-webpack-configuration
 /blog/angular-inline-lazy-load
